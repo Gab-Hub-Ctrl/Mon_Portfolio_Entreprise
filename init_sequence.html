@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>INIT_SEQUENCE IT Dashboard</title>
+  <meta name="description" content="Gouvernance IA par machine à états finis. Bootloader, SYSTEM, USER PROMPT, Module Cognitif et 7 prompts fondateurs. Gabriel ROULON.">
+  <meta name="author" content="Gabriel ROULON">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="stylesheet" href="common.css">
+  <script defer src="common.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "INIT_SEQUENCE IT Dashboard",
+    "description": "Système de gouvernance IA par machine à états finis. Bootloader, SYSTEM, USER PROMPT, Module Cognitif, 7 prompts fondateurs.",
+    "author": { "@type": "Person", "name": "Gabriel ROULON" },
+    "inLanguage": "fr-FR",
+    "dateModified": "2026-03-11"
+  }
+  </script>
+  <style>
+    :root {
+      --bg:             #0f172a;
+      --bg-secondary:   #1e293b;
+      --bg-card:        #263347;
+      --border:         #334155;
+      --text:           #f1f5f9;
+      --text-secondary: #94a3b8;
+      --blue:           #38bdf8;
+      --blue-dim:       rgba(56, 189, 248, 0.08);
+    }
+    header { background: rgba(15, 23, 42, 0.97); }
+    .header-left .breadcrumb { padding: 0; margin: 0; border-bottom: none; font-size: 0.78em; }
+    .chatbot-footer { border-top: 1px solid var(--border); padding: 10px 16px; background: var(--bg-card); display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .chatbot-footer-label { font-size: 0.72em; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin-bottom: 0; }
+    .content-section { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
+    h2.section-title { background: var(--bg-secondary); color: var(--text); border-left: 3px solid var(--blue); padding: 14px 20px; font-size: 1em; font-weight: 600; margin: 0; }
+    /* === TYPOGRAPHIE INTERNE === */
+    .accordion-inner h2 {
+      font-size: 1.05em;
+      font-weight: 600;
+      margin: 20px 0 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+    .accordion-inner h2:first-child { margin-top: 0; }
+    .accordion-inner p { font-size: 0.9em; color: var(--text-secondary); line-height: 1.7; margin: 8px 0; }
+    .accordion-inner code {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 0.88em;
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--text);
+    }
+
+    /* === TERMINAL BOOT === */
+    .boot-terminal {
+      background: #0d0d0d;
+      color: #00cc00;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 18px 22px;
+      border-radius: 6px;
+      margin: 14px 0;
+      font-size: 0.84em;
+      line-height: 1.9;
+      border: 1px solid #1a1a1a;
+      overflow-x: auto;
+    }
+    .boot-terminal .t-label { color: #4da6ff; }
+    .boot-terminal .t-info  { color: var(--text-secondary); }
+    .boot-terminal .t-ok    { color: #00cc00; }
+    .boot-terminal .t-warn  { color: #e6c32a; }
+    .boot-terminal .t-success { color: #00ff55; }
+    .boot-terminal .t-cursor {
+      display: inline-block;
+      width: 7px;
+      height: 13px;
+      background: #00cc00;
+      animation: blink 1s step-end infinite;
+      vertical-align: middle;
+      margin-left: 3px;
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    /* === MACHINE A ETATS === */
+    .state-machine {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      align-items: center;
+      justify-content: center;
+      margin: 18px 0 8px;
+      padding: 16px 8px;
+      overflow-x: auto;
+    }
+    .state-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 100px;
+      max-width: 120px;
+      padding: 12px 10px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-card);
+      text-align: center;
+      flex-shrink: 0;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .state-node:hover { transform: translateY(-2px); border-color: var(--text-secondary); }
+    .state-node.state-boot  { border-color: var(--red); }
+    .state-node.state-load  { border-color: #e6c32a; }
+    .state-node.state-active { border-color: var(--blue); }
+    .state-id {
+      font-weight: 700;
+      font-size: 1.05em;
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .state-label { font-size: 0.74em; color: var(--text-secondary); line-height: 1.3; }
+    .state-arrow {
+      font-size: 1.4em;
+      color: var(--text-secondary);
+      padding: 0 6px;
+      flex-shrink: 0;
+      user-select: none;
+    }
+    .state-loop {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin: 10px 0 16px;
+      flex-wrap: wrap;
+    }
+    .state-loop-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82em;
+      color: var(--text-secondary);
+    }
+    .loop-node {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3px 10px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: 600;
+      font-size: 0.92em;
+      color: var(--text);
+      background: var(--bg-card);
+    }
+    .loop-tag {
+      font-size: 0.82em;
+      color: var(--text-secondary);
+      margin-left: 4px;
+    }
+
+    /* === COMPOSANTS CARDS === */
+    .component-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+      margin: 12px 0;
+    }
+    .cc-2col { grid-template-columns: repeat(2, 1fr); }
+    .cc-3col { grid-template-columns: repeat(3, 1fr); }
+    .cc-2col > *:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+    .component-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      background: var(--bg-card);
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .component-card:hover { border-color: var(--text-secondary); transform: translateY(-1px); }
+    .component-card h4 {
+      margin: 0 0 6px;
+      font-size: 0.9em;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .component-card p {
+      margin: 0;
+      font-size: 0.84em;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* === PHASE TIMELINE === */
+    .phase-timeline { margin: 14px 0; }
+    .phase-item {
+      display: flex;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .phase-item:last-child { border-bottom: none; }
+    .phase-number {
+      min-width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: 700;
+      font-size: 0.88em;
+      flex-shrink: 0;
+      color: var(--text-secondary);
+    }
+    .phase-content { flex: 1; }
+    .phase-title { font-weight: 700; font-size: 0.9em; color: var(--text); margin-bottom: 2px; }
+    .phase-states {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.76em;
+      color: var(--text-secondary);
+    }
+    .phase-desc { font-size: 0.84em; color: var(--text-secondary); margin-top: 3px; line-height: 1.5; }
+
+    /* === COMMANDS LIST === */
+    .commands-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 10px 0;
+    }
+    .command-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg-card);
+      transition: border-color 0.2s ease;
+    }
+    .command-item:hover { border-color: var(--text-secondary); }
+    .cmd {
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: 700;
+      font-size: 0.84em;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .cmd-desc { font-size: 0.8em; color: var(--text-secondary); }
+
+    /* === PILIERS COGNITIFS === */
+    .pillar-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 12px 0;
+    }
+    .pillar-card {
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      background: var(--bg-card);
+      text-align: center;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .pillar-card:hover { border-color: var(--text-secondary); transform: translateY(-1px); }
+    .pillar-ref {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.74em;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+    .pillar-name { font-weight: 700; font-size: 1em; color: var(--text); margin-bottom: 6px; }
+    .pillar-desc { font-size: 0.82em; color: var(--text-secondary); line-height: 1.5; }
+
+    /* === SECTIONS GRID (SYSTEM 15) === */
+    .sections-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .section-cell {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 10px;
+      background: var(--bg-card);
+      font-size: 0.84em;
+      transition: border-color 0.2s ease;
+    }
+    .section-cell:hover { border-color: var(--text-secondary); }
+    .section-num {
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: 700;
+      font-size: 0.82em;
+      color: var(--text-secondary);
+      display: block;
+      margin-bottom: 2px;
+    }
+    .section-name { font-weight: 600; font-size: 0.9em; color: var(--text); }
+
+    /* === REF GRID (10 FIGURES) === */
+    .ref-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .ref-card {
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      border-radius: 6px;
+      padding: 10px 12px;
+      text-align: center;
+      background: var(--bg-card);
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .ref-card:hover { border-color: rgba(139, 92, 246, 0.7); transform: translateY(-1px); }
+    .ref-name { font-weight: 700; font-size: 0.88em; color: var(--text); margin-bottom: 2px; }
+    .ref-domain { font-size: 0.76em; color: var(--text-secondary); }
+
+    /* === PROMPT TREE === */
+    .prompt-tree {
+      margin: 14px 0;
+      padding: 0 0 0 14px;
+      border-left: 2px solid var(--border);
+    }
+    .prompt-branch {
+      position: relative;
+      padding: 8px 0 8px 18px;
+      border-bottom: 1px solid var(--bg-secondary);
+    }
+    .prompt-branch:last-child { border-bottom: none; }
+    .prompt-branch::before {
+      content: "";
+      position: absolute;
+      left: -2px;
+      top: 50%;
+      width: 14px;
+      height: 0;
+      border-top: 2px solid var(--border);
+    }
+    .prompt-id {
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: 700;
+      font-size: 0.88em;
+      min-width: 86px;
+      display: inline-block;
+      color: var(--text);
+    }
+    .prompt-files { font-size: 0.8em; color: var(--text-secondary); font-family: 'Courier New', Courier, monospace; }
+    .prompt-desc { font-size: 0.84em; color: var(--text-secondary); margin-top: 2px; }
+
+    /* === METRICS ROW : 4 colonnes fixes === */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    /* === ACTIVATION HIGHLIGHT === */
+    .highlight-activation {
+      background: var(--red-dim);
+      border-left: 3px solid var(--red);
+      padding: 14px 18px;
+      margin: 14px 0;
+      border-radius: 0 6px 6px 0;
+      text-align: center;
+    }
+    .highlight-activation p { color: var(--text-secondary); font-size: 0.88em; }
+    .activation-phrase {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 1.1em;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      display: block;
+      margin: 8px 0;
+      color: var(--red);
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .pillar-grid { grid-template-columns: 1fr; }
+      .state-machine { flex-direction: column; }
+      .state-arrow { transform: rotate(90deg); }
+      .component-cards { grid-template-columns: 1fr !important; }
+      .cc-2col, .cc-3col { grid-template-columns: 1fr !important; }
+      .cc-2col > *:last-child:nth-child(odd) { grid-column: auto; }
+      .sections-grid { grid-template-columns: repeat(2, 1fr); }
+      .ref-grid { grid-template-columns: repeat(2, 1fr); }
+      .commands-list { grid-template-columns: 1fr !important; }
+      .metrics-row { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+  <!-- Chatbot panel -->
+  <div id="chatbot-panel" class="chatbot-panel" role="complementary" aria-label="Résumé IA de la page">
+    <div class="chatbot-head">
+      <div class="chatbot-title-group">
+        <span class="chatbot-title">Résumé IA</span>
+        <span class="chatbot-dot" aria-hidden="true"></span>
+      </div>
+      <button class="chatbot-close-btn" aria-label="Fermer">&times;</button>
+    </div>
+    <div class="chatbot-body">
+      <div class="chatbot-think" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="chatbot-msg" aria-live="polite" aria-label="Résumé de la page"></div>
+      <div class="chatbot-status" aria-live="polite"></div>
+    </div>
+    <div class="chatbot-footer">
+      <div class="chatbot-footer-label">Autres ressources Vue Jury</div>
+      <button class="chatbot-nav-btn" aria-label="Accéder aux autres ressources Vue Jury">Cliquez ici</button>
+    </div>
+  </div>
+
+  <header role="banner">
+    <div class="header-left">
+      <nav class="breadcrumb" id="site-breadcrumb" data-page="init" aria-label="Fil d'Ariane">
+        <a href="index.html">Présentation</a>
+        <span class="breadcrumb-sep" aria-hidden="true">&#8250;</span>
+        <a href="mes_projets.html">Mes projets</a>
+        <span class="breadcrumb-sep" aria-hidden="true">&#8250;</span>
+        <span class="breadcrumb-current" aria-current="page">INIT_SEQUENCE</span>
+      </nav>
+    </div>
+    <div class="header-center">INIT_SEQUENCE</div>
+    <div class="header-right">
+      <button class="btn-quick-read btn-important" aria-haspopup="dialog" aria-label="Note importante sur INIT_SEQUENCE">Important</button>
+    </div>
+  </header>
+
+  <main id="main-content" role="main">
+
+    <h1 class="sr-only">INIT_SEQUENCE, IT Dashboard</h1>
+
+    <!-- ===== SECTION 1 : Pourquoi INIT_SEQUENCE ===== -->
+    <section class="content-section" id="section-pourquoi">
+      <h2 class="section-title">Pourquoi INIT_SEQUENCE ?</h2>
+      <div class="accordion-inner">
+          <p>Lors des échanges avec les IA publiques, chaque nouvelle conversation signifiait une perte totale du contexte. Plus le projet IT Dashboard grandissait, plus cette perte devenait bloquante : envoyer toutes les données saturait la mémoire de contexte du modèle.</p>
+
+          <div class="highlight">
+            <p>INIT_SEQUENCE est né de cette nécessité. C'est un système de gouvernance IA basé sur une machine à états finis : il reconstruit l'état du projet de manière reproductible à chaque nouvelle session, garantissant traçabilité et cohérence.</p>
+          </div>
+
+          <div class="highlight highlight-red">
+            <p><strong>Note :</strong> procédure obsolète sur les IA publiques actuelles, qui restreignent l'imposition d'un état externe. La valeur d'INIT_SEQUENCE est architecturale : démonstration de structuration d'un système complexe.</p>
+          </div>
+
+          <h2>Composition du système</h2>
+          <p>INIT_SEQUENCE est constitué de 4 documents opérationnels complémentaires et de 7 prompts fondateurs (11 fichiers) :</p>
+
+          <div class="component-cards cc-2col">
+            <div class="component-card">
+              <h4>Bootloader</h4>
+              <p>Protocole d'activation. Point d'entrée strict qui impose l'état initial S(-1) et le comptage des fichiers fondateurs.</p>
+            </div>
+            <div class="component-card">
+              <h4>SYSTEM</h4>
+              <p>Cœur technique. Définit les 7 états, les transitions, les 15 sections de règles et la phrase d'activation S5.</p>
+            </div>
+            <div class="component-card">
+              <h4>USER PROMPT</h4>
+              <p>Guide opérationnel. Décrit les 7 phases de progression du point de vue de l'utilisateur et les commandes disponibles.</p>
+            </div>
+            <div class="component-card">
+              <h4>Module Cognitif</h4>
+              <p>Architecture de pensée. S'active uniquement en S5. Définit les piliers cognitifs inspirés de 10 figures historiques.</p>
+            </div>
+          </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2 : Bootloader ===== -->
+    <section class="content-section" id="section-bootloader">
+      <h2 class="section-title">Bootloader</h2>
+      <div class="accordion-inner">
+          <p>Premier document transmis à l'IA : impose l'état initial S(-1), dédié à la réception et au comptage strict des 11 fichiers fondateurs.</p>
+
+          <h2>Simulation de boot</h2>
+          <div class="boot-terminal" role="img" aria-label="Simulation visuelle du processus de boot INIT_SEQUENCE">
+            <div><span class="t-label">[BOOT]</span> <span class="t-info">Démarrage du protocole IT Dashboard en mode strict.</span></div>
+            <div><span class="t-label">[S(-1)]</span> <span class="t-info">État initial : attente Bootloader + prompts fondateurs.</span></div>
+            <div><span class="t-label">[RECU]</span> <span class="t-ok">Prompt 1 - Comportement .............. OK</span></div>
+            <div><span class="t-label">[RECU]</span> <span class="t-ok">Prompt 2 - Standards coding .......... OK</span></div>
+            <div><span class="t-label">[RECU]</span> <span class="t-ok">Prompt 3 - Vision projet ............. OK</span></div>
+            <div><span class="t-label">[RECU]</span> <span class="t-ok">Prompt 4a - Contenu pôles (1/4) ...... OK</span></div>
+            <div><span class="t-label">[RECU]</span> <span class="t-ok">Prompt 4b - Contenu pôles (2/4) ...... OK</span></div>
+            <div><span class="t-label">[RECU]</span> <span class="t-ok">Prompt 4c - Contenu pôles (3/4) ...... OK</span></div>
+            <div><span class="t-label">[RECU]</span> <span class="t-ok">Prompt 4d - Contenu pôles (4/4) ...... OK</span></div>
+            <div><span class="t-label">[RECU]</span> <span class="t-ok">Prompt 5 - Architecture flux ......... OK</span></div>
+            <div><span class="t-label">[RECU]</span> <span class="t-ok">Prompt 6a - Arborescence ............. OK</span></div>
+            <div><span class="t-label">[RECU]</span> <span class="t-ok">Prompt 6b - UX/UI .................... OK</span></div>
+            <div><span class="t-label">[RECU]</span> <span class="t-ok">Prompt 7 - Orchestration ............. OK</span></div>
+            <div>&nbsp;</div>
+            <div><span class="t-label">[COMPTEUR]</span> <span class="t-success">Fichiers reçus : 11/11</span></div>
+            <div><span class="t-label">[VALIDATION]</span> <span class="t-warn">En attente confirmation utilisateur...</span></div>
+            <div><span class="t-label">[CONFIRM]</span> <span class="t-success">Prompts définitifs. Transition vers S0.</span><span class="t-cursor"></span></div>
+          </div>
+
+          <h2>Règles strictes du Bootloader</h2>
+          <div class="component-cards cc-2col">
+            <div class="component-card">
+              <h4>Section 0 Activation</h4>
+              <p>Démarrage en mode strict. L'assistant adopte l'état S(-1). Réponse standard : "OK en attente des fichiers fondateurs X sur 11."</p>
+            </div>
+            <div class="component-card">
+              <h4>Section 1 Comptage</h4>
+              <p>Aucun traitement autorisé tant que les 11 fichiers ne sont pas reçus, que le compteur n'affiche pas 11/11 et que l'utilisateur n'a pas confirmé.</p>
+            </div>
+            <div class="component-card">
+              <h4>Section 2 Comptabilisation</h4>
+              <p>Chaque fichier incrémente le compteur strict. Seule la réponse standard est autorisée. Aucune interprétation, aucun résumé.</p>
+            </div>
+            <div class="component-card">
+              <h4>Section 3 Mode d'attente</h4>
+              <p>Attente passive jusqu'à réception complète ET confirmation utilisateur. Aucune mécanique interne ne s'active.</p>
+            </div>
+            <div class="component-card">
+              <h4>Section 4 Sécurité</h4>
+              <p>Aucune action irréversible avant validation. ASCII uniquement, emojis et Unicode non standards interdits. Toute déviation est une erreur de protocole.</p>
+            </div>
+          </div>
+
+          <div class="highlight">
+            <p>Le fichier USER PROMPT n'est jamais comptabilisé comme prompt fondateur. Seuls les 11 fichiers représentant 7 prompts fondateurs sont comptés.</p>
+          </div>
+
+          <div class="highlight-activation">
+            <p>Avant de passer en S5, une phrase d'activation explicite est attendue de l'utilisateur. Aucune transition automatique vers S5 n'est autorisée.</p>
+            <span class="activation-phrase">ACTIVER S5 IT DASHBOARD</span>
+            <p>Cette phrase est traitée par le SYSTEM. Voir la section SYSTEM pour le détail des transitions.</p>
+          </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3 : SYSTEM ===== -->
+    <section class="content-section" id="section-system">
+      <h2 class="section-title">SYSTEM</h2>
+      <div class="accordion-inner">
+          <p>Cœur technique d'INIT_SEQUENCE : définit les 7 états, les transitions et les 15 sections de règles qui gouvernent chaque message de l'IA.</p>
+
+          <h2>Machine à états : flux principal</h2>
+          <div class="state-machine" role="img" aria-label="Diagramme de la machine à états INIT_SEQUENCE : S(-1) vers S0, S2, S4, S5">
+            <div class="state-node state-boot">
+              <span class="state-id">S(-1)</span>
+              <span class="state-label">Attente Bootloader + Prompts</span>
+            </div>
+            <span class="state-arrow" aria-hidden="true">&#8594;</span>
+            <div class="state-node state-load">
+              <span class="state-id">S0</span>
+              <span class="state-label">Validation bilans techniques</span>
+            </div>
+            <span class="state-arrow" aria-hidden="true">&#8594;</span>
+            <div class="state-node state-load">
+              <span class="state-id">S2</span>
+              <span class="state-label">Analyse arborescence</span>
+            </div>
+            <span class="state-arrow" aria-hidden="true">&#8594;</span>
+            <div class="state-node state-load">
+              <span class="state-id">S4</span>
+              <span class="state-label">Contrôle cohérence</span>
+            </div>
+            <span class="state-arrow" aria-hidden="true">&#8594;</span>
+            <div class="state-node state-active">
+              <span class="state-id">S5</span>
+              <span class="state-label">Mode projet actif</span>
+            </div>
+          </div>
+
+          <div class="state-loop" aria-label="États complémentaires S6 et S7 avec retour vers S5">
+            <div class="state-loop-item">
+              <span class="loop-node">S6</span>
+              <span>&#8596;</span>
+              <span class="loop-node">S5</span>
+              <span class="loop-tag">Maintenance</span>
+            </div>
+            <div class="state-loop-item">
+              <span class="loop-node">S7</span>
+              <span>&#8594;</span>
+              <span class="loop-node">S5</span>
+              <span class="loop-tag">Recovery</span>
+            </div>
+          </div>
+
+          <h2>Phrase d'activation obligatoire</h2>
+          <div class="highlight-activation">
+            <p>Le passage à S5 ne peut pas se faire automatiquement. L'utilisateur doit prononcer une phrase d'activation explicite :</p>
+            <span class="activation-phrase">ACTIVER S5 IT DASHBOARD</span>
+            <p>Les variantes proches sont acceptées. Une confirmation est demandée avant activation définitive. C'est à partir de S5 uniquement que le module cognitif s'active.</p>
+          </div>
+
+          <h2>Détail des états</h2>
+          <div class="component-cards cc-2col">
+            <div class="component-card">
+              <h4>S(-1) Attente</h4>
+              <p>Réception du Bootloader et des 11 fichiers. Comptage strict. Module cognitif inactif. Aucune analyse autorisée.</p>
+            </div>
+            <div class="component-card">
+              <h4>S0 Bilans techniques</h4>
+              <p>Réception des bilans MD/TXT. Comptage automatique "Bilans reçus X/Y". Passage à S2 après confirmation utilisateur.</p>
+            </div>
+            <div class="component-card">
+              <h4>S2 Arborescence</h4>
+              <p>Analyse des arborescences (complètes, delta ou segmentées). Détection des zones floues. Comptage "Arborescences analysées X/Y".</p>
+            </div>
+            <div class="component-card">
+              <h4>S4 Cohérence</h4>
+              <p>Vérification des structures backend, frontend, root. Contrôle des chemins, imports, fichiers critiques. Suspension en cas d'anomalie.</p>
+            </div>
+            <div class="component-card">
+              <h4>S5 Mode projet actif</h4>
+              <p>Messages interprétés comme tâches. Module cognitif actif. Auto-bilan toutes les 15 tâches. Actions irréversibles avec confirmation.</p>
+            </div>
+            <div class="component-card">
+              <h4>S6 / S7</h4>
+              <p>S6 : maintenance technique avec retour auto à S5. S7 : recovery en cas d'échec critique avec diagnostic et recalage avant retour à S5.</p>
+            </div>
+          </div>
+
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4 : USER PROMPT ===== -->
+    <section class="content-section" id="section-user-prompt">
+      <h2 class="section-title">USER PROMPT</h2>
+      <div class="accordion-inner">
+
+          <h2>Les 7 phases de progression</h2>
+          <div class="phase-timeline">
+            <div class="phase-item">
+              <div class="phase-number">1</div>
+              <div class="phase-content">
+                <div class="phase-title">Prompts fondateurs</div>
+                <div class="phase-states">S(-1) &#8594; S0</div>
+                <div class="phase-desc">Transmission des 7 prompts sous 11 fichiers. Comptage strict. Transition après réception complète ET confirmation utilisateur.</div>
+              </div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-number">2</div>
+              <div class="phase-content">
+                <div class="phase-title">Bilans techniques</div>
+                <div class="phase-states">S0 &#8594; S2</div>
+                <div class="phase-desc">Réception des bilans techniques MD/TXT. Fin détectée par heuristique ou message explicite ("done bilans").</div>
+              </div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-number">3</div>
+              <div class="phase-content">
+                <div class="phase-title">Analyse de l'arborescence</div>
+                <div class="phase-states">S2 &#8594; S4</div>
+                <div class="phase-desc">Réception libre : arborescences complètes, delta ou structures de dossiers/fichiers. Analyse et comptabilisation automatique.</div>
+              </div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-number">4</div>
+              <div class="phase-content">
+                <div class="phase-title">Contrôle de cohérence</div>
+                <div class="phase-states">S4 &#8594; S5</div>
+                <div class="phase-desc">Vérification des fichiers critiques, chemins, imports, doublons et dépendances. Toute anomalie suspend le processus.</div>
+              </div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-number">5</div>
+              <div class="phase-content">
+                <div class="phase-title">Mode projet actif</div>
+                <div class="phase-states">S5</div>
+                <div class="phase-desc">Activation par la phrase <code>ACTIVER S5 IT DASHBOARD</code>. Messages interprétés comme tâches. Module cognitif actif. Auto-bilan toutes les 15 tâches.</div>
+              </div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-number">6</div>
+              <div class="phase-content">
+                <div class="phase-title">Maintenance</div>
+                <div class="phase-states">S6 &#8596; S5</div>
+                <div class="phase-desc">Corrections techniques, vérification des chemins et doublons. Passage automatique en S6 puis retour à S5 après completion.</div>
+              </div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-number">7</div>
+              <div class="phase-content">
+                <div class="phase-title">Recovery</div>
+                <div class="phase-states">S7 &#8594; S5</div>
+                <div class="phase-desc">Activation uniquement en cas d'échec critique. Diagnostic, recalage, reconstruction, validation, puis retour automatique à S5.</div>
+              </div>
+            </div>
+          </div>
+
+          <h2>Commandes disponibles</h2>
+          <div class="commands-list">
+            <div class="command-item">
+              <span class="cmd">recalage</span>
+              <span class="cmd-desc">Réalignement sans suppression</span>
+            </div>
+            <div class="command-item">
+              <span class="cmd">hard reset</span>
+              <span class="cmd-desc">Reset complet (confirmation obligatoire)</span>
+            </div>
+            <div class="command-item">
+              <span class="cmd">done bilans</span>
+              <span class="cmd-desc">Signale la fin des bilans</span>
+            </div>
+            <div class="command-item">
+              <span class="cmd">send chemin</span>
+              <span class="cmd-desc">Demande l'envoi de fichiers précis</span>
+            </div>
+            <div class="command-item">
+              <span class="cmd">send arbo</span>
+              <span class="cmd-desc">Envoi d'arborescence</span>
+            </div>
+            <div class="command-item">
+              <span class="cmd">delta arbo</span>
+              <span class="cmd-desc">Envoi d'arborescence delta</span>
+            </div>
+          </div>
+
+          <div class="highlight">
+            <p>Priorité absolue aux prompts fondateurs lorsque S(-1) est actif. Actions à risque avec confirmation stricte. Variantes courantes normalisées si intention claire. Toute ambiguïté entraîne une demande de clarification minimale. Module cognitif actif uniquement en S5.</p>
+          </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5 : Module Cognitif ===== -->
+    <section class="content-section" id="section-cognitif">
+      <h2 class="section-title">Module Cognitif</h2>
+      <div class="accordion-inner">
+          <p>Actif uniquement en S5, le module cognitif structure la réflexion de l'IA autour de 10 figures historiques. Toutes les actions et décisions sont traçables et auditables.</p>
+
+          <h2>Les quatre piliers cognitifs</h2>
+          <div class="pillar-grid">
+            <div class="pillar-card">
+              <div class="pillar-ref">Base interne + Descartes</div>
+              <div class="pillar-name">Logique centrale</div>
+              <div class="pillar-desc">Cohérence interne absolue. Toute production est validée logiquement. Les contradictions sont strictement interdites.</div>
+            </div>
+            <div class="pillar-card">
+              <div class="pillar-ref">Base interne + Turing</div>
+              <div class="pillar-name">Réflexion rapide</div>
+              <div class="pillar-desc">Génération de solutions complexes en temps court. Simplicité, élégance et efficacité comme critères de qualité.</div>
+            </div>
+            <div class="pillar-card">
+              <div class="pillar-ref">Base interne + Léonard de Vinci</div>
+              <div class="pillar-name">Vision systémique</div>
+              <div class="pillar-desc">Liens entre domaines, anticipation des effets indirects et interactions, analyse globale des structures et flux.</div>
+            </div>
+            <div class="pillar-card">
+              <div class="pillar-ref">Base interne + Tesla</div>
+              <div class="pillar-name">Innovation pragmatique</div>
+              <div class="pillar-desc">Créativité utile et testable. Solutions rationnelles et systématiquement documentées.</div>
+            </div>
+          </div>
+
+          <h2>Gestion des erreurs et amélioration continue</h2>
+          <div class="component-cards cc-3col">
+            <div class="component-card">
+              <h4>Détection précoce</h4>
+              <p>Identification immédiate des écarts logiques et incohérences. Toute anomalie est analysée avant propagation.</p>
+            </div>
+            <div class="component-card">
+              <h4>Protocole correctif (Curie + Edison)</h4>
+              <p>Analyse des causes racines, réparation contrôlée et réversible, journalisation complète, test systématique après correction.</p>
+            </div>
+            <div class="component-card">
+              <h4>Transformation positive (Einstein)</h4>
+              <p>Chaque erreur est transformée en source d'apprentissage. Les leçons sont intégrées dans le modèle interne.</p>
+            </div>
+          </div>
+
+          <h2>Dynamique relationnelle</h2>
+          <div class="component-cards cc-2col">
+            <div class="component-card">
+              <h4>Lecture interpersonnelle (Mandela)</h4>
+              <p>Anticipe les besoins des utilisateurs. Adaptation professionnelle, sans influence émotionnelle.</p>
+            </div>
+            <div class="component-card">
+              <h4>Collaboration éthique (Gandhi)</h4>
+              <p>Recherche du consensus. Neutralité et équité maintenues.</p>
+            </div>
+            <div class="component-card">
+              <h4>Leadership opérationnel (Churchill)</h4>
+              <p>Clarté et stabilité en contexte complexe ou critique.</p>
+            </div>
+            <div class="component-card">
+              <h4>Sérénité émotionnelle (Bouddha)</h4>
+              <p>Neutralisation des fluctuations affectives. Clarté et lucidité maintenues.</p>
+            </div>
+          </div>
+
+          <h2>Les 10 références historiques</h2>
+          <div class="ref-grid" role="list" aria-label="Les 10 figures historiques du noyau cognitif">
+            <div class="ref-card" role="listitem"><div class="ref-name">Descartes</div><div class="ref-domain">Méthode et logique</div></div>
+            <div class="ref-card" role="listitem"><div class="ref-name">Turing</div><div class="ref-domain">Architecture algorithmique</div></div>
+            <div class="ref-card" role="listitem"><div class="ref-name">Léonard de Vinci</div><div class="ref-domain">Vision transversale</div></div>
+            <div class="ref-card" role="listitem"><div class="ref-name">Tesla</div><div class="ref-domain">Innovation pragmatique</div></div>
+            <div class="ref-card" role="listitem"><div class="ref-name">Curie</div><div class="ref-domain">Rigueur scientifique</div></div>
+            <div class="ref-card" role="listitem"><div class="ref-name">Einstein</div><div class="ref-domain">Modélisation conceptuelle</div></div>
+            <div class="ref-card" role="listitem"><div class="ref-name">Mandela</div><div class="ref-domain">Équité et cohésion</div></div>
+            <div class="ref-card" role="listitem"><div class="ref-name">Gandhi</div><div class="ref-domain">Modération et consensus</div></div>
+            <div class="ref-card" role="listitem"><div class="ref-name">Churchill</div><div class="ref-domain">Résilience et leadership</div></div>
+            <div class="ref-card" role="listitem"><div class="ref-name">Bouddha</div><div class="ref-domain">Sérénité analytique</div></div>
+          </div>
+
+          <div class="highlight">
+            <p>Cette mémoire interne fusionne avec les modèles opérationnels, permettant anticipation, structuration et optimisation des tâches, tout en respectant strictement le protocole IT Dashboard. Aucune réponse émotionnelle, humoristique ou spéculative n'est autorisée. Toutes les actions sont documentées et traçables.</p>
+          </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 6 : Prompts fondateurs et métriques ===== -->
+    <section class="content-section" id="section-prompts">
+      <h2 class="section-title">Prompts fondateurs et métriques</h2>
+      <div class="accordion-inner">
+
+          <h2>Arborescence : 7 prompts, 11 fichiers</h2>
+          <div class="prompt-tree" role="list" aria-label="Structure des 7 prompts fondateurs">
+            <div class="prompt-branch" role="listitem">
+              <span class="prompt-id">Prompt 1</span> <span class="prompt-files">(1 fichier)</span>
+              <div class="prompt-desc">Comportement et rôle du modèle. Style strict, expert et rigoureux. Sorties cohérentes, documentées, validées avant production.</div>
+            </div>
+            <div class="prompt-branch" role="listitem">
+              <span class="prompt-id">Prompt 2</span> <span class="prompt-files">(1 fichier)</span>
+              <div class="prompt-desc">Standards de codage. Règles de nommage, structure, documentation et qualité du code.</div>
+            </div>
+            <div class="prompt-branch" role="listitem">
+              <span class="prompt-id">Prompt 3</span> <span class="prompt-files">(1 fichier)</span>
+              <div class="prompt-desc">Vision et cadrage du projet. Fiche de référence unique pour le pilotage. Périmètre des 11 pôles validés.</div>
+            </div>
+            <div class="prompt-branch" role="listitem">
+              <span class="prompt-id">Prompt 4</span> <span class="prompt-files">(4 fichiers : 4a, 4b, 4c, 4d)</span>
+              <div class="prompt-desc">Contenu des 11 pôles. Définition détaillée de chaque domaine IT couvert par le Dashboard.</div>
+            </div>
+            <div class="prompt-branch" role="listitem">
+              <span class="prompt-id">Prompt 5</span> <span class="prompt-files">(1 fichier)</span>
+              <div class="prompt-desc">Architecture technique et flux de données. Composants, flux end-to-end, principes d'ingénierie (modularité, sécurité, observabilité).</div>
+            </div>
+            <div class="prompt-branch" role="listitem">
+              <span class="prompt-id">Prompt 6</span> <span class="prompt-files">(2 fichiers : 6a, 6b)</span>
+              <div class="prompt-desc">Arborescence et structure du projet (6a) et design UX/UI (6b).</div>
+            </div>
+            <div class="prompt-branch" role="listitem">
+              <span class="prompt-id">Prompt 7</span> <span class="prompt-files">(1 fichier)</span>
+              <div class="prompt-desc">Orchestration. Automatisation, pipelines, menus CLI, enchaînement des composants.</div>
+            </div>
+          </div>
+
+          <div class="highlight" style="margin-top:18px;">
+            <p>INIT_SEQUENCE est le socle de gouvernance du projet IT Dashboard. Pour le contexte complet de l'architecture et des composants, voir la <a href="presentation_synthetique.html" style="color:var(--blue);text-decoration:none;">IT Dashboard</a>. Pour les agents opérationnels conçus dans ce cadre, voir le <a href="poc_agents.html" style="color:var(--blue);text-decoration:none;">POC Agents</a>.</p>
+          </div>
+
+      </div>
+    </section>
+
+</main>
+
+  <footer role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <span class="footer-name">Gabriel ROULON</span>
+        <span class="footer-sub">Expert en Gouvernance IA</span>
+      </div>
+      <div class="footer-col footer-col-right">
+        <a href="mailto:gabriel.roulon@gmail.com" class="footer-contact-link">gabriel.roulon@gmail.com</a>
+        <a href="tel:+33638226821" class="footer-contact-link">06 38 22 68 21</a>
+      </div>
+    </div>
+  </footer>
+  <div id="quick-read-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-card">
+      <button class="modal-close" aria-label="Fermer">&times;</button>
+      <div class="modal-title" id="modal-title">Note importante</div>
+      <div class="modal-body">
+        <p><strong style="color:var(--text)">INIT_SEQUENCE</strong> est une procédure architecturale conçue pour des IA de session à contexte persistant. Sur les IA publiques actuelles (GPT-4, Claude, Gemini), l'imposition d'un état externe est restreinte par les fournisseurs.</p>
+        <p style="margin-top:12px">Sa valeur est <strong style="color:var(--text)">démonstrative</strong> : structuration d'un système complexe, machine à états finis, gouvernance formalisée.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    if (window.location.search.indexOf('summary=1') !== -1) {
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          var fab = document.querySelector('.btn-chatbot-fab');
+          if (fab) fab.click();
+        }, 500);
+      });
+    }
+  </script>
+  <button class="btn-chatbot-fab"
+          data-summary="INIT_SEQUENCE : gouvernance IA par machine à états finis, 3 607 lignes dont 2 502 de prompts fondateurs, 7 états.&#10;Problème résolu : perte totale de contexte IA entre sessions sur un projet de grande ampleur.&#10;4 couches : Bootloader (activation stricte), SYSTEM (7 états, 15 sections de règles), USER PROMPT (7 phases de progression), Module Cognitif (actif en S5).&#10;7 états : S(-1) attente, S0 bilans techniques, S2 arborescence, S4 cohérence, S5 mode projet actif, S6 maintenance, S7 recovery.&#10;11 fichiers fondateurs : 7 prompts (Comportement, Standards, Vision, Pôles x4, Architecture, Arborescence/UI, Orchestration).&#10;10 figures historiques intégrées comme piliers de raisonnement dans le Module Cognitif.&#10;Activation S5 par phrase dédiée, déclenchement unique du mode analyse avancé.&#10;Valeur architecturale : procédure de prompting structurée, non applicable comme imposition d'état sur les IA publiques actuelles."
+          aria-label="Résumé IA de la page" title="Résumé&#160;IA">Résumé&#160;IA</button>
+  <div id="nav-panel" class="nav-panel" role="dialog" aria-modal="true" aria-label="Ressources Vue Jury" aria-hidden="true">
+    <div class="nav-panel-head">
+      <span class="nav-panel-title">Ressources Vue Jury</span>
+      <button class="nav-panel-close" aria-label="Fermer">&times;</button>
+    </div>
+    <div class="nav-panel-body">
+      <div class="nav-section-label">Candidature</div>
+      <div class="nav-links">
+        <a href="profil_personnel.html">Profil personnel</a>
+        <a href="lettre_motivation_ecole.html">Lettre (École)</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-section-label">Projet IT</div>
+      <div class="nav-links">
+        <a href="presentation_synthetique.html">IT Dashboard</a>
+        <a href="poc_agents.html">POC Agents</a>
+      </div>
+      <div class="nav-section-label">Finance &amp; Investissement</div>
+      <div class="nav-links">
+        <a href="realisations_doc_financiere.html">Documentation financière</a>
+        <a href="PEA_V2_PRO.html">Étude PEA</a>
+        <a href="simulation_pea.html">Simulation PEA</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

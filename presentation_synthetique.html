@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>IT Dashboard</title>
+  <meta name="description" content="IT Dashboard du projet : architecture, pipeline ETL, gouvernance IA et standards. Gabriel ROULON.">
+  <meta name="author" content="Gabriel ROULON">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="stylesheet" href="common.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "IT Dashboard",
+    "description": "Architecture, pipeline ETL, gouvernance IA et standards du projet IT Dashboard.",
+    "author": { "@type": "Person", "name": "Gabriel ROULON" },
+    "inLanguage": "fr-FR",
+    "dateModified": "2026-03-11"
+  }
+  </script>
+  <style>
+    :root {
+      --bg:             #0f172a;
+      --bg-secondary:   #1e293b;
+      --bg-card:        #263347;
+      --border:         #334155;
+      --text:           #f1f5f9;
+      --text-secondary: #94a3b8;
+      --blue:           #38bdf8;
+      --blue-dim:       rgba(56, 189, 248, 0.08);
+    }
+    header { background: rgba(15, 23, 42, 0.97); }
+    .header-left .breadcrumb { padding: 0; margin: 0; border-bottom: none; font-size: 0.78em; }
+    .chatbot-footer { border-top: 1px solid var(--border); padding: 10px 16px; background: var(--bg-card); display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .chatbot-footer-label { font-size: 0.72em; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin-bottom: 0; }
+    .chatbot-footer-links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chatbot-footer-links a { font-size: 0.82em; color: var(--blue); text-decoration: none; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 4px; padding: 4px 10px; transition: background 0.15s, border-color 0.15s; }
+    .chatbot-footer-links a:hover { background: var(--bg-card); border-color: var(--blue); }
+    .content-section { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
+    h2.section-title { background: var(--bg-secondary); color: var(--text); border-left: 3px solid var(--blue); padding: 14px 20px; font-size: 1em; font-weight: 600; margin: 0; }
+    .explore-box {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--border);
+      border-radius: 0 8px 8px 0;
+      padding: 20px 24px;
+      margin: 20px 0;
+    }
+    .explore-box h3 { color: var(--text); font-size: 1em; margin-bottom: 8px; }
+    .explore-box p { font-size: 0.9em; color: var(--text-secondary); margin-bottom: 10px; }
+    .explore-box a { font-weight: 600; font-size: 0.95em; color: var(--text-secondary); }
+    .explore-box a:hover { color: var(--text); }
+    .signature { text-align: right; margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--border); }
+    .sig-name { font-weight: 700; color: var(--text); }
+    .sig-first { color: var(--text-secondary); margin-left: 6px; }
+    .accordion-inner p { color: var(--text-secondary); }
+    .accordion-inner h2 { font-size: 1.1em; }
+    .metrics-grid { gap: 10px; margin: 14px 0; }
+    .metric-card { padding: 10px 12px; }
+    .metric-card .metric-value { font-size: 1.4em; margin-bottom: 3px; }
+    .metric-card .metric-label { font-size: 0.78em; }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+  <!-- Chatbot panel -->
+  <div id="chatbot-panel" class="chatbot-panel" role="complementary" aria-label="Résumé IA de la page">
+    <div class="chatbot-head">
+      <div class="chatbot-title-group">
+        <span class="chatbot-title">Résumé IA</span>
+        <span class="chatbot-dot" aria-hidden="true"></span>
+      </div>
+      <button class="chatbot-close-btn" aria-label="Fermer">&times;</button>
+    </div>
+    <div class="chatbot-body">
+      <div class="chatbot-think" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="chatbot-msg" aria-live="polite" aria-label="Résumé de la page"></div>
+      <div class="chatbot-status" aria-live="polite"></div>
+    </div>
+    <div class="chatbot-footer">
+      <div class="chatbot-footer-label">Autres ressources Vue Jury</div>
+      <button class="chatbot-nav-btn" aria-label="Accéder aux autres ressources Vue Jury">Cliquez ici</button>
+    </div>
+  </div>
+
+  <header role="banner">
+    <div class="header-left">
+      <nav class="breadcrumb" id="site-breadcrumb" data-page="synthese" aria-label="Fil d'Ariane">
+        <a href="index.html">Présentation</a>
+        <span class="breadcrumb-sep" aria-hidden="true">&#8250;</span>
+        <a href="mes_projets.html">Mes projets</a>
+        <span class="breadcrumb-sep" aria-hidden="true">&#8250;</span>
+        <span class="breadcrumb-current" aria-current="page">IT Dashboard</span>
+      </nav>
+    </div>
+    <div class="header-center">IT Dashboard</div>
+    <div class="header-right"></div>
+  </header>
+
+  <main id="main-content" role="main">
+
+    <h1 class="sr-only">IT Dashboard</h1>
+
+    <!-- Introduction -->
+    <section class="content-section" id="section-intro">
+      <h2 class="section-title">Introduction</h2>
+      <div class="accordion-inner">
+        <p id="intro-desc" class="sr-only">Contexte, motivations et approche du projet IT Dashboard.</p>
+        <div class="highlight">
+          <p><strong>Parti de zéro en programmation</strong>, j'ai conçu un tableau de bord IT de surveillance d'alertes multi-pôles, avec pipeline ETL, intégration Vault, agents opérationnels et système de gouvernance IA. Sans formation préalable en développement logiciel, en architecture logicielle ni en intelligence artificielle.</p>
+        </div>
+        <p>Réalisé exclusivement à l'aide d'IA publiques (ChatGPT, Copilot, puis Cursor), le projet a généré ses propres solutions aux blocages rencontrés : <strong>INIT_SEQUENCE</strong> pour la perte de contexte, les <strong>31 standards Dashboard_IT</strong> pour la cohérence des sessions, une architecture modulaire pour la maintenabilité. Développé en trois mois.</p>
+      </div>
+    </section>
+
+    <!-- Architecture et fonctionnalités -->
+    <section class="content-section" id="section-archi">
+      <h2 class="section-title">Architecture et fonctionnalités</h2>
+      <div class="accordion-inner">
+        <p id="archi-desc" class="sr-only">Composants backend et démonstrations fonctionnelles du projet.</p>
+        <p>Pipeline complet validé sur 10 pôles spécialisés : collecte parallèle, normalisation ETL, scoring de sévérité, corrélation multi-pôles. Frontend React exposant alertes et corrélations en temps réel.</p>
+
+        <h2>Composants backend</h2>
+        <div class="cards-grid" role="list">
+          <div class="card" role="listitem">
+            <h4>Collecteurs</h4>
+            <p>10 scripts Python collectent les événements par domaine IT. Chargement automatique des credentials Vault, génération d'événements JSON, logging standardisé et propagation de Corrélation IDs.</p>
+          </div>
+          <div class="card" role="listitem">
+            <h4>Pipeline ETL</h4>
+            <p>Normalisation des schémas JSON, déduplication par hash SHA256, enrichissement des métadonnées, archivage automatique J-1 et rétention de 90 jours.</p>
+          </div>
+          <div class="card" role="listitem">
+            <h4>Rules Engine</h4>
+            <p>Transformation des événements en alertes avec scoring de sévérité : critique (&#x2265;0,7), moyen (0,4-0,69), faible (&lt;0,4).</p>
+          </div>
+          <div class="card" role="listitem">
+            <h4>Corrélation Engine</h4>
+            <p>Corrélation des alertes multi-pôles et calcul d'un score de risque global. Détection de menaces complexes.</p>
+          </div>
+        </div>
+
+        <h2 style="margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border);">Démonstrations fonctionnelles</h2>
+        <div class="cards-grid" role="list">
+          <div class="card" role="listitem">
+            <h4>Intégration Vault</h4>
+            <p>Génération automatique de 10 fichiers AppRole JSON. Cycle complet en 15 étapes avec rotation des logs et génération de rapports.</p>
+          </div>
+          <div class="card" role="listitem">
+            <h4>Pipeline backend</h4>
+            <p>Flux complet validé : collecte parallèle, ETL, Rules Engine et Corrélation Engine. Traçabilité complète avec corrélation IDs.</p>
+          </div>
+          <div class="card" role="listitem">
+            <h4>Synchronisation Backend-Frontend</h4>
+            <p>Copie automatique des données vers Frontend/public et génération de <code>artifacts.json</code> et <code>config.json</code>. Sans intervention manuelle.</p>
+          </div>
+          <div class="card" role="listitem">
+            <h4>Remontée des alertes</h4>
+            <p>Composants React chargent les fichiers JSONL. Affichage dans GlobalView, PoleView, SeverityHeatmap, TimelineView et CorrélationsChart. API FastAPI disponible.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INIT_SEQUENCE -->
+    <section class="content-section" id="section-init">
+      <h2 class="section-title">INIT_SEQUENCE</h2>
+      <div class="accordion-inner">
+        <p id="init-desc" class="sr-only">INIT_SEQUENCE, système de gouvernance IA par machine à états finis.</p>
+        <p>Chaque nouvelle conversation avec une IA publique signifiait une perte totale du contexte. Face à l'impossibilité d'envoyer l'intégralité du projet à chaque session, j'ai conçu un système de gouvernance IA original.</p>
+        <p><strong>INIT_SEQUENCE</strong> est une machine à états finis (7 états, 11 fichiers fondateurs, 3 607 lignes dont 2 502 lignes de prompts fondateurs) qui reconstitue le contexte de travail par une séquence de prompts structurée, de façon reproductible et traçable à chaque session.</p>
+        <div class="explore-box">
+          <h3>Explorer INIT_SEQUENCE</h3>
+          <p>Bootloader, machine à états, module cognitif, prompts fondateurs : la documentation complète du système de gouvernance.</p>
+          <a href="init_sequence.html">Découvrir INIT_SEQUENCE en détail &#8594;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Standards et métriques -->
+    <section class="content-section" id="section-standards">
+      <h2 class="section-title">Standards et métriques</h2>
+      <div class="accordion-inner">
+        <p id="standards-desc" class="sr-only">Framework de gouvernance 31 standards en 8 catégories, métriques quantitatives.</p>
+        <p>31 standards en 8 catégories, chacun appliqué et tenu sur l'ensemble du projet, soit environ 50 000 lignes de documentation structurée, réutilisables sur tout projet similaire.</p>
+        <div class="metrics-grid" role="list" aria-label="Métriques du projet">
+          <div class="metric-card" role="listitem">
+            <span class="metric-value">95</span>
+            <span class="metric-label">Scripts PowerShell</span>
+          </div>
+          <div class="metric-card" role="listitem">
+            <span class="metric-value">79</span>
+            <span class="metric-label">Fichiers Python</span>
+          </div>
+          <div class="metric-card" role="listitem">
+            <span class="metric-value">92</span>
+            <span class="metric-label">Composants React/TS</span>
+          </div>
+          <div class="metric-card" role="listitem">
+            <span class="metric-value">11</span>
+            <span class="metric-label">Fichiers fondateurs</span>
+          </div>
+          <div class="metric-card" role="listitem">
+            <span class="metric-value">4</span>
+            <span class="metric-label">Documents opérationnels</span>
+          </div>
+          <div class="metric-card" role="listitem">
+            <span class="metric-value">31</span>
+            <span class="metric-label">Standards Dashboard_IT</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Conclusion -->
+    <section class="content-section" id="section-conclusion">
+      <h2 class="section-title">Conclusion</h2>
+      <div class="accordion-inner">
+        <p>Ce projet illustre une capacité à apprendre seul, à structurer des solutions face à des blocages réels, et à maintenir des standards professionnels sans cadre académique. Chaque problème rencontré a généré une solution architecturale : INIT_SEQUENCE, les 31 standards, le pipeline ETL, les agents opérationnels.</p>
+        <p>Mon objectif est de transformer cette pratique empirique en compétence structurée dans le cadre d'une formation supérieure en Intelligence Artificielle et d'une alternance en entreprise.</p>
+        <div class="signature">
+          <span class="sig-name">ROULON</span><span class="sig-first">Gabriel</span>
+        </div>
+      </div>
+    </section>
+
+</main>
+
+  <footer role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <span class="footer-name">Gabriel ROULON</span>
+        <span class="footer-sub">Expert en Gouvernance IA</span>
+      </div>
+      <div class="footer-col footer-col-right">
+        <a href="mailto:gabriel.roulon@gmail.com" class="footer-contact-link">gabriel.roulon@gmail.com</a>
+        <a href="tel:+33638226821" class="footer-contact-link">06 38 22 68 21</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    if (window.location.search.indexOf('summary=1') !== -1) {
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          var fab = document.querySelector('.btn-chatbot-fab');
+          if (fab) fab.click();
+        }, 500);
+      });
+    }
+  </script>
+  <script src="common.js" defer></script>
+  <button class="btn-chatbot-fab"
+          data-summary="IT Dashboard : surveillance multi-pôles, développé en 3 mois parti de zéro en programmation.&#10;Contexte : reconversion IT, formation TSSR, IA comme outil de montée en compétences.&#10;Architecture : 10 pôles surveillés (Sécurité, Incidents, Performances, Applications, Services, Réseaux, Systèmes, Cloud, Données, Innovation).&#10;Pipeline ETL : collecte parallèle, hash SHA256, Rules Engine, corrélation multi-pôles, alertes structurées JSON.&#10;Agents POC v2.1.0 : Cerveau (supervision), Chatbot (FAQ frontend), Collecteurs (10 scripts Python).&#10;Démonstrations fonctionnelles : intégration Vault, pipeline backend complet, synchronisation Backend-Frontend, remontée des alertes React.&#10;Standards : 31 standards sur 8 catégories. Technologies : FastAPI, React/TypeScript, Vault, Bridgepoint.&#10;Métriques : 95 scripts PowerShell, 79 fichiers Python, 92 composants React/TypeScript.&#10;Gouvernance IA : INIT_SEQUENCE, machine à états finis, 3 607 lignes dont 2 502 de prompts fondateurs, 7 états, reconstitue le contexte de travail par une séquence de prompts structurée.&#10;Conclusion : capacité à apprendre seul, structurer des solutions, maintenir des standards professionnels. Objectif : transformer cette pratique empirique en compétence structurée."
+          aria-label="Résumé IA de la page" title="Résumé&#160;IA">Résumé&#160;IA</button>
+  <div id="nav-panel" class="nav-panel" role="dialog" aria-modal="true" aria-label="Ressources Vue Jury" aria-hidden="true">
+    <div class="nav-panel-head">
+      <span class="nav-panel-title">Ressources Vue Jury</span>
+      <button class="nav-panel-close" aria-label="Fermer">&times;</button>
+    </div>
+    <div class="nav-panel-body">
+      <div class="nav-section-label">Candidature</div>
+      <div class="nav-links">
+        <a href="profil_personnel.html">Profil personnel</a>
+        <a href="lettre_motivation_ecole.html">Lettre (École)</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-section-label">Projet IT</div>
+      <div class="nav-links">
+        <a href="init_sequence.html">INIT_SEQUENCE</a>
+        <a href="poc_agents.html">POC Agents</a>
+      </div>
+      <div class="nav-section-label">Finance &amp; Investissement</div>
+      <div class="nav-links">
+        <a href="realisations_doc_financiere.html">Documentation financière</a>
+        <a href="PEA_V2_PRO.html">Étude PEA</a>
+        <a href="simulation_pea.html">Simulation PEA</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

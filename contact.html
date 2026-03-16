@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Contact Gabriel ROULON</title>
+  <meta name="description" content="Coordonnées de Gabriel ROULON : email gabriel.roulon@gmail.com, téléphone 06 38 22 68 21.">
+  <meta name="author" content="Gabriel ROULON">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="stylesheet" href="common.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact Gabriel ROULON",
+    "description": "Coordonnées de Gabriel ROULON, candidat Bachelor Intelligence Artificielle & Business, Eugenia School, alternance 2026.",
+    "author": {
+      "@type": "Person",
+      "name": "Gabriel ROULON",
+      "email": "gabriel.roulon@gmail.com",
+      "telephone": "+33638226821"
+    },
+    "inLanguage": "fr-FR",
+    "dateModified": "2026-03-11"
+  }
+  </script>
+  <style>
+    :root {
+      --bg:             #0f172a;
+      --bg-secondary:   #1e293b;
+      --bg-card:        #263347;
+      --border:         #334155;
+      --text:           #f1f5f9;
+      --text-secondary: #94a3b8;
+      --blue:           #38bdf8;
+      --blue-dim:       rgba(56, 189, 248, 0.08);
+    }
+    header { background: rgba(15, 23, 42, 0.97); }
+    .header-left .breadcrumb { padding: 0; margin: 0; border-bottom: none; font-size: 0.78em; }
+
+    .contact-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.18s ease;
+    }
+    .contact-row:last-child { border-bottom: none; }
+    .contact-row:hover { background: var(--bg-card); }
+
+    .contact-row-name {
+      background: var(--bg-card);
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+    .contact-name-full {
+      font-size: 1.2em;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.01em;
+    }
+    .contact-name-role {
+      font-size: 0.82em;
+      color: var(--text-secondary);
+    }
+
+    .contact-label {
+      font-size: 0.74em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      min-width: 82px;
+      flex-shrink: 0;
+    }
+    .contact-label-email { color: var(--blue); }
+    .contact-label-tel   { color: #7dd3fc; }
+
+    .contact-value {
+      font-size: 0.97em;
+      color: var(--text);
+      font-weight: 500;
+      flex: 1;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    a.contact-value:hover { color: var(--text-secondary); }
+
+    .copy-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 0.77em;
+      padding: 5px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s, border-color 0.18s;
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-family: var(--font);
+    }
+    .copy-btn:hover {
+      background: var(--bg-card);
+      color: var(--text);
+      border-color: var(--text-secondary);
+    }
+    .copy-btn.copied {
+      border-color: var(--text-secondary);
+      color: var(--text);
+    }
+
+    .quick-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+    .quick-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.88em;
+      color: var(--text-secondary);
+      background: var(--bg-secondary);
+      transition: background 0.18s, color 0.18s, border-color 0.18s, transform 0.18s;
+    }
+    .quick-link:hover {
+      background: var(--bg-card);
+      color: var(--text);
+      border-color: var(--text-secondary);
+      transform: translateY(-1px);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(60px);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 22px;
+      font-size: 0.84em;
+      color: var(--text);
+      z-index: 600;
+      opacity: 0;
+      transition: transform 0.22s ease, opacity 0.22s ease;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 600px) {
+      .contact-row { flex-wrap: wrap; gap: 10px; padding: 16px 18px; }
+      .contact-label { min-width: 60px; }
+      .quick-links { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+  <header role="banner">
+    <div class="header-left">
+      <nav class="breadcrumb" id="site-breadcrumb" data-page="contact" aria-label="Fil d'Ariane">
+        <a href="index.html">Présentation</a>
+        <span class="breadcrumb-sep" aria-hidden="true">&#8250;</span>
+        <a href="vue_rh.html">Vue RH / Recruteur</a>
+        <span class="breadcrumb-sep" aria-hidden="true">&#8250;</span>
+        <span class="breadcrumb-current" aria-current="page">Contact</span>
+      </nav>
+    </div>
+    <div class="header-center">Contact</div>
+    <div class="header-right"></div>
+  </header>
+
+  <main id="main-content" role="main">
+
+    <h1 class="sr-only">Contact, Gabriel ROULON</h1>
+
+    <div class="contact-card" role="region" aria-label="Informations de contact">
+
+      <div class="contact-row contact-row-name">
+        <div class="contact-name-full">ROULON Gabriel</div>
+        <div class="contact-name-role">Candidature Bachelor Intelligence Artificielle &amp; Business, Eugenia School, alternance 2026</div>
+      </div>
+
+      <div class="contact-row">
+        <span class="contact-label contact-label-email">Email</span>
+        <a class="contact-value" href="mailto:gabriel.roulon@gmail.com" aria-label="Envoyer un email à gabriel.roulon@gmail.com">
+          gabriel.roulon@gmail.com
+        </a>
+        <button class="copy-btn" data-copy="gabriel.roulon@gmail.com" aria-label="Copier l'adresse email">
+          Copier
+        </button>
+      </div>
+
+      <div class="contact-row">
+        <span class="contact-label contact-label-tel">Téléphone</span>
+        <a class="contact-value" href="tel:+33638226821" aria-label="Appeler le 06 38 22 68 21">
+          06 38 22 68 21
+        </a>
+        <button class="copy-btn" data-copy="0638226821" aria-label="Copier le numéro de téléphone">
+          Copier
+        </button>
+      </div>
+
+    </div>
+
+    <div class="quick-links" role="list" aria-label="Actions rapides">
+      <a href="mailto:gabriel.roulon@gmail.com" class="quick-link" role="listitem" aria-label="Ouvrir le client email">
+        &#x2709; Envoyer un email
+      </a>
+      <a href="tel:+33638226821" class="quick-link" role="listitem" aria-label="Appeler le 06 38 22 68 21">
+        &#x260E; Appeler
+      </a>
+    </div>
+
+</main>
+
+  <div id="copy-toast" class="toast" role="status" aria-live="polite"></div>
+
+  <footer role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <span class="footer-name">Gabriel ROULON</span>
+        <span class="footer-sub">Expert en Gouvernance IA</span>
+      </div>
+      <div class="footer-col footer-col-right">
+        <a href="mailto:gabriel.roulon@gmail.com" class="footer-contact-link">gabriel.roulon@gmail.com</a>
+        <a href="tel:+33638226821" class="footer-contact-link">06 38 22 68 21</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="common.js" defer></script>
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var text = btn.getAttribute('data-copy');
+        var toast = document.getElementById('copy-toast');
+        var origLabel = btn.textContent.trim();
+
+        function showToast(msg) {
+          toast.textContent = msg;
+          toast.classList.add('show');
+          setTimeout(function () { toast.classList.remove('show'); }, 1800);
+        }
+
+        function onCopied() {
+          btn.textContent = 'Copié !';
+          btn.classList.add('copied');
+          showToast(text + ' copié');
+          setTimeout(function () {
+            btn.textContent = origLabel;
+            btn.classList.remove('copied');
+          }, 1600);
+        }
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(onCopied).catch(function () {
+            showToast('Copie indisponible');
+          });
+        } else {
+          var el = document.createElement('textarea');
+          el.value = text;
+          el.style.cssText = 'position:absolute;left:-9999px;top:0';
+          document.body.appendChild(el);
+          el.select();
+          try { document.execCommand('copy'); onCopied(); }
+          catch (e) { showToast('Copie indisponible'); }
+          document.body.removeChild(el);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Vue RH, Gabriel ROULON</title>
+  <meta name="description" content="Vue RH / Recruteur : profil, CV, lettre de motivation et contact, Gabriel ROULON.">
+  <meta name="author" content="Gabriel ROULON">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="stylesheet" href="common.css">
+  <style>
+    :root {
+      --bg:             #0f172a;
+      --bg-secondary:   #1e293b;
+      --bg-card:        #263347;
+      --border:         #334155;
+      --text:           #f1f5f9;
+      --text-secondary: #94a3b8;
+      --blue:           #38bdf8;
+      --blue-dim:       rgba(56, 189, 248, 0.08);
+    }
+    header { background: rgba(15, 23, 42, 0.97); }
+    .header-left .breadcrumb { padding: 0; margin: 0; border-bottom: none; font-size: 0.78em; }
+    .vue-list { display: flex; flex-direction: column; gap: 10px; max-width: 600px; margin: 0 auto; }
+    .vue-list-group { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .vue-list-group-label {
+      padding: 9px 18px;
+      font-size: 0.68em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-secondary);
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+    }
+    .vue-list-item { display: flex; align-items: stretch; border-bottom: 1px solid var(--border); }
+    .vue-list-item:last-child { border-bottom: none; }
+    .vue-list-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 17px 18px;
+      text-decoration: none;
+      color: var(--text);
+      transition: background 0.2s ease;
+      min-width: 0;
+    }
+    .vue-list-main:hover {
+      background: var(--bg-secondary);
+      box-shadow: inset 0 0 0 1px rgba(56, 189, 248, 0.12);
+    }
+    .vue-list-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: var(--border);
+    }
+    .vue-list-title { flex: 1; font-size: 0.95em; font-weight: 500; }
+    .vue-list-time { font-size: 0.78em; color: var(--text-secondary); white-space: nowrap; flex-shrink: 0; }
+    /* Bouton Résumé IA */
+    .vue-list-summary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 128px;
+      padding: 0 16px;
+      font-size: 0.78em;
+      color: var(--blue);
+      text-decoration: none;
+      border-left: 1px solid var(--border);
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background 0.18s, color 0.18s;
+    }
+    .vue-list-summary:hover { background: var(--blue-dim); color: var(--text); }
+    .vue-list-main-contact { justify-content: center; }
+    .vue-list-main-contact .vue-list-title { flex: 0; }
+    main { padding-bottom: calc(var(--header-h) + 12px); }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+  <header role="banner">
+    <div class="header-left">
+      <nav class="breadcrumb" id="site-breadcrumb" data-page="vue-rh" aria-label="Fil d'Ariane">
+        <a href="index.html">Présentation</a>
+        <span class="breadcrumb-sep" aria-hidden="true">&#8250;</span>
+        <span class="breadcrumb-current" aria-current="page">Vue RH / Recruteur</span>
+      </nav>
+    </div>
+    <div class="header-center">Vue RH / Recruteur</div>
+    <div class="header-right"><a href="mes_projets.html" class="btn-quick-read btn-important">Mes projets</a></div>
+  </header>
+
+  <main id="main-content" role="main">
+    <h1 class="sr-only">Vue RH / Recruteur, Gabriel ROULON</h1>
+
+    <div class="vue-list" role="list" aria-label="Ressources RH / Recruteur">
+
+      <div class="vue-list-group" role="listitem">
+        <div class="vue-list-group-label">RH / Recruteur</div>
+
+        <div class="vue-list-item">
+          <a href="profil_personnel.html" class="vue-list-main" aria-label="Profil personnel, 4 minutes 30 de lecture">
+            <span class="vue-list-dot" aria-hidden="true"></span>
+            <span class="vue-list-title">Profil personnel</span>
+            <span class="vue-list-time">4 min 30</span>
+          </a>
+          <a href="profil_personnel.html?summary=1" class="vue-list-summary" aria-label="Résumé IA du profil personnel, 1 minute">Résumé IA · 1 min</a>
+        </div>
+
+        <div class="vue-list-item">
+          <a href="cv.html" class="vue-list-main" aria-label="Curriculum Vitae, 1 minute 30 de lecture">
+            <span class="vue-list-dot" aria-hidden="true"></span>
+            <span class="vue-list-title">Curriculum Vitae</span>
+            <span class="vue-list-time">1 min 30</span>
+          </a>
+          <a href="cv.html?summary=1" class="vue-list-summary" aria-label="Résumé IA du CV, 30 secondes">Résumé IA · 30 sec</a>
+        </div>
+
+        <div class="vue-list-item">
+          <a href="lettre_motivation_entreprise.html" class="vue-list-main" aria-label="Lettre de motivation, 1 minute 30 de lecture">
+            <span class="vue-list-dot" aria-hidden="true"></span>
+            <span class="vue-list-title">Lettre de motivation (Entreprise)</span>
+            <span class="vue-list-time">1 min 30</span>
+          </a>
+          <a href="lettre_motivation_entreprise.html?summary=1" class="vue-list-summary" aria-label="Résumé IA de la lettre de motivation, 20 secondes">Résumé IA · 20 sec</a>
+        </div>
+
+        <div class="vue-list-item">
+          <a href="contact.html" class="vue-list-main vue-list-main-contact" aria-label="Contact">
+            <span class="vue-list-title">Contact</span>
+          </a>
+        </div>
+
+      </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <footer role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <span class="footer-name">Gabriel ROULON</span>
+        <span class="footer-sub">Bachelor IA &amp; Business, Eugenia School · Alternance 2026</span>
+      </div>
+      <nav class="footer-nav" aria-label="Ressources Vue RH">
+        <a href="profil_personnel.html">Profil personnel</a>
+        <span class="footer-sep" aria-hidden="true">·</span>
+        <a href="cv.html">CV</a>
+        <span class="footer-sep" aria-hidden="true">·</span>
+        <a href="lettre_motivation_entreprise.html">Lettre</a>
+        <span class="footer-sep" aria-hidden="true">·</span>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>sessionStorage.setItem('lastVue', 'rh');</script>
+  <script src="common.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,2028 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>PEA v2.0, étude complète</title>
+  <meta name="description" content="Étude complète du Plan d'Épargne en Actions v2.0 : cadre réglementaire, ETF éligibles 2026, 3 profils de portefeuille, simulations et analyse des risques.">
+  <meta name="author" content="Gabriel ROULON">
+  <link rel="stylesheet" href="common.css">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "PEA v2.0, étude complète",
+    "author": { "@type": "Person", "name": "Gabriel ROULON" },
+    "inLanguage": "fr-FR",
+    "dateModified": "2026-01-30"
+  }
+  </script>
+  <style>
+    :root {
+      --bg:             #0f172a;
+      --bg-secondary:   #1e293b;
+      --bg-card:        #263347;
+      --border:         #334155;
+      --text:           #f1f5f9;
+      --text-secondary: #94a3b8;
+      --blue:           #38bdf8;
+      --blue-dim:       rgba(56, 189, 248, 0.08);
+    }
+    header { background: rgba(15, 23, 42, 0.97); }
+    .header-left .breadcrumb { padding: 0; margin: 0; border-bottom: none; font-size: 0.78em; }
+    .chatbot-footer { border-top: 1px solid var(--border); padding: 10px 16px; background: var(--bg-card); display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .chatbot-footer-label { font-size: 0.72em; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin-bottom: 0; }
+    /* ── Layout document ── */
+    .doc-wrap {
+      display: flex;
+      align-items: flex-start;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: calc(var(--header-h) + 20px) 24px 60px;
+      gap: 28px;
+    }
+
+    /* ── Sidebar TOC ── */
+    .doc-toc {
+      width: 220px;
+      flex-shrink: 0;
+      position: sticky;
+      top: calc(var(--header-h) + 20px);
+      max-height: calc(100vh - var(--header-h) - 40px);
+      overflow-y: auto;
+      font-size: 0.78em;
+      line-height: 1.5;
+      scrollbar-width: thin;
+    }
+    .doc-toc::-webkit-scrollbar { width: 4px; }
+    .doc-toc::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    .toc-title {
+      font-size: 0.72em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-list li { margin: 0; }
+    .toc-list a {
+      display: block;
+      padding: 2px 6px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: 3px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .toc-list a:hover { color: var(--text); background: var(--bg-card); }
+    .toc-list a.toc-n1 { font-weight: 600; color: var(--text); margin-top: 6px; }
+    .toc-list a.toc-n2 { padding-left: 14px; }
+    .toc-list a.toc-n3 { padding-left: 24px; font-size: 0.93em; }
+    .toc-list a.toc-highlight { color: #f59e0b; }
+    .toc-list a.toc-highlight::before { content: '●'; font-size: 0.55em; vertical-align: middle; margin-right: 5px; opacity: 0.85; }
+    .toc-list a.toc-highlight:hover { color: #fbbf24; background: rgba(245,158,11,0.07); }
+    .toc-legend {
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      font-size: 0.7em;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .toc-legend-dot { color: #f59e0b; margin-right: 4px; }
+
+    /* ── Bouton Néophyte ── */
+    .btn-neophyte { border-color: #f59e0b; color: #f59e0b; }
+    .btn-neophyte:hover { background: rgba(245,158,11,0.10); color: #fbbf24; }
+    .btn-neophyte.active { border-color: var(--blue); color: var(--blue); background: transparent; }
+    .btn-neophyte.active:hover { background: var(--blue-dim); }
+
+    /* ── Mode Néophyte ── */
+    body.mode-neo .neo-heading,
+    body.mode-neo .neo-body,
+    body.mode-neo .neo-body p,
+    body.mode-neo .neo-body li,
+    body.mode-neo .neo-body h4,
+    body.mode-neo .neo-body td,
+    body.mode-neo .neo-body th,
+    body.mode-neo .neo-body strong,
+    body.mode-neo .neo-body dt,
+    body.mode-neo .neo-body dd { color: #f59e0b; }
+
+    /* ── Document content ── */
+    .doc-content {
+      flex: 1;
+      min-width: 0;
+      max-width: 860px;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* Preamble block */
+    .doc-preamble {
+      border: 1px solid var(--border);
+      background: var(--bg-secondary);
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin-bottom: 36px;
+      font-size: 0.88em;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .doc-preamble p { text-align: justify; }
+    .doc-content section p, .doc-content > p { text-align: justify; }
+    .doc-preamble h2 {
+      font-size: 0.85em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      margin: 16px 0 6px;
+      border: none;
+      padding: 0;
+    }
+    .doc-preamble h2:first-child { margin-top: 0; }
+    .doc-preamble ul { margin: 6px 0 6px 18px; }
+    .doc-preamble li { margin-bottom: 3px; }
+    .doc-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+      align-items: center;
+    }
+    .doc-tag {
+      display: inline-block;
+      font-size: 0.76em;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 2px 10px;
+    }
+    .doc-badge {
+      display: inline-block;
+      font-size: 0.75em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #1a7a3a;
+      background: rgba(26,122,58,0.08);
+      border: 1px solid rgba(26,122,58,0.25);
+      border-radius: 3px;
+      padding: 2px 10px;
+    }
+    .doc-action-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .doc-btn {
+      display: inline-block;
+      padding: 7px 18px;
+      border: 1px solid var(--blue);
+      border-radius: 4px;
+      color: var(--blue);
+      font-size: 0.88em;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+    }
+    .doc-btn:hover { background: var(--blue); color: #fff; }
+    .doc-btn.secondary {
+      border-color: var(--border);
+      color: var(--text-secondary);
+    }
+    .doc-btn.secondary:hover { background: var(--bg-card); color: var(--text); }
+
+    /* ── Chapter / Section headings ── */
+    .doc-content h1 {
+      font-size: 1.5em;
+      font-weight: 800;
+      color: var(--text);
+      margin: 0 0 6px;
+      line-height: 1.3;
+    }
+    .doc-content h2 {
+      font-size: 1.2em;
+      font-weight: 700;
+      color: var(--text);
+      margin: 40px 0 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+    .doc-content h3 {
+      font-size: 1.02em;
+      font-weight: 700;
+      color: var(--text);
+      margin: 28px 0 10px;
+    }
+    .doc-content h4 {
+      font-size: 0.92em;
+      font-weight: 600;
+      color: var(--text);
+      margin: 18px 0 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .doc-content p {
+      margin: 0 0 12px;
+      line-height: 1.75;
+      color: var(--text);
+      font-size: 0.93em;
+    }
+    .doc-content ul {
+      margin: 8px 0 14px 22px;
+      padding: 0;
+    }
+    .doc-content li {
+      margin-bottom: 6px;
+      line-height: 1.65;
+      font-size: 0.93em;
+      color: var(--text);
+    }
+    .doc-content hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 28px 0;
+    }
+    .doc-content code {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.88em;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 0 5px;
+      color: var(--text);
+    }
+    .doc-content pre {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px 18px;
+      font-size: 0.83em;
+      overflow-x: auto;
+      margin: 12px 0;
+      line-height: 1.5;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    /* ── Avertissement / Note ── */
+    .doc-note {
+      background: rgba(230,57,70,0.05);
+      border-left: 3px solid var(--red);
+      border-radius: 0 4px 4px 0;
+      padding: 10px 16px;
+      margin: 14px 0;
+      font-size: 0.86em;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .doc-note strong { color: var(--text); }
+
+    /* ── Source inline ── */
+    .doc-source {
+      font-size: 0.8em;
+      color: var(--text-secondary);
+      margin: -4px 0 14px;
+      font-style: italic;
+    }
+
+    /* ── Tables ── */
+    .doc-table-wrap { overflow-x: auto; margin: 16px 0; }
+    .doc-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.87em;
+    }
+    .doc-table th {
+      background: var(--bg-card);
+      color: var(--text);
+      font-weight: 700;
+      text-align: left;
+      padding: 9px 14px;
+      border: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .doc-table td {
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      color: var(--text);
+      vertical-align: top;
+    }
+    .doc-table tr:nth-child(even) td { background: var(--bg-secondary); }
+    .doc-table td.num { text-align: center; font-weight: 600; }
+    .doc-table td.risk-low { color: #1a7a3a; font-weight: 600; }
+    .doc-table td.risk-mid { color: #b45309; font-weight: 600; }
+    .doc-table td.risk-hi  { color: var(--red); font-weight: 600; }
+
+    /* ── ETF Cards ── */
+    .etf-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin: 16px 0;
+    }
+    .etf-card-title {
+      font-size: 0.85em;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .etf-card dl { display: grid; grid-template-columns: 130px 1fr; gap: 5px 16px; margin: 0; }
+    .etf-card dt {
+      font-size: 0.82em;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      align-self: center;
+    }
+    .etf-card dd {
+      font-size: 0.88em;
+      color: var(--text);
+      margin: 0;
+    }
+    .etf-card-role {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      font-size: 0.85em;
+      color: var(--text-secondary);
+    }
+    .etf-card-role strong { color: var(--text); }
+
+    /* ── Action cards (actions individuelles) ── */
+    .action-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin: 8px 0;
+      font-size: 0.88em;
+    }
+    .action-card-name { font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .action-card-meta { color: var(--text-secondary); font-size: 0.9em; }
+
+    /* ── Formule mathématique ── */
+    .doc-formula {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 18px;
+      margin: 10px 0;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9em;
+      color: var(--text);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .doc-toc { display: none; }
+      .doc-wrap { padding-top: calc(var(--header-h) + 20px); gap: 0; }
+    }
+    @media (max-width: 600px) {
+      .doc-wrap { padding: calc(var(--header-h) + 16px) 14px 40px; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+  <!-- Chatbot panel -->
+  <div id="chatbot-panel" class="chatbot-panel" role="complementary" aria-label="Résumé IA de la page">
+    <div class="chatbot-head">
+      <div class="chatbot-title-group">
+        <span class="chatbot-title">Résumé IA</span>
+        <span class="chatbot-dot" aria-hidden="true"></span>
+      </div>
+      <button class="chatbot-close-btn" aria-label="Fermer">&times;</button>
+    </div>
+    <div class="chatbot-body">
+      <div class="chatbot-think" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="chatbot-msg" aria-live="polite" aria-label="Résumé de la page"></div>
+      <div class="chatbot-status" aria-live="polite"></div>
+    </div>
+    <div class="chatbot-footer">
+      <div class="chatbot-footer-label">Autres ressources Vue Jury</div>
+      <button class="chatbot-nav-btn" aria-label="Accéder aux autres ressources Vue Jury">Cliquez ici</button>
+    </div>
+  </div>
+
+  <header role="banner">
+    <div class="header-left">
+      <nav class="breadcrumb" id="site-breadcrumb" data-page="pea-document" aria-label="Fil d'Ariane">
+        <a href="index.html">Présentation</a>
+        <span class="breadcrumb-sep" aria-hidden="true">&#8250;</span>
+        <a href="vue_ecole.html">Vue Jury école</a>
+        <span class="breadcrumb-sep" aria-hidden="true">&#8250;</span>
+        <span class="breadcrumb-current" aria-current="page">Étude PEA v2.0</span>
+      </nav>
+    </div>
+    <div class="header-center">Étude PEA v2.0</div>
+    <div class="header-right">
+      <button id="btn-neophyte" class="btn-quick-read btn-neophyte" aria-label="Passer en vue néophyte">Néophyte</button>
+      <button class="btn-quick-read btn-important" aria-haspopup="dialog" aria-label="Note importante sur ce document">Important</button>
+    </div>
+  </header>
+
+  <div class="doc-wrap">
+
+    <!-- ── Sidebar TOC ── -->
+    <aside class="doc-toc" aria-label="Table des matières">
+      <p class="toc-title">Table des matières</p>
+      <ul class="toc-list">
+        <li><a href="#s-pre" class="toc-n1">Mentions importantes</a></li>
+        <li><a href="#s-1" class="toc-n1">1. Introduction</a></li>
+        <li><a href="#s-1-1" class="toc-n2">1.1 Objectif du document</a></li>
+        <li><a href="#s-1-2" class="toc-n2">1.2 Public visé et périmètre</a></li>
+        <li><a href="#s-1-3" class="toc-n2">1.3 Avertissement institutionnel</a></li>
+        <li><a href="#s-1-4" class="toc-n2 toc-highlight">1.4 Pourquoi investir via un PEA</a></li>
+        <li><a href="#s-1-5" class="toc-n2">1.5 Pourquoi utiliser des ETF</a></li>
+        <li><a href="#s-2" class="toc-n1">2. Le PEA</a></li>
+        <li><a href="#s-2-1" class="toc-n2 toc-highlight">2.1 Définition du PEA</a></li>
+        <li><a href="#s-2-2" class="toc-n2 toc-highlight">2.2 Conditions d'ouverture</a></li>
+        <li><a href="#s-2-3" class="toc-n2">2.3 Fonctionnement général</a></li>
+        <li><a href="#s-2-4" class="toc-n2 toc-highlight">2.4 Fiscalité du PEA</a></li>
+        <li><a href="#s-2-5" class="toc-n2 toc-highlight">2.5 Règles de retrait et de versement</a></li>
+        <li><a href="#s-2-6" class="toc-n2 toc-highlight">2.6 Plafonds et limites</a></li>
+        <li><a href="#s-3" class="toc-n1">3. Types de PEA</a></li>
+        <li><a href="#s-3-1" class="toc-n2">3.1 PEA bancaire</a></li>
+        <li><a href="#s-3-2" class="toc-n2">3.2 PEA assurance</a></li>
+        <li><a href="#s-3-3" class="toc-n2">3.3 PEA-PME</a></li>
+        <li><a href="#s-3-4" class="toc-n2">3.4 Transfert d'un PEA</a></li>
+        <li><a href="#s-4" class="toc-n1">4. ETF éligibles au PEA</a></li>
+        <li><a href="#s-4-1" class="toc-n2 toc-highlight">4.1 Définition d'un ETF</a></li>
+        <li><a href="#s-4-2" class="toc-n2">4.2 Avantages et limites</a></li>
+        <li><a href="#s-4-3" class="toc-n2">4.3 Critères de sélection</a></li>
+        <li><a href="#s-4-4" class="toc-n2">4.4 Risques associés</a></li>
+        <li><a href="#s-4-5" class="toc-n2 toc-highlight">4.5 Sélection 2026</a></li>
+        <li><a href="#s-4-5-1" class="toc-n3">4.5.1 WPEA (MSCI World)</a></li>
+        <li><a href="#s-4-5-2" class="toc-n3">4.5.2 PE500 (S&amp;P 500)</a></li>
+        <li><a href="#s-4-5-3" class="toc-n3">4.5.3 PAEEM (MSCI EM)</a></li>
+        <li><a href="#s-4-5-4" class="toc-n3">4.5.4 PANX (Nasdaq-100)</a></li>
+        <li><a href="#s-5" class="toc-n1">5. Performances historiques</a></li>
+        <li><a href="#s-5-1" class="toc-n2">5.1 Notion de CAGR</a></li>
+        <li><a href="#s-5-2" class="toc-n2">5.2 Performance cumulée</a></li>
+        <li><a href="#s-5-3" class="toc-n2">5.3 Performances historiques</a></li>
+        <li><a href="#s-5-4" class="toc-n2">5.4 Cycles de marché</a></li>
+        <li><a href="#s-6" class="toc-n1">6. Construction des portefeuilles</a></li>
+        <li><a href="#s-6-0" class="toc-n2">6.0 Méthodologie</a></li>
+        <li><a href="#s-6-1" class="toc-n2 toc-highlight">6.1 Principes de construction</a></li>
+        <li><a href="#s-6-2" class="toc-n2 toc-highlight">6.2 Profil Sécuritaire</a></li>
+        <li><a href="#s-6-3" class="toc-n2">6.3 Profil Équilibré</a></li>
+        <li><a href="#s-6-4" class="toc-n2">6.4 Profil Dynamique</a></li>
+        <li><a href="#s-6-5" class="toc-n2">6.5 Comparatif des allocations</a></li>
+        <li><a href="#s-7" class="toc-n1">7. Sélection d'actions</a></li>
+        <li><a href="#s-7-0" class="toc-n2">7.0 Méthodologie de screening</a></li>
+        <li><a href="#s-7-1" class="toc-n2">7.1 Critères institutionnels</a></li>
+        <li><a href="#s-7-2" class="toc-n2">7.2 Actions par zone</a></li>
+        <li><a href="#s-7-3" class="toc-n2">7.3 Rôle des actions</a></li>
+        <li><a href="#s-7-4" class="toc-n2">7.4 Profil Sécuritaire</a></li>
+        <li><a href="#s-7-5" class="toc-n2">7.5 Profil Équilibré</a></li>
+        <li><a href="#s-7-6" class="toc-n2">7.6 Profil Dynamique</a></li>
+        <li><a href="#s-7-7" class="toc-n2">7.7 Pondérations par profil</a></li>
+        <li><a href="#s-7-8" class="toc-n2">7.8 Rendements attendus</a></li>
+        <li><a href="#s-8" class="toc-n1">8. Simulations financières</a></li>
+        <li><a href="#s-8-0" class="toc-n2">8.0 Hypothèses générales</a></li>
+        <li><a href="#s-8-1" class="toc-n2 toc-highlight">8.1 Présentation des profils</a></li>
+        <li><a href="#s-8-2" class="toc-n2">8.2 Tableau comparatif</a></li>
+        <li><a href="#s-8-3" class="toc-n2">8.3 Tableau de robustesse</a></li>
+        <li><a href="#s-8-4" class="toc-n2">8.4 Tableau des risques</a></li>
+        <li><a href="#s-8-5" class="toc-n2">8.5 Ratios professionnels</a></li>
+        <li><a href="#s-9" class="toc-n1">9. Analyse des risques</a></li>
+        <li><a href="#s-9-1" class="toc-n2">9.1 Volatilité des marchés</a></li>
+        <li><a href="#s-9-2" class="toc-n2">9.2 Risques macroéconomiques</a></li>
+        <li><a href="#s-9-3" class="toc-n2">9.3 Risques extrêmes</a></li>
+        <li><a href="#s-9-4" class="toc-n2">9.4 Fiscalité en cas de clôture</a></li>
+        <li><a href="#s-9-5" class="toc-n2">9.5 Risques liés au fournisseur</a></li>
+        <li><a href="#s-9-6" class="toc-n2">9.6 Risque de change</a></li>
+        <li><a href="#s-10" class="toc-n1">10. Cadre méthodologique</a></li>
+        <li><a href="#s-10-1" class="toc-n2">10.1 Principes de gestion</a></li>
+        <li><a href="#s-10-2" class="toc-n2">10.2 Considérations opérationnelles</a></li>
+        <li><a href="#s-10-3" class="toc-n2">10.3 Thématiques techniques</a></li>
+        <li><a href="#s-11" class="toc-n1 toc-highlight">11. Conclusion</a></li>
+        <li><a href="#s-11-1" class="toc-n2">11.1 Sources utilisées</a></li>
+        <li><a href="#s-11-2" class="toc-n2">11.2 Limites méthodologiques</a></li>
+        <li><a href="#s-11-3" class="toc-n2">11.3 Mise à jour future</a></li>
+        <li><a href="#s-11-4" class="toc-n2">11.4 Usage en grande entreprise</a></li>
+      </ul>
+      <div class="toc-legend">
+        <span class="toc-legend-dot">●</span>Sections clés pour comprendre le PEA
+      </div>
+    </aside>
+
+    <!-- ── Document content ── -->
+    <main id="main-content" class="doc-content" role="main">
+
+      <!-- En-tête document -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:6px;">
+        <h1 style="margin:0;">Plan d'Épargne en Actions, étude complète</h1>
+        <span style="display:inline-block;font-size:0.75em;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;border-radius:3px;padding:2px 10px;color:#1a7a3a;background:rgba(26,122,58,0.08);border:1px solid rgba(26,122,58,0.25);">Finalisé</span>
+      </div>
+      <p style="color:var(--text-secondary);font-size:0.88em;margin-bottom:20px;text-align:center;">Auteur : Gabriel ROULON, mise à jour : 30/01/2026</p>
+
+      <!-- ── Mentions importantes ── -->
+      <section id="s-pre" aria-labelledby="h-pre">
+        <div class="doc-preamble">
+          <h2 id="h-pre">Avertissement préliminaire</h2>
+          <p>Ce document ne constitue pas un document d'information clé pour l'investisseur (DICI) ni un document réglementaire au sens de la directive MiFID II. Les informations présentées ne tiennent pas compte des objectifs, de la situation financière ou des besoins spécifiques d'un investisseur. L'auteur ne saurait être tenu responsable de toute décision prise sur la base des informations contenues dans ce document. Les marques et indices cités appartiennent à leurs propriétaires respectifs. Leur mention n'implique aucune affiliation, validation ou approbation.</p>
+
+          <h2>Objet du document</h2>
+          <p>Étude complète et mise à jour du Plan d'Épargne en Actions (PEA), des ETF éligibles, des performances historiques des principaux indices actions, ainsi que de la construction de portefeuilles compatibles avec différents profils d'investisseurs. Le document inclut une révision intégrale des données réglementaires, des règles de fonctionnement du PEA, des ETF disponibles en 2026, ainsi que des simulations financières et des analyses de robustesse associées. Il constitue un cadre méthodologique structuré, destiné à éclairer la compréhension et l'utilisation du PEA dans une perspective long terme.</p>
+
+          <h2>Mentions importantes</h2>
+          <ul>
+            <li>Toutes les données réglementaires, financières et techniques présentées sont mises à jour pour l'année 2026.</li>
+            <li>Ce document a une vocation pédagogique et analytique.</li>
+            <li>Il ne constitue pas un conseil financier personnalisé, ni une recommandation d'investissement.</li>
+            <li>Tout investissement en actions comporte un risque de perte en capital.</li>
+            <li>Les performances passées ne préjugent pas des performances futures.</li>
+            <li>Toute décision d'investissement doit être prise de manière autonome ou avec l'appui d'un professionnel habilité.</li>
+          </ul>
+          <p style="margin-top:10px;font-size:0.88em;">Mention de confidentialité : toute reproduction, utilisation ou transmission, même partielle, est soumise à autorisation préalable.</p>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════
+           CHAPITRE 1 - INTRODUCTION
+      ════════════════════════════════════════ -->
+      <section id="s-1" aria-labelledby="h-1">
+        <h2 id="h-1">1. Introduction</h2>
+        <p>L'investissement en actions constitue un levier reconnu de développement patrimonial à long horizon. Dans un environnement marqué par l'inflation, la volatilité financière et l'évolution des politiques monétaires, la définition d'un cadre d'allocation structuré et reproductible revêt un caractère déterminant.</p>
+        <p>Le Plan d'Épargne en Actions (PEA) s'inscrit dans ce cadre. Il offre un environnement fiscal spécifique et un accès encadré aux marchés actions européens, ainsi qu'aux marchés internationaux via des instruments éligibles. Ce dispositif constitue un support compatible avec une démarche d'investissement progressive et disciplinée.</p>
+        <p>Le présent document formalise une approche méthodologique applicable à la construction et à la gestion d'un portefeuille au sein d'un PEA. Il s'appuie sur des instruments indiciels et des actions sélectionnées selon des critères institutionnels, et sur des principes de gestion compatibles avec différents profils d'investisseurs. L'objectif est d'établir un cadre opérationnel clair, robuste et mobilisable dans un contexte patrimonial ou professionnel.</p>
+
+        <h3 id="s-1-1">1.1 Objectif du document</h3>
+        <p>Le présent document a pour objectif de définir un cadre méthodologique structuré applicable à la gestion d'un Plan d'Épargne en Actions (PEA). Il vise notamment à :</p>
+        <ul>
+          <li>préciser les principes fondamentaux du PEA et son positionnement dans une stratégie patrimoniale de long terme&nbsp;;</li>
+          <li>formaliser les critères retenus pour la sélection des ETF et des actions éligibles&nbsp;;</li>
+          <li>présenter trois profils d'investissement cohérents, différenciés par leur niveau de risque et leur potentiel de rendement&nbsp;;</li>
+          <li>fournir un support opérationnel, clair et réutilisable dans un contexte professionnel ou institutionnel.</li>
+        </ul>
+        <p>L'ambition du document n'est pas de proposer une stratégie complexe, mais d'établir un cadre d'investissement lisible, rationnel et durable, compatible avec un horizon long terme et conforme aux pratiques de gestion structurée.</p>
+
+        <h3 id="s-1-2">1.2 Public visé et périmètre</h3>
+        <p>Ce document s'adresse principalement aux investisseurs particuliers souhaitant structurer leur gestion au sein d'un PEA, ainsi qu'aux professionnels ou intervenants disposant d'un rôle d'accompagnement patrimonial ou financier. Il suppose une connaissance générale des mécanismes d'investissement en actions, sans exiger une expertise technique avancée.</p>
+        <p>Le périmètre couvre exclusivement :</p>
+        <ul>
+          <li>le fonctionnement du PEA dans son cadre réglementaire&nbsp;;</li>
+          <li>l'utilisation d'ETF et d'actions éligibles dans une allocation structurée&nbsp;;</li>
+          <li>la présentation de profils d'allocation compatibles avec différents niveaux de risque.</li>
+        </ul>
+        <p>Ne sont pas inclus :</p>
+        <ul>
+          <li>les conseils personnalisés tenant compte de la situation individuelle de l'investisseur ; les analyses fiscales exhaustives ou spécifiques à des situations particulières&nbsp;;</li>
+          <li>les stratégies complexes ou les instruments non éligibles au PEA.</li>
+        </ul>
+        <p>L'objectif est de fournir un cadre institutionnel clair, applicable dans un contexte patrimonial ou professionnel, sans se substituer à un accompagnement réglementé lorsque celui-ci est nécessaire.</p>
+
+        <h3 id="s-1-3">1.3 Avertissement institutionnel</h3>
+        <aside class="doc-note">
+          <strong>Avertissement :</strong> Ce document est fourni exclusivement à titre informatif. Il ne constitue ni un conseil en investissement personnalisé, ni une recommandation d'achat, de vente ou d'arbitrage d'instruments financiers. Tout investissement en actions comporte un risque de perte en capital. Les performances passées ne préjugent pas des performances futures. Toute décision d'investissement doit être prise de manière autonome ou avec l'appui d'un professionnel habilité.
+        </aside>
+
+        <h3 id="s-1-4">1.4 Pourquoi investir via un PEA</h3>
+        <p>Le Plan d'Épargne en Actions (PEA) constitue un dispositif réglementé permettant d'investir en actions européennes et dans certains fonds éligibles, dans un cadre fiscal défini par la loi. Il s'inscrit dans une logique de gestion patrimoniale de long terme et présente plusieurs caractéristiques structurantes.</p>
+        <h4>Cadre fiscal spécifique</h4>
+        <p>Après cinq années de détention, les gains réalisés dans le PEA sont exonérés d'impôt sur le revenu, hors prélèvements sociaux. Ce régime fiscal constitue un élément structurant de la performance nette à long horizon.</p>
+        <h4>Accès encadré aux marchés actions</h4>
+        <p>Le PEA permet l'investissement dans :</p>
+        <ul>
+          <li>des actions de sociétés européennes&nbsp;;</li>
+          <li>des ETF éligibles répliquant de grands indices internationaux&nbsp;;</li>
+          <li>des fonds conformes aux critères réglementaires d'éligibilité.</li>
+        </ul>
+        <h4>Intégration dans une stratégie long terme</h4>
+        <p>Le dispositif s'inscrit dans une démarche visant la constitution progressive d'un capital, la diversification des actifs détenus et l'exposition à des moteurs de croissance structurels.</p>
+        <h4>Structure opérationnelle flexible</h4>
+        <p>Le PEA autorise des versements libres dans la limite du plafond réglementaire de 150 000 euros, ainsi qu'une gestion autonome ou accompagnée selon les besoins de l'investisseur.</p>
+
+        <h3 id="s-1-5">1.5 Pourquoi utiliser des ETF</h3>
+        <p>Les ETF (Exchange Traded Funds) sont des instruments indiciels cotés permettant d'obtenir une exposition diversifiée à un ensemble d'actifs via un support unique. Dans le cadre d'un PEA, ils constituent des outils compatibles avec une allocation structurée et conforme aux exigences réglementaires.</p>
+        <h4>Diversification étendue</h4>
+        <p>Les ETF offrent une exposition simultanée à un ensemble large d'entreprises ou de secteurs, réduisant la concentration sur un émetteur unique.</p>
+        <h4>Structure de frais maîtrisée</h4>
+        <p>Les frais de gestion des ETF sont généralement inférieurs à ceux des fonds traditionnels, ce qui contribue à optimiser la performance nette sur longue période.</p>
+        <h4>Transparence opérationnelle</h4>
+        <p>Les indices répliqués sont publics et documentés, assurant une visibilité complète sur l'exposition, la méthodologie et la composition du support.</p>
+        <h4>Comportement historique stable</h4>
+        <p>Les grands indices actions mondiaux ont présenté, sur longue période, des trajectoires de croissance soutenues, reflétant l'évolution des économies développées et la création de valeur des entreprises.</p>
+        <h4>Compatibilité avec une allocation disciplinée</h4>
+        <p>Les ETF s'intègrent dans une démarche de gestion structurée reposant sur des principes de régularité, de neutralité et de cohérence dans la construction du portefeuille.</p>
+      </section>
+
+      <hr>
+
+      <!-- ════════════════════════════════════════
+           CHAPITRE 2 - LE PEA
+      ════════════════════════════════════════ -->
+      <section id="s-2" aria-labelledby="h-2">
+        <h2 id="h-2">2. Le Plan d'Épargne en Actions (PEA)</h2>
+        <p>Le Plan d'Épargne en Actions (PEA) est une enveloppe réglementée permettant d'investir en actions européennes et dans certains fonds éligibles, dans un cadre fiscal défini par les articles L221-30 à L221-32 du Code monétaire et financier. Ce dispositif encadre les conditions d'ouverture, les modalités de fonctionnement, les plafonds applicables et les règles de retrait. Il constitue un instrument structurant pour la constitution d'un capital à long terme, en raison de sa fiscalité spécifique et de sa simplicité opérationnelle.</p>
+
+        <h3 id="s-2-1">2.1 Définition du PEA</h3>
+        <p>Le Plan d'Épargne en Actions (PEA) est un dispositif d'investissement encadré par la réglementation française. Il permet la détention d'actions et de parts d'organismes de placement collectif éligibles, dans un cadre fiscal spécifique.</p>
+        <h4>Structure juridique</h4>
+        <ul>
+          <li>Le PEA est constitué d'un compte espèces et d'un compte-titres associés.</li>
+          <li>Il est ouvert auprès d'un établissement habilité (banque ou compagnie d'assurance, selon la forme du plan).</li>
+          <li>Les opérations réalisées dans le cadre du plan sont soumises aux règles définies par le Code monétaire et financier.</li>
+        </ul>
+        <h4>Supports éligibles</h4>
+        <ul>
+          <li>Actions de sociétés ayant leur siège dans l'Union européenne ou l'Espace économique européen (hors Liechtenstein).</li>
+          <li>Parts ou actions d'OPCVM et d'ETF conformes aux critères d'éligibilité.</li>
+          <li>Instruments financiers répondant aux exigences réglementaires propres au PEA.</li>
+        </ul>
+        <h4>Cadre réglementaire</h4>
+        <p>Le fonctionnement, les conditions d'éligibilité et la fiscalité du PEA sont définis par les textes législatifs et réglementaires en vigueur.</p>
+
+        <h3 id="s-2-2">2.2 Conditions d'ouverture</h3>
+        <p>L'ouverture d'un PEA est strictement encadrée par la réglementation.</p>
+        <h4>Conditions principales</h4>
+        <ul>
+          <li>Être majeur et résident fiscal en France.</li>
+          <li>Ne pas détenir un autre PEA (un seul PEA par personne).</li>
+          <li>Possibilité pour chaque membre d'un couple d'en détenir un individuellement.</li>
+        </ul>
+        <p>Le PEA peut être ouvert auprès :</p>
+        <ul>
+          <li>d'un établissement bancaire (PEA bancaire),</li>
+          <li>d'une compagnie d'assurance (PEA assurance),</li>
+          <li>ou d'un établissement en ligne habilité.</li>
+        </ul>
+        <p>Un mineur peut détenir un PEA Jeune, dispositif distinct du PEA classique.</p>
+        <p class="doc-source">Source : Service-Public.fr / Fiche officielle PEA.</p>
+
+        <h3 id="s-2-3">2.3 Fonctionnement général</h3>
+        <p>Le fonctionnement du PEA est encadré par un ensemble de règles définissant les modalités de versement, d'investissement, de gestion et de retrait. Ces règles s'appliquent uniformément à l'ensemble des établissements habilités.</p>
+        <h4>Versements</h4>
+        <ul>
+          <li>Les versements sont réalisés exclusivement en numéraire.</li>
+          <li>Ils sont libres dans la limite du plafond réglementaire applicable au PEA.</li>
+          <li>Aucun autre type d'apport n'est autorisé.</li>
+        </ul>
+        <h4>Investissements</h4>
+        <p>Les sommes versées peuvent être investies dans :</p>
+        <ul>
+          <li>des actions de sociétés ayant leur siège dans l'Union européenne ou l'Espace économique européen (hors Liechtenstein)&nbsp;;</li>
+          <li>des parts d'OPCVM éligibles&nbsp;;</li>
+          <li>des ETF conformes aux règles du PEA, notamment via réplication synthétique.</li>
+        </ul>
+        <p>Les titres doivent respecter les critères d'éligibilité définis par la réglementation.</p>
+        <h4>Gestion</h4>
+        <ul>
+          <li>Les opérations d'achat, de vente ou d'arbitrage sont libres au sein du plan.</li>
+          <li>Les mouvements internes au PEA n'entraînent aucune imposition tant qu'aucun retrait n'est effectué.</li>
+          <li>La gestion peut être autonome ou réalisée via un intermédiaire habilité.</li>
+        </ul>
+        <h4>Clôture</h4>
+        <ul>
+          <li>Tout retrait avant cinq ans entraîne la clôture du PEA, sauf exceptions prévues par la loi.</li>
+          <li>Après cinq ans, les retraits sont possibles sans entraîner la clôture du plan.</li>
+          <li>Après huit ans, le PEA peut être converti en rente viagère exonérée d'impôt sur le revenu (hors prélèvements sociaux).</li>
+        </ul>
+
+        <h3 id="s-2-4">2.4 Fiscalité du PEA</h3>
+        <p>La fiscalité constitue l'un des éléments structurants du dispositif.</p>
+        <h4>Avant 5 ans</h4>
+        <ul>
+          <li>Tout retrait entraîne la clôture du PEA.</li>
+          <li>Les gains sont imposés selon la fiscalité en vigueur (prélèvement forfaitaire unique ou barème de l'impôt sur le revenu).</li>
+          <li>Tout retrait avant 5 ans entraîne la clôture du PEA et une fiscalité de 31,4 % (12,8 % IR + 18,6 % prélèvements sociaux) en 2026.</li>
+        </ul>
+        <h4>Après 5 ans</h4>
+        <ul>
+          <li>Les gains (plus-values et dividendes) sont exonérés d'impôt sur le revenu.</li>
+          <li>Seuls les prélèvements sociaux s'appliquent, au taux de 18,6 % en 2026. Ce taux est prélevé à la source lors d'un retrait partiel ou total.</li>
+          <li>Les retraits n'entraînent plus la clôture du plan.</li>
+          <li>Retrait partiel : prélèvements sociaux (18,6 %) sur la part des gains retirés.</li>
+          <li>Retrait total : capital non imposé à l'IR ; prélèvements sociaux (18,6 %) sur les plus-values.</li>
+          <li>Conserver le PEA ouvert permet de continuer à investir, faire des versements complémentaires et bénéficier de l'ancienneté fiscale.</li>
+        </ul>
+        <h4>Après 8 ans</h4>
+        <ul>
+          <li>Possibilité de transformer le PEA en rente viagère exonérée d'impôt sur le revenu (hors prélèvements sociaux).</li>
+        </ul>
+        <p class="doc-source">Sources : Code général des impôts, article 157-5° bis ; loi n° 2025-1403 du 30 décembre 2025 (LFSS 2026), art. 12 ; Service-Public.fr / Fiscalité du PEA (F22449, F2385), Prélèvements sociaux (F2329).</p>
+
+        <h3 id="s-2-5">2.5 Règles de retrait et de versement</h3>
+        <p>Le Plan d'Épargne en Actions (PEA) est un dispositif d'épargne réglementé dont les avantages fiscaux sont conditionnés au respect de règles précises en matière de versements et de retraits. Ces règles sont définies par le Code monétaire et financier et la documentation officielle de l'administration française. La compréhension de ces mécanismes est essentielle, car toute opération non conforme peut entraîner la clôture du plan et la perte de l'antériorité fiscale.</p>
+        <h4>Versements</h4>
+        <p>Les versements au sein d'un PEA obéissent aux règles suivantes :</p>
+        <ul>
+          <li>Les versements sont autorisés tant que le plafond réglementaire n'est pas atteint.</li>
+          <li>Les versements doivent être réalisés exclusivement en numéraire.</li>
+          <li>Après un retrait effectué sur un PEA de plus de 5 ans, les versements peuvent rester autorisés tant que le plan n'est pas clôturé et que le plafond n'est pas atteint.</li>
+          <li>Après 8 ans, les versements sont en principe interdits sur les PEA bancaires, conformément au fonctionnement historique du dispositif.</li>
+          <li>Exception, PEA assurance : certains contrats peuvent prévoir des modalités spécifiques permettant la poursuite des versements après 8 ans. Ces dispositions relèvent du cadre contractuel propre à l'assureur et doivent être vérifiées dans les conditions du contrat.</li>
+        </ul>
+        <h4>Retraits, avant 5 ans</h4>
+        <ul>
+          <li>Tout retrait partiel ou total entraîne la clôture automatique du PEA, sauf cas légaux dérogatoires.</li>
+          <li>Les gains réalisés sont soumis à la fiscalité en vigueur (prélèvement forfaitaire unique ou régime applicable à la date du retrait).</li>
+          <li>Les prélèvements sociaux s'appliquent sur la part de gains. En 2026, la fiscalité peut atteindre 31,4 % (12,8 % IR + 18,6 % prélèvements sociaux) en cas d'application du PFU.</li>
+        </ul>
+        <h4>Retraits, après 5 ans</h4>
+        <ul>
+          <li>Les retraits partiels ou totaux sont possibles sans entraîner la clôture du plan.</li>
+          <li>Les gains (plus-values et dividendes) sont exonérés d'impôt sur le revenu.</li>
+          <li>Les prélèvements sociaux restent applicables sur la part de gains (taux en vigueur : 18,6 % en 2026), prélevés à la source.</li>
+          <li>Les versements peuvent rester autorisés dans la limite du plafond, tant que le plan n'est pas clôturé.</li>
+        </ul>
+        <h4>Retraits, après 8 ans</h4>
+        <ul>
+          <li>Les règles applicables sont identiques à celles en vigueur après 5 ans en matière de retraits.</li>
+          <li>Le titulaire conserve la possibilité d'effectuer des retraits libres sans clôture.</li>
+          <li>Le PEA peut être transformé en rente viagère, laquelle est exonérée d'impôt sur le revenu, hors prélèvements sociaux.</li>
+          <li>En pratique, les versements ne sont plus autorisés sur les PEA bancaires, sauf dispositions spécifiques propres aux contrats de type PEA assurance.</li>
+        </ul>
+        <h4>Cas particuliers (exceptions légales)</h4>
+        <p>Dans certaines situations expressément prévues par la réglementation, des retraits peuvent être effectués sans entraîner la clôture du PEA, même avant 5 ans :</p>
+        <ul>
+          <li>invalidité du titulaire&nbsp;;</li>
+          <li>licenciement du titulaire&nbsp;;</li>
+          <li>mise à la retraite anticipée&nbsp;;</li>
+          <li>reprise ou création d'une entreprise, sous conditions légales.</li>
+        </ul>
+        <p>Ces cas sont strictement encadrés et nécessitent la production de justificatifs conformes.</p>
+        <h4>Cadre réglementaire et sources</h4>
+        <p>Les règles de retrait, de versement et de fiscalité du PEA sont définies par :</p>
+        <ul>
+          <li>le Code monétaire et financier (articles L221-30 et suivants)&nbsp;;</li>
+          <li>le Code général des impôts&nbsp;;</li>
+          <li>la documentation officielle de l'administration française.</li>
+        </ul>
+        <p class="doc-source">Source : Service-Public.fr / Retraits et clôture du Plan d'Épargne en Actions (PEA).</p>
+        <p>Les règles exposées dans cette section relèvent exclusivement du cadre juridique et fiscal du PEA. Elles ne sont pas liées aux données de performance financière des indices, ETF ou portefeuilles présentés dans les autres sections du document. Les données de performance, arrêtées à fin 2025, sont utilisées à des fins analytiques et pédagogiques et ne modifient en aucun cas les règles réglementaires décrites ci-dessus.</p>
+
+        <h3 id="s-2-6">2.6 Plafonds et limites réglementaires</h3>
+        <h4>PEA classique</h4>
+        <ul><li>Plafond de versement : 150 000 €.</li></ul>
+        <h4>PEA-PME</h4>
+        <ul>
+          <li>Plafond spécifique : 225 000 €.</li>
+          <li>Le cumul PEA + PEA-PME ne peut excéder 225 000 €.</li>
+        </ul>
+        <h4>PEA Jeune</h4>
+        <ul><li>Plafond : 20 000 €.</li></ul>
+        <h4>Limites réglementaires générales</h4>
+        <ul>
+          <li>Un seul PEA par personne.</li>
+          <li>Versements exclusivement en numéraire.</li>
+          <li>Titres éligibles strictement encadrés.</li>
+          <li>Respect des règles européennes (siège social, éligibilité OPCVM, etc.).</li>
+        </ul>
+        <p class="doc-source">Sources : Service-Public.fr / Plafonds du PEA ; Code monétaire et financier L221-30 et suivants.</p>
+      </section>
+
+      <hr>
+
+      <!-- ════════════════════════════════════════
+           CHAPITRE 3 - TYPES DE PEA
+      ════════════════════════════════════════ -->
+      <section id="s-3" aria-labelledby="h-3">
+        <h2 id="h-3">3. Les différents types de PEA</h2>
+        <p>Le Plan d'Épargne en Actions (PEA) existe sous plusieurs formes, chacune répondant à des objectifs patrimoniaux distincts. Selon les informations publiées par le Ministère de l'Économie, quatre catégories principales sont définies : le PEA bancaire, le PEA assurance, le PEA-PME et le PEA Jeune. Ces dispositifs partagent un cadre fiscal commun, mais se distinguent par leur structure, leur mode de fonctionnement et les supports d'investissement accessibles.</p>
+
+        <h3 id="s-3-1">3.1 PEA bancaire</h3>
+        <p>Le PEA bancaire constitue la forme la plus courante du Plan d'Épargne en Actions. Il repose sur une structure composée d'un compte espèces et d'un compte-titres, permettant la détention et la gestion des instruments éligibles.</p>
+        <h4>Structure</h4>
+        <ul>
+          <li>Un compte espèces destiné aux versements et aux opérations financières.</li>
+          <li>Un compte-titres permettant l'acquisition, la détention et la cession des actions et fonds éligibles.</li>
+        </ul>
+        <h4>Caractéristiques opérationnelles</h4>
+        <ul>
+          <li>Gestion directe par le titulaire du plan ou par un intermédiaire habilité.</li>
+          <li>Accès à un univers étendu d'actions européennes, d'ETF éligibles et d'OPCVM conformes aux règles du PEA.</li>
+          <li>Frais variables selon l'établissement (frais de courtage, droits de garde, frais de tenue de compte).</li>
+        </ul>
+        <h4>Utilisation courante</h4>
+        <p>Le PEA bancaire est généralement utilisé dans le cadre d'une gestion structurée reposant sur des instruments indiciels et des titres individuels, en raison de la flexibilité opérationnelle qu'il offre.</p>
+        <p class="doc-source">Source : Ministère de l'Économie / Documentation officielle sur le PEA.</p>
+
+        <h3 id="s-3-2">3.2 PEA assurance</h3>
+        <p>Le PEA assurance est proposé sous la forme d'un contrat de capitalisation géré par une compagnie d'assurance. Il se distingue du PEA bancaire par sa structure juridique et par les modalités de détention des supports.</p>
+        <h4>Structure</h4>
+        <ul>
+          <li>Le contrat prend la forme d'un support de capitalisation.</li>
+          <li>Les titres ne sont pas détenus en direct mais via des unités de compte internes au contrat.</li>
+          <li>Les supports accessibles dépendent de l'offre propre à chaque assureur.</li>
+        </ul>
+        <h4>Caractéristiques opérationnelles</h4>
+        <ul>
+          <li>Fiscalité identique à celle du PEA bancaire, conformément au cadre réglementaire applicable.</li>
+          <li>Gestion assurée par la compagnie d'assurance, avec une architecture de supports déterminée contractuellement.</li>
+          <li>Possibilité de nantissement dans le cadre des dispositions propres aux contrats de capitalisation.</li>
+        </ul>
+        <h4>Particularités</h4>
+        <ul>
+          <li>La sélection des supports dépend de l'assureur et peut différer de celle disponible dans un PEA bancaire.</li>
+          <li>L'accès aux ETF éligibles peut être limité selon la gamme proposée.</li>
+          <li>Le contrat peut présenter des modalités spécifiques en matière de transmission patrimoniale.</li>
+        </ul>
+        <p class="doc-source">Source : Documentation comparative / PEA bancaire / PEA assurance.</p>
+
+        <h3 id="s-3-3">3.3 PEA-PME</h3>
+        <p>Le PEA-PME est un dispositif complémentaire au PEA classique, destiné à soutenir le financement des petites et moyennes entreprises (PME) et des entreprises de taille intermédiaire (ETI) françaises et européennes. Il bénéficie d'un cadre fiscal identique à celui du PEA classique, mais avec un plafond distinct.</p>
+        <h4>Caractéristiques principales</h4>
+        <ul>
+          <li>Plafond de versement : 225 000 €, cumul PEA + PEA-PME compris.</li>
+          <li>Investissements orientés vers : actions de PME et ETI ; obligations convertibles ; parts de fonds spécialisés PME/ETI.</li>
+          <li>Niveau de risque généralement plus élevé que celui du PEA classique, en contrepartie d'un potentiel de rendement supérieur.</li>
+        </ul>
+        <h4>Public concerné</h4>
+        <ul>
+          <li>Investisseurs souhaitant diversifier leur exposition vers des entreprises de taille intermédiaire.</li>
+          <li>Profils dynamiques ou expérimentés.</li>
+        </ul>
+        <p class="doc-source">Source : Banque de France / Présentation du PEA-PME.</p>
+
+        <h3 id="s-3-4">3.4 Transfert d'un PEA</h3>
+        <p>Le transfert d'un PEA consiste à déplacer l'intégralité du plan d'un établissement à un autre, sans clôture et sans perte de l'antériorité fiscale, conformément au cadre réglementaire applicable.</p>
+        <h4>Conditions générales</h4>
+        <ul>
+          <li>Le transfert porte sur l'ensemble des avoirs du plan : compte espèces, titres détenus et historique associé.</li>
+          <li>Le PEA demeure indisponible pendant la durée du transfert, selon les délais opérationnels propres aux établissements concernés.</li>
+          <li>Le transfert n'entraîne pas de modification de la date d'ouverture du plan.</li>
+        </ul>
+        <h4>Modalités opérationnelles</h4>
+        <ul>
+          <li>L'établissement d'arrivée initie la procédure auprès de l'établissement de départ.</li>
+          <li>Les titres sont transférés selon leurs caractéristiques (titres cotés, OPCVM, ETF).</li>
+          <li>Les frais éventuels liés au transfert sont déterminés par l'établissement de départ, conformément à sa grille tarifaire.</li>
+        </ul>
+        <h4>Cadre réglementaire</h4>
+        <p>Le transfert d'un PEA est encadré par les dispositions du Code monétaire et financier et ne constitue pas une opération de clôture.</p>
+      </section>
+
+      <hr>
+
+      <!-- ════════════════════════════════════════
+           CHAPITRE 4 - ETF ÉLIGIBLES AU PEA
+      ════════════════════════════════════════ -->
+      <section id="s-4" aria-labelledby="h-4">
+        <h2 id="h-4">4. Les ETF éligibles au PEA</h2>
+        <p>Les ETF éligibles au Plan d'Épargne en Actions (PEA) permettent d'accéder à des indices mondiaux tels que le MSCI World, le S&amp;P 500, le Nasdaq-100 ou les marchés émergents, tout en bénéficiant du cadre fiscal spécifique du dispositif.</p>
+        <p>Dans le cadre réglementaire actuel, de nombreux ETF synthétiques, domiciliés dans l'Union européenne et conformes à la directive UCITS, sont compatibles avec le PEA, sous réserve du respect des critères d'éligibilité (domiciliation, structure juridique, composition des actifs).</p>
+        <p>La sélection présentée dans cette section est alignée avec les trois profils d'investissement définis précédemment et repose sur des ETF largement diffusés et régulièrement référencés dans les analyses spécialisées portant sur les ETF éligibles au PEA.</p>
+
+        <h3 id="s-4-1">4.1 Définition d'un ETF</h3>
+        <p>Un ETF (Exchange Traded Fund) est un fonds indiciel coté dont la structure vise à reproduire la performance d'un indice de référence. Il se caractérise par une cotation en continu, une composition définie par la méthodologie de l'indice et un cadre réglementaire conforme aux normes UCITS lorsqu'il est domicilié dans l'Union européenne.</p>
+        <h4>Caractéristiques structurelles</h4>
+        <ul>
+          <li>Réplication physique ou synthétique selon la méthodologie retenue par l'émetteur.</li>
+          <li>Composition alignée sur l'indice de référence, selon des règles de pondération prédéfinies.</li>
+          <li>Cotation sur les marchés réglementés, permettant des opérations d'achat et de vente en continu.</li>
+          <li>Encadrement réglementaire déterminé par la directive UCITS pour les ETF européens.</li>
+        </ul>
+        <h4>ETF éligibles au PEA</h4>
+        <p>Pour être éligible au PEA, un ETF doit respecter :</p>
+        <ul>
+          <li>une domiciliation dans l'Union européenne&nbsp;;</li>
+          <li>une conformité aux règles UCITS&nbsp;;</li>
+          <li>une structure permettant de satisfaire aux critères d'éligibilité propres au PEA, notamment en matière de composition et de réplication.</li>
+        </ul>
+
+        <h3 id="s-4-2">4.2 Avantages et limites des ETF</h3>
+        <p>Les ETF présentent des caractéristiques structurelles qui influencent leur utilisation dans une allocation au sein d'un PEA. Ces éléments relèvent de considérations techniques et opérationnelles, sans constituer une appréciation qualitative.</p>
+        <h4>Caractéristiques structurelles</h4>
+        <ul>
+          <li>Exposition large à un ensemble d'entreprises ou de secteurs via un support unique.</li>
+          <li>Frais de gestion généralement inférieurs à ceux des fonds traditionnels, en raison de leur mode de réplication indicielle.</li>
+          <li>Composition et méthodologie de l'indice répliqué documentées et accessibles publiquement.</li>
+          <li>Accès à des zones géographiques ou des segments de marché variés selon la structure de l'indice.</li>
+        </ul>
+        <h4>Points d'attention</h4>
+        <ul>
+          <li>Sensibilité aux fluctuations des marchés actions, inhérente à leur exposition.</li>
+          <li>Risque de contrepartie dans le cadre des ETF à réplication synthétique, encadré par la réglementation UCITS.</li>
+          <li>Exposition indirecte aux devises étrangères lorsque l'indice répliqué est libellé dans une autre monnaie (risque de change EUR/USD détaillé en section 9.6).</li>
+          <li>Variabilité des caractéristiques opérationnelles (frais, liquidité, taille, politique de prêt de titres) selon les émetteurs.</li>
+        </ul>
+
+        <h3 id="s-4-3">4.3 Critères de sélection d'un ETF éligible au PEA</h3>
+        <p>La sélection des ETF retenus repose sur une approche structurée, adaptée à une utilisation dans un PEA et à une stratégie de long terme.</p>
+        <h4>Principaux critères</h4>
+        <ul>
+          <li>Éligibilité PEA : structure UCITS, domiciliation UE, réplication synthétique conforme.</li>
+          <li>Qualité de l'indice : MSCI World marchés développés, S&amp;P 500 grandes capitalisations américaines, Nasdaq-100 valeurs de croissance, MSCI Emerging Markets marchés émergents.</li>
+          <li>Frais de gestion compétitifs : alignement avec les standards observés dans les comparatifs spécialisés.</li>
+          <li>Taille et liquidité : encours significatifs, volumes adaptés, cotation sur Euronext Paris.</li>
+          <li>Rôle dans les profils : socle mondial, moteur US, exposition croissance ou émergents.</li>
+        </ul>
+        <p>Les références d'ETF (noms, tickers, ISIN) sont fournies à titre informatif. Les gammes peuvent évoluer (changements d'ISIN, fusions, modifications de structure, évolution de l'éligibilité). L'éligibilité au PEA doit être vérifiée auprès de l'émetteur ou de l'intermédiaire financier au moment de l'investissement.</p>
+
+        <h3 id="s-4-4">4.4 Risques associés aux ETF</h3>
+        <p>Les ETF présentent des risques inhérents à leur structure, à leur méthodologie de réplication et aux marchés sous-jacents. Ces risques sont définis par la documentation réglementaire des émetteurs et par le cadre applicable aux organismes de placement collectif.</p>
+        <h4>Risque de marché</h4>
+        <ul>
+          <li>Variation de la valeur liquidative en fonction des fluctuations de l'indice sous-jacent.</li>
+          <li>Sensibilité aux conditions macroéconomiques, sectorielles et géographiques.</li>
+        </ul>
+        <h4>Risque de réplication</h4>
+        <ul>
+          <li>Écarts potentiels entre la performance de l'ETF et celle de l'indice de référence (tracking difference).</li>
+          <li>Contraintes liées à la réplication physique (sélection et pondération des titres) ou synthétique (dépendance au contrat de swap).</li>
+        </ul>
+        <h4>Risque de liquidité</h4>
+        <ul>
+          <li>Variation de la liquidité selon les conditions de marché et la profondeur du carnet d'ordres.</li>
+          <li>Possibilité d'écarts entre le prix de marché et la valeur liquidative indicative.</li>
+        </ul>
+        <h4>Risque opérationnel</h4>
+        <ul>
+          <li>Dépendance aux processus de gestion, de conservation et de compensation.</li>
+          <li>Risques liés aux contreparties dans le cas des ETF à réplication synthétique.</li>
+        </ul>
+        <h4>Risque réglementaire</h4>
+        <ul>
+          <li>Évolutions possibles du cadre réglementaire applicable aux ETF et aux marchés financiers.</li>
+          <li>Impact potentiel sur la composition, la méthodologie ou la disponibilité des supports.</li>
+        </ul>
+
+        <h3 id="s-4-5">4.5 Sélection 2026 des ETF retenus</h3>
+        <p>La sélection ci-dessous est alignée avec les allocations des profils Sécuritaire, Équilibré et Dynamique. Elle constitue un cadre institutionnel fondé sur des ETF couramment utilisés dans le cadre du PEA. Les pondérations finales attribuées à chaque ETF dans les trois profils d'investissement sont détaillées dans la section 6.</p>
+
+        <h4 id="s-4-5-1">4.5.1 iShares MSCI World PEA (WPEA)</h4>
+        <div class="etf-card">
+          <div class="etf-card-title">iShares MSCI World Swap UCITS ETF PEA</div>
+          <dl>
+            <dt>Indice</dt><dd>MSCI World (pays développés)</dd>
+            <dt>Réplication</dt><dd>Synthétique</dd>
+            <dt>Ticker</dt><dd><code>WPEA</code></dd>
+            <dt>ISIN</dt><dd><code>IE0002XZSHO1</code></dd>
+            <dt>Lancement</dt><dd>2023 (échange synthétique éligible PEA)</dd>
+            <dt>TER</dt><dd>0,20 % / an</dd>
+            <dt>Place</dt><dd>Euronext Paris</dd>
+          </dl>
+          <div class="etf-card-role">
+            <strong>Rôle dans les profils :</strong> Profil 1 Sécuritaire : 60 %, Profil 2 Équilibré : 25 %
+          </div>
+        </div>
+
+        <h4 id="s-4-5-2">4.5.2 Amundi S&amp;P 500 PEA (PE500)</h4>
+        <div class="etf-card">
+          <div class="etf-card-title">Amundi ETF S&amp;P 500 PEA</div>
+          <dl>
+            <dt>Indice</dt><dd>S&amp;P 500</dd>
+            <dt>Réplication</dt><dd>Synthétique</dd>
+            <dt>Ticker</dt><dd><code>PE500</code></dd>
+            <dt>ISIN</dt><dd><code>FR0013412285</code></dd>
+            <dt>TER</dt><dd>0,15 % / an</dd>
+            <dt>Place</dt><dd>Euronext Paris</dd>
+          </dl>
+          <div class="etf-card-role">
+            <strong>Rôle dans les profils :</strong> Profil 2 Équilibré : 25 %
+          </div>
+        </div>
+
+        <h4 id="s-4-5-3">4.5.3 Amundi MSCI Emerging Markets PEA (PAEEM)</h4>
+        <div class="etf-card">
+          <div class="etf-card-title">Amundi MSCI Emerging Markets PEA UCITS ETF</div>
+          <dl>
+            <dt>Indice</dt><dd>MSCI Emerging Markets</dd>
+            <dt>Réplication</dt><dd>Synthétique</dd>
+            <dt>Ticker</dt><dd><code>PAEEM</code></dd>
+            <dt>ISIN</dt><dd><code>FR0013412020</code></dd>
+            <dt>TER</dt><dd>0,20 % / an</dd>
+            <dt>Place</dt><dd>Euronext Paris</dd>
+          </dl>
+          <div class="etf-card-role">
+            <strong>Rôle dans les profils :</strong> Profil 3 Dynamique : 25 %
+          </div>
+        </div>
+
+        <h4 id="s-4-5-4">4.5.4 Amundi Nasdaq-100 PEA (PANX)</h4>
+        <div class="etf-card">
+          <div class="etf-card-title">Amundi Nasdaq-100 PEA UCITS ETF</div>
+          <dl>
+            <dt>Indice</dt><dd>Nasdaq-100</dd>
+            <dt>Réplication</dt><dd>Synthétique</dd>
+            <dt>Ticker</dt><dd><code>PANX</code></dd>
+            <dt>ISIN</dt><dd><code>FR0013412269</code></dd>
+            <dt>TER</dt><dd>0,23 % / an</dd>
+            <dt>Place</dt><dd>Euronext Paris</dd>
+          </dl>
+          <div class="etf-card-role">
+            <strong>Rôle dans les profils :</strong> Profil 3 Dynamique : 25 %
+          </div>
+        </div>
+      </section>
+
+      <hr>
+
+      <!-- ════════════════════════════════════════
+           CHAPITRE 5 - PERFORMANCES HISTORIQUES
+      ════════════════════════════════════════ -->
+      <section id="s-5" aria-labelledby="h-5">
+        <h2 id="h-5">5. Performances historiques des indices</h2>
+        <p>L'analyse des performances historiques constitue un indicateur de référence pour appréhender le comportement long terme des principaux indices actions mondiaux. Elle permet d'évaluer la stabilité et la cyclicité des marchés, tout en rappelant que les performances passées ne préjugent pas des performances futures. Les données présentées proviennent de sources publiques reconnues (MSCI, Nasdaq, Curvo, Investing, Macrotrends).</p>
+
+        <h3 id="s-5-1">5.1 Notion de CAGR (Compound Annual Growth Rate)</h3>
+        <p>Le taux de croissance annuel composé (CAGR) mesure la performance annualisée d'un investissement sur une période donnée.</p>
+        <div class="doc-formula">CAGR = (Valeur finale / Valeur initiale)^(1/n) &minus; 1</div>
+        <aside class="doc-note">Les CAGR historiques présentés dans ce document sont exprimés en USD total return (dividendes réinvestis). Les performances en EUR peuvent différer selon les variations du taux de change.</aside>
+
+        <h3 id="s-5-2">5.2 Formule de performance cumulée</h3>
+        <p>La performance cumulée permet d'apprécier la croissance totale d'un indice sur une période longue.</p>
+        <div class="doc-formula">Performance cumulée = (Valeur finale &minus; Valeur initiale) / Valeur initiale</div>
+
+        <h3 id="s-5-3">5.3 Performances historiques</h3>
+        <p>Les performances historiques mentionnées dans cette section sont fournies à titre informatif et reposent sur les données publiées par les fournisseurs d'indices et les émetteurs d'ETF. Elles ne constituent ni une garantie, ni une indication fiable des performances futures. Les marchés financiers peuvent évoluer de manière significative et les rendements passés ne préjugent pas des rendements à venir.</p>
+        <h4>Indices actions mondiaux</h4>
+        <p>Les grands indices actions mondiaux ont enregistré, sur longue période, des trajectoires de performance positives, avec des phases de croissance, de stagnation et de correction. Ces évolutions reflètent les cycles économiques, les politiques monétaires et les dynamiques sectorielles.</p>
+        <h4>Indices américains</h4>
+        <p>Les indices américains ont présenté une progression soutenue sur plusieurs décennies, portée notamment par les secteurs technologiques, industriels et de consommation. Les variations observées dépendent des cycles macroéconomiques, des politiques publiques et des résultats des entreprises.</p>
+        <h4>Marchés émergents</h4>
+        <p>Les marchés émergents ont connu des performances hétérogènes, caractérisées par des phases d'expansion et des périodes de volatilité accrue. Les rendements historiques reflètent des dynamiques structurelles propres à chaque zone géographique.</p>
+        <h4>ETF répliquant ces indices</h4>
+        <p>Les ETF indiciels ont reproduit, selon leur méthodologie de réplication, la performance des indices sous-jacents, sous réserve :</p>
+        <ul>
+          <li>des frais de gestion,</li>
+          <li>des écarts de suivi (tracking difference),</li>
+          <li>des conditions de marché,</li>
+          <li>de la structure de réplication (physique ou synthétique).</li>
+        </ul>
+        <aside class="doc-note">Avertissement : les données historiques sont fournies à titre descriptif uniquement. Voir section 1.3.</aside>
+
+        <hr>
+
+        <h4 id="s-5-3-1">5.3.1 MSCI World (pays développés)</h4>
+        <p><strong>CAGR long terme (1970-2025) :</strong> 9,2 % par an (source : MSCI, total return USD, données à fin 2024).</p>
+        <p><strong>Volatilité (long terme) :</strong> ≈ 12 %-15 % annualisée.</p>
+        <p><strong>Sharpe ratio (long terme) :</strong> ≈ 0,6 - 0,8 (en fonction du taux sans risque et de la période).</p>
+        <p>L'indice MSCI World reflète la performance des marchés actions dans les pays développés, couvrant plus de 1 000 titres de grande et moyenne capitalisation dans 23 marchés développés. Il est considéré comme un référentiel global pour une exposition actions monde développées.</p>
+
+        <h4 id="s-5-3-2">5.3.2 S&amp;P 500 (grandes capitalisations américaines)</h4>
+        <p>Le S&amp;P 500 mesure la performance des 500 plus grandes sociétés américaines cotées en bourse et est souvent utilisé comme référence principale du marché actions américain. Il présente historiquement une tendance haussière structurelle sur longues périodes, malgré les phases de volatilité et de correction.</p>
+        <p>Rappel de performances récentes (illustratives) : 2025 : ≈ +17,9 % total return, 2024 : ≈ +25 % total return, 2023 : ≈ +24 % total return.</p>
+        <p>Ces chiffres reflètent l'importance du marché américain dans les cycles marché récents et sont conformes aux données historiques annuelles pour l'indice S&amp;P 500.</p>
+        <p><strong>CAGR long terme (1957-2025) :</strong> 10,5 % par an (source : SPDJI, total return USD, données à fin 2024).</p>
+
+        <h4 id="s-5-3-3">5.3.3 Nasdaq-100 (valeurs technologiques américaines)</h4>
+        <p>Performances récentes (total return Nasdaq-100) : 2025 : ≈ +21 %, 2024 : ≈ +25,9 %, 2023 : ≈ +55,1 %, 2022 : ≈ &minus;32,4 %.</p>
+        <p>Ces variations illustrent la forte cyclicité et la volatilité élevée du Nasdaq-100, corrélée à la dynamique des grandes valeurs technologiques (poids des leaders tech) et aux phases de marché haussier/baissier.</p>
+        <p><strong>CAGR long terme (1985-2025) :</strong> 14,8 % par an (source : Nasdaq Inc., total return USD, données à fin 2024).</p>
+        <p>Ces performances reflètent la croissance structurelle des grandes valeurs technologiques, accompagnée d'une volatilité significative.</p>
+
+        <h4 id="s-5-3-4">5.3.4 MSCI Emerging Markets (marchés émergents)</h4>
+        <p><strong>CAGR long terme (2000-2025) :</strong> 6 à 7 % par an (source : MSCI, total return USD, données à fin 2024 - estimation, plage de référence).</p>
+        <p><strong>Volatilité (annualisée) :</strong> généralement plus élevée que pour les marchés développés.</p>
+        <p><strong>Sharpe ratio (long terme) :</strong> souvent plus faible que sur les marchés développés, du fait d'une volatilité plus grande et de cycles économiques contrastés.</p>
+        <p>L'indice MSCI Emerging Markets regroupe des sociétés de grandes et moyennes capitalisations de marchés dits émergents (Asie, Amérique latine, Afrique). Il présente un potentiel de croissance attractif, mais cela s'accompagne d'une volatilité plus prononcée que les marchés développés.</p>
+
+        <hr>
+
+        <h3 id="s-5-4">5.4 Cycles de marché</h3>
+        <p>Les marchés financiers évoluent selon des phases successives de hausse, de stagnation et de repli. Ces cycles résultent de facteurs macroéconomiques, microéconomiques et structurels, sans constituer des indicateurs fiables de performances futures.</p>
+        <h4>Phases de hausse</h4>
+        <ul>
+          <li>Progression des indices liée à l'évolution des résultats des entreprises et aux conditions économiques favorables.</li>
+          <li>Contribution de facteurs tels que la croissance nominale, les politiques monétaires accommodantes ou l'expansion sectorielle.</li>
+        </ul>
+        <h4>Phases de stagnation</h4>
+        <ul>
+          <li>Périodes caractérisées par une évolution limitée des indices.</li>
+          <li>Influence de facteurs tels que l'incertitude macroéconomique, les ajustements sectoriels ou les révisions de perspectives.</li>
+        </ul>
+        <h4>Phases de repli</h4>
+        <ul>
+          <li>Diminution de la valorisation des marchés en réponse à des chocs économiques, financiers ou géopolitiques.</li>
+          <li>Impact sur les indices reflétant la contraction des résultats ou la réévaluation des anticipations.</li>
+        </ul>
+        <h4>Cadre analytique</h4>
+        <ul>
+          <li>Les cycles de marché ne suivent pas de périodicité régulière.</li>
+          <li>Leur amplitude et leur durée varient selon les conditions économiques et financières.</li>
+          <li>Les données historiques ne constituent pas une base de projection.</li>
+        </ul>
+        <aside class="doc-note">Avertissement : les cycles historiques décrits ne préjugent pas des évolutions futures. Voir section 1.3.</aside>
+      </section>
+
+      <hr>
+
+      <!-- ════════════════════════════════════════
+           CHAPITRE 6 - CONSTRUCTION DES PORTEFEUILLES
+      ════════════════════════════════════════ -->
+      <section id="s-6" aria-labelledby="h-6">
+        <h2 id="h-6">6. Construction des portefeuilles ETF</h2>
+        <p>La construction d'un portefeuille au sein d'un PEA repose sur une logique de diversification maîtrisée, adaptée au niveau de risque de l'investisseur et à son horizon de placement. Les trois profils présentés dans cette section ont été élaborés afin de proposer des structures simples, robustes et cohérentes, conformes aux contraintes réglementaires du PEA et aux principes de gestion long terme. Chaque portefeuille combine des ETF indiciels éligibles au PEA et des actions de grande qualité, sélectionnées pour leur solidité financière, leur visibilité et leur capacité à traverser différents cycles économiques.</p>
+
+        <h3 id="s-6-0">6.0 Méthodologie de construction (cadre institutionnel)</h3>
+        <p>La méthodologie de construction des portefeuilles repose sur une approche structurée intégrant plusieurs dimensions complémentaires :</p>
+        <ul>
+          <li>une diversification géographique couvrant les principales zones économiques mondiales&nbsp;;</li>
+          <li>une diversification sectorielle permettant de limiter la concentration sur un segment unique&nbsp;;</li>
+          <li>une combinaison d'ETF indiciels et d'actions individuelles sélectionnées selon des critères institutionnels&nbsp;;</li>
+          <li>une gradation du niveau de risque selon trois profils distincts&nbsp;;</li>
+          <li>un contrôle des pondérations afin de maîtriser le risque spécifique.</li>
+        </ul>
+        <p>Cette méthodologie vise à établir des allocations lisibles, reproductibles et adaptées à un horizon long terme.</p>
+
+        <h3 id="s-6-1">6.1 Principes de construction</h3>
+        <p>La construction d'un portefeuille au sein d'un PEA repose sur une diversification structurée selon trois axes complémentaires : géographique, sectorielle et instrumentale. Cette organisation vise à assurer une répartition cohérente des expositions au sein des profils d'investissement.</p>
+        <h4>Diversification géographique</h4>
+        <p>Les ETF retenus couvrent plusieurs zones économiques majeures :</p>
+        <ul>
+          <li>marchés développés mondiaux (MSCI World)&nbsp;;</li>
+          <li>États-Unis (S&amp;P 500, Nasdaq-100)&nbsp;;</li>
+          <li>marchés émergents (MSCI Emerging Markets).</li>
+        </ul>
+        <p>Cette répartition permet d'exposer le portefeuille aux économies matures, aux segments technologiques et aux zones à forte dynamique structurelle.</p>
+
+        <hr>
+
+        <h4>Diversification sectorielle</h4>
+        <p>Les actions et ETF sélectionnés couvrent des secteurs distincts :</p>
+        <ul>
+          <li>industrie et ingénierie&nbsp;;</li>
+          <li>santé et biotechnologies&nbsp;;</li>
+          <li>technologies de croissance&nbsp;;</li>
+          <li>consommation et services essentiels.</li>
+        </ul>
+        <p>Cette structuration limite la concentration sur un secteur unique et favorise la stabilité des performances.</p>
+        <h4>Diversification des instruments</h4>
+        <p>Les portefeuilles combinent :</p>
+        <ul>
+          <li>des ETF indiciels éligibles au PEA, pour une exposition large et systématique&nbsp;;</li>
+          <li>des actions individuelles choisies selon des critères de solidité financière et de visibilité opérationnelle.</li>
+        </ul>
+        <p>Cette combinaison concilie diversification étendue et expositions ciblées.</p>
+        <h4>Progressivité du risque</h4>
+        <p>Les trois profils d'investissement présentent une gradation du niveau de risque :</p>
+        <ul>
+          <li>Profil Sécuritaire : pondération élevée en ETF mondiaux et valeurs défensives&nbsp;;</li>
+          <li>Profil Équilibré : répartition équilibrée entre ETF et actions, avec une exposition accrue aux États-Unis&nbsp;;</li>
+          <li>Profil Dynamique : orientation renforcée vers les moteurs de croissance (technologie, émergents, innovation).</li>
+        </ul>
+        <h4>Contrôle du risque spécifique</h4>
+        <ul>
+          <li>Dans le Profil Équilibré, aucun titre individuel ne dépasse 20 %.</li>
+          <li>Dans le Profil Dynamique, certaines pondérations plus élevées sont assumées, en cohérence avec l'orientation croissance.</li>
+        </ul>
+        <h4>Horizon indicatif des profils</h4>
+        <p>Compte tenu des objectifs de croissance à long terme et de la tolérance au risque, tous les profils sont orientés vers un horizon d'investissement de 10 à 15 ans :</p>
+        <ul>
+          <li>Profil Sécuritaire : 10 à 15 ans, pour bénéficier d'une exposition progressive aux marchés tout en limitant les fluctuations à court terme&nbsp;;</li>
+          <li>Profil Équilibré : 10 à 15 ans, afin de combiner stabilité et potentiel de croissance sur le moyen-long terme&nbsp;;</li>
+          <li>Profil Dynamique : 10 à 15 ans, pour exploiter pleinement les moteurs de croissance à long terme.</li>
+        </ul>
+
+        <hr>
+
+        <h3 id="s-6-2">6.2 Profil 1 : Sécuritaire</h3>
+        <h4>Objectif</h4>
+        <p>Établir une allocation à faible volatilité, structurée autour d'expositions globales et de valeurs défensives, dans une logique de stabilité et de lisibilité.</p>
+        <h4>Allocation, ETF</h4>
+        <ul>
+          <li>iShares MSCI World PEA | Ticker : <code>WPEA</code> | ISIN : <code>IE0002XZSHO1</code> | Place : Euronext Paris | <strong>60 %</strong></li>
+        </ul>
+        <h4>Allocation, Actions</h4>
+        <ul>
+          <li>Air Liquide | Ticker : <code>AI</code> | ISIN : <code>FR0000120073</code> | <strong>20 %</strong></li>
+          <li>Sanofi | Ticker : <code>SAN</code> | ISIN : <code>FR0000120578</code> | <strong>20 %</strong></li>
+        </ul>
+        <h4>Logique du portefeuille</h4>
+        <ul>
+          <li>Exposition mondiale via un ETF large, assurant une couverture diversifiée des marchés développés.</li>
+          <li>Pondération complémentaire en valeurs défensives présentant une visibilité opérationnelle élevée.</li>
+          <li>Structure volontairement simple, orientée vers la stabilité du profil.</li>
+        </ul>
+        <h4>Caractéristiques structurelles</h4>
+        <ul>
+          <li>Allocation concentrée sur des expositions globales et des valeurs à profil défensif.</li>
+          <li>Volatilité attendue inférieure à celle des profils présentant une orientation croissance.</li>
+          <li>Sensibilité réduite aux cycles sectoriels marqués.</li>
+        </ul>
+        <h4>Points d'attention</h4>
+        <ul>
+          <li>Dépendance aux marchés développés via l'ETF mondial.</li>
+          <li>Potentiel de croissance inférieur aux profils présentant une exposition accrue aux moteurs technologiques ou émergents.</li>
+        </ul>
+
+        <hr>
+
+        <h3 id="s-6-3">6.3 Profil 2 : Équilibré</h3>
+        <h4>Objectif</h4>
+        <p>Structurer une allocation intermédiaire articulant expositions globales, pondérations sectorielles diversifiées et répartition équilibrée entre ETF et actions individuelles.</p>
+        <h4>Allocation, ETF</h4>
+        <ul>
+          <li>iShares MSCI World PEA | Ticker : <code>WPEA</code> | ISIN : <code>IE0002XZSHO1</code> | <strong>25 %</strong></li>
+          <li>Amundi S&amp;P 500 PEA | Ticker : <code>PE500</code> | ISIN : <code>FR0013412285</code> | <strong>25 %</strong></li>
+        </ul>
+        <h4>Allocation, Actions</h4>
+        <ul>
+          <li>Thales | Ticker : <code>HO</code> | ISIN : <code>FR0000121329</code> | <strong>20 %</strong></li>
+          <li>Air Liquide | Ticker : <code>AI</code> | ISIN : <code>FR0000120073</code> | <strong>15 %</strong></li>
+          <li>Sanofi | Ticker : <code>SAN</code> | ISIN : <code>FR0000120578</code> | <strong>15 %</strong></li>
+        </ul>
+        <h4>Logique du portefeuille</h4>
+        <ul>
+          <li>Répartition équilibrée entre ETF mondiaux et américains, assurant une couverture large des marchés développés.</li>
+          <li>Pondération complémentaire en actions présentant une visibilité opérationnelle et un positionnement sectoriel structurant.</li>
+          <li>Aucun titre individuel ne dépasse 20 %, limitant la concentration spécifique.</li>
+        </ul>
+        <h4>Caractéristiques structurelles</h4>
+        <ul>
+          <li>Diversification géographique répartie entre expositions mondiales et américaines.</li>
+          <li>Pondérations sectorielles couvrant défense, santé, industrie et services essentiels.</li>
+          <li>Niveau de volatilité intermédiaire entre les profils Sécuritaire et Dynamique.</li>
+        </ul>
+        <h4>Points d'attention</h4>
+        <ul>
+          <li>Sensibilité aux marchés américains via l'exposition au S&amp;P 500.</li>
+          <li>Pondération sectorielle concentrée sur des segments stratégiques.</li>
+          <li>Potentiel de croissance et volatilité situés à un niveau médian dans la gamme des profils.</li>
+        </ul>
+
+        <hr>
+
+        <h3 id="s-6-4">6.4 Profil 3 : Dynamique</h3>
+        <h4>Objectif</h4>
+        <p>Structurer une allocation orientée vers les moteurs de croissance à long horizon, intégrant une exposition accrue aux technologies, aux marchés émergents et aux entreprises à forte intensité d'innovation.</p>
+        <h4>Allocation, ETF</h4>
+        <ul>
+          <li>Amundi Nasdaq-100 PEA | Ticker : <code>PANX</code> | ISIN : <code>FR0013412269</code> | <strong>25 %</strong></li>
+          <li>Amundi MSCI Emerging Markets PEA | Ticker : <code>PAEEM</code> | ISIN : <code>FR0013412020</code> | <strong>25 %</strong></li>
+        </ul>
+        <h4>Allocation, Actions</h4>
+        <ul>
+          <li>Dassault Systèmes | Ticker : <code>DSY</code> | ISIN : <code>FR0014003TT8</code> | <strong>25 %</strong></li>
+          <li>Sartorius Stedim Biotech | Ticker : <code>DIM</code> | ISIN : <code>FR0013154002</code> | <strong>25 %</strong></li>
+        </ul>
+        <h4>Logique du portefeuille</h4>
+        <ul>
+          <li>Exposition renforcée aux secteurs technologiques via le Nasdaq-100.</li>
+          <li>Pondération significative en marchés émergents, reflétant une dynamique structurelle de croissance.</li>
+          <li>Intégration d'actions à forte intensité d'innovation.</li>
+          <li>Structure orientée vers un potentiel de croissance supérieur, avec une volatilité associée plus élevée.</li>
+        </ul>
+        <h4>Caractéristiques structurelles</h4>
+        <ul>
+          <li>Allocation concentrée sur des moteurs de croissance mondiaux.</li>
+          <li>Sensibilité accrue aux cycles technologiques et macroéconomiques.</li>
+          <li>Volatilité structurellement supérieure aux profils Sécuritaire et Équilibré.</li>
+          <li>Exposition combinée aux États-Unis, aux marchés émergents et à l'innovation européenne.</li>
+        </ul>
+        <h4>Points d'attention</h4>
+        <ul>
+          <li>Variabilité potentielle plus marquée en période de correction des marchés technologiques.</li>
+          <li>Sensibilité aux conditions macroéconomiques globales.</li>
+          <li>Pondérations élevées sur des valeurs individuelles, cohérentes avec l'orientation croissance du profil.</li>
+        </ul>
+
+        <hr>
+
+        <h3 id="s-6-5">6.5 Comparatif des allocations</h3>
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Profil</th>
+                <th>ETF</th>
+                <th>Actions</th>
+                <th>Niveau de risque</th>
+                <th>Objectif</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Sécuritaire</strong></td>
+                <td class="num">60 %</td>
+                <td class="num">40 %</td>
+                <td class="risk-low">Faible</td>
+                <td>Exposition aux marchés développés avec maîtrise du risque</td>
+              </tr>
+              <tr>
+                <td><strong>Équilibré</strong></td>
+                <td class="num">50 %</td>
+                <td class="num">50 %</td>
+                <td class="risk-mid">Modéré</td>
+                <td>Performance stable et diversifiée</td>
+              </tr>
+              <tr>
+                <td><strong>Dynamique</strong></td>
+                <td class="num">50 %</td>
+                <td class="num">50 %</td>
+                <td class="risk-hi">Élevé</td>
+                <td>Croissance long terme</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <hr>
+
+      <!-- ════════════════════════════════════════
+           CHAPITRE 7 - SÉLECTION D'ACTIONS
+      ════════════════════════════════════════ -->
+      <section id="s-7" aria-labelledby="h-7">
+        <h2 id="h-7">7. Sélection d'actions éligibles PEA</h2>
+        <p>La sélection d'actions éligibles au PEA constitue un complément stratégique aux ETF indiciels. Les actions permettent d'introduire des convictions ciblées, d'améliorer le rendement potentiel et de renforcer la stabilité du portefeuille grâce à des entreprises de grande qualité, solides financièrement et capables de traverser les cycles économiques. La sélection présentée dans cette section est cohérente avec les trois profils d'investissement définis précédemment et repose sur des sociétés reconnues, liquides et adaptées à une stratégie long terme.</p>
+
+        <h3 id="s-7-0">7.0 Méthodologie de screening</h3>
+        <p>La méthodologie de sélection des actions repose sur un processus structuré visant à identifier des entreprises européennes répondant aux exigences réglementaires du PEA et adaptées à une allocation long terme. Elle s'articule autour des étapes suivantes :</p>
+        <ul>
+          <li>identification de l'univers éligible au PEA&nbsp;;</li>
+          <li>filtrage fondamental basé sur la solidité financière, la visibilité opérationnelle et la stabilité du modèle économique&nbsp;;</li>
+          <li>analyse sectorielle visant à assurer une complémentarité avec les ETF retenus&nbsp;;</li>
+          <li>évaluation de la liquidité et de la capitalisation&nbsp;;</li>
+          <li>sélection finale en cohérence avec les profils d'allocation définis dans la section 6.</li>
+        </ul>
+        <p>Cette méthodologie garantit une sélection robuste, reproductible et conforme aux standards institutionnels.</p>
+
+        <hr>
+
+        <h3 id="s-7-1">7.1 Critères institutionnels de sélection</h3>
+        <p>La sélection repose sur une méthodologie rigoureuse, adaptée à un cadre PEA et à une stratégie long terme.</p>
+        <h4>Critères fondamentaux</h4>
+        <ul>
+          <li>Éligibilité PEA : titres européens répondant aux exigences réglementaires.</li>
+          <li>Solidité financière : bilan robuste, faible endettement, génération de cash flow régulier.</li>
+          <li>Positionnement stratégique : leadership sectoriel, avantage compétitif durable.</li>
+          <li>Visibilité long terme : modèle économique stable, résilience face aux cycles.</li>
+          <li>Historique de performance : croissance régulière, dividendes stables ou progressifs.</li>
+          <li>Liquidité : capitalisation suffisante et volumes quotidiens élevés.</li>
+          <li>Pertinence sectorielle : complémentarité avec les ETF retenus.</li>
+        </ul>
+        <p>Ces critères garantissent une sélection cohérente, robuste et adaptée à une gestion long terme.</p>
+
+        <h3 id="s-7-2">7.2 Actions retenues par zone géographique</h3>
+        <p>La sélection d'actions retenues dans ce document couvre principalement la zone Europe, conformément aux exigences d'éligibilité du PEA. Les entreprises sélectionnées sont issues de secteurs variés tels que l'industrie, la santé, la technologie, la défense et les biotechnologies. Elles présentent des caractéristiques communes : solidité financière, visibilité opérationnelle, liquidité suffisante et pertinence sectorielle dans une allocation structurée.</p>
+
+        <hr>
+
+        <h3 id="s-7-3">7.3 Rôle des actions dans les profils</h3>
+        <p>L'intégration d'actions individuelles dans un PEA répond à des considérations structurelles liées à la composition du portefeuille et à la répartition des expositions.</p>
+        <h4>Rôle des actions dans la structure du portefeuille</h4>
+        <ul>
+          <li>Contribution à la diversification des sources de performance au sein de l'enveloppe PEA.</li>
+          <li>Possibilité d'intégrer des entreprises présentant une visibilité opérationnelle élevée ou un positionnement sectoriel spécifique.</li>
+          <li>Ajustement de l'exposition sectorielle ou géographique lorsque les ETF ne couvrent pas certains segments de manière granulaire.</li>
+          <li>Renforcement de la cohérence entre l'allocation stratégique et les caractéristiques propres à chaque profil d'investissement.</li>
+        </ul>
+        <h4>Sélection orientée long terme</h4>
+        <p>Les actions retenues répondent à des critères institutionnels tels que :</p>
+        <ul>
+          <li>solidité financière&nbsp;;</li>
+          <li>stabilité du modèle économique&nbsp;;</li>
+          <li>liquidité&nbsp;;</li>
+          <li>pertinence sectorielle dans une allocation structurée.</li>
+        </ul>
+
+        <h3 id="s-7-4">7.4 Profil Sécuritaire</h3>
+        <p>Le profil Sécuritaire privilégie des entreprises stables, peu volatiles et disposant d'un historique solide.</p>
+        <h4>Actions retenues</h4>
+        <div class="action-card">
+          <div class="action-card-name">Air Liquide</div>
+          <div class="action-card-meta">Ticker : <code>AI</code> | ISIN : <code>FR0000120073</code> | Place : Euronext Paris</div>
+        </div>
+        <div class="action-card">
+          <div class="action-card-name">Sanofi</div>
+          <div class="action-card-meta">Ticker : <code>SAN</code> | ISIN : <code>FR0000120578</code> | Place : Euronext Paris</div>
+        </div>
+        <h4>Justification</h4>
+        <ul>
+          <li>Air Liquide : acteur mondial des gaz industriels, modèle résilient, forte visibilité.</li>
+          <li>Sanofi : grande entreprise pharmaceutique, revenus récurrents, stabilité des dividendes.</li>
+        </ul>
+        <p>Ces deux valeurs renforcent la stabilité du portefeuille et complètent efficacement l'exposition mondiale apportée par l'ETF MSCI World.</p>
+
+        <hr>
+
+        <h3 id="s-7-5">7.5 Profil Équilibré</h3>
+        <p>Le profil Équilibré combine stabilité et performance, avec une exposition plus marquée à des secteurs stratégiques.</p>
+        <h4>Actions retenues</h4>
+        <div class="action-card">
+          <div class="action-card-name">Thales</div>
+          <div class="action-card-meta">Ticker : <code>HO</code> | ISIN : <code>FR0000121329</code> | Place : Euronext Paris</div>
+        </div>
+        <div class="action-card">
+          <div class="action-card-name">Air Liquide</div>
+          <div class="action-card-meta">Ticker : <code>AI</code> | ISIN : <code>FR0000120073</code> | Place : Euronext Paris</div>
+        </div>
+        <div class="action-card">
+          <div class="action-card-name">Sanofi</div>
+          <div class="action-card-meta">Ticker : <code>SAN</code> | ISIN : <code>FR0000120578</code> | Place : Euronext Paris</div>
+        </div>
+        <h4>Justification</h4>
+        <ul>
+          <li>Thales : acteur majeur de la défense, de l'aéronautique et de la cybersécurité, croissance soutenue.</li>
+          <li>Air Liquide et Sanofi : piliers défensifs assurant stabilité et résilience.</li>
+        </ul>
+        <p>Cette combinaison permet d'équilibrer croissance, stabilité et diversification sectorielle.</p>
+
+        <h3 id="s-7-6">7.6 Profil Dynamique</h3>
+        <p>Le profil Dynamique vise une croissance long terme plus élevée, en assumant une volatilité supérieure.</p>
+        <h4>Actions retenues</h4>
+        <div class="action-card">
+          <div class="action-card-name">Dassault Systèmes</div>
+          <div class="action-card-meta">Ticker : <code>DSY</code> | ISIN : <code>FR0014003TT8</code> | Place : Euronext Paris</div>
+        </div>
+        <div class="action-card">
+          <div class="action-card-name">Sartorius Stedim Biotech</div>
+          <div class="action-card-meta">Ticker : <code>DIM</code> | ISIN : <code>FR0013154002</code> | Place : Euronext Paris</div>
+        </div>
+        <h4>Justification</h4>
+        <ul>
+          <li>Dassault Systèmes : leader mondial des logiciels industriels, forte croissance structurelle.</li>
+          <li>Sartorius Stedim Biotech : acteur clé des biotechnologies, potentiel élevé mais volatilité plus importante.</li>
+        </ul>
+        <p>Ces valeurs complètent l'exposition croissance apportée par le Nasdaq-100 et les marchés émergents.</p>
+
+        <hr>
+
+        <h3 id="s-7-7">7.7 Répartition des pondérations par profil</h3>
+        <p>Les pondérations des actions dans chaque profil ont été définies pour assurer une cohérence globale du portefeuille.</p>
+        <h4>Profil Sécuritaire</h4>
+        <ul>
+          <li>Air Liquide : 20 %</li>
+          <li>Sanofi : 20 %</li>
+        </ul>
+        <h4>Profil Équilibré</h4>
+        <ul>
+          <li>Thales : 20 %</li>
+          <li>Air Liquide : 15 %</li>
+          <li>Sanofi : 15 %</li>
+        </ul>
+        <h4>Profil Dynamique</h4>
+        <ul>
+          <li>Dassault Systèmes : 25 %</li>
+          <li>Sartorius Stedim Biotech : 25 %</li>
+        </ul>
+        <p>Ces pondérations sont cohérentes avec les allocations ETF présentées dans la section 6.</p>
+
+        <h3 id="s-7-8">7.8 Rendements attendus par profil</h3>
+        <p>Les rendements présentés dans cette section reposent sur des hypothèses techniques utilisées dans le cadre des simulations financières du document. Ces hypothèses sont fournies à titre illustratif.</p>
+        <aside class="doc-note">Avertissement : les hypothèses de rendement ne constituent pas des indicateurs fiables de performances futures. Voir section 1.3.</aside>
+        <h4>Profil Sécuritaire</h4>
+        <ul>
+          <li>Rendement annuel retenu : <strong>5 %</strong></li>
+          <li>Justification : allocation majoritairement orientée vers le MSCI World (WPEA, 60 %), complétée par des valeurs défensives sélectionnées (Air Liquide, Sanofi). Ce taux est cohérent avec les estimations long terme du MSCI World (CAGR 1970-2025 : 9,2 %) après application d'une marge de prudence pour frais, fiscalité et aléas de marché.</li>
+          <li>Scénario pessimiste : 3 % (phase de stagnation à l'instar de 2000-2010).</li>
+          <li>Scénario optimiste : 7 % (marchés développés favorables, dividendes réinvestis).</li>
+          <li>Volatilité attendue : modérée (&minus;15 %/&minus;20 % en scénario adverse extrême).</li>
+        </ul>
+        <h4>Profil Équilibré</h4>
+        <ul>
+          <li>Rendement annuel retenu : <strong>7 %</strong></li>
+          <li>Justification : exposition répartie entre ETF mondiaux (WPEA 25 %), ETF américains (S&amp;P 500 25 %) et actions sectorielles défensives (Thales 20 %, Air Liquide 15 %, Sanofi 15 %). Le taux de 7 % constitue une hypothèse intermédiaire entre les performances historiques du MSCI World (9,2 %) et du S&amp;P 500 (10,5 %) après marge de prudence.</li>
+          <li>Scénario pessimiste : 4 % (corrélation accrue des actifs en crise systémique).</li>
+          <li>Scénario optimiste : 10 % (phase haussière durable sur les marchés développés).</li>
+          <li>Volatilité projetée : intermédiaire (&minus;20 %/&minus;30 % en scénario adverse extrême).</li>
+        </ul>
+        <h4>Profil Dynamique</h4>
+        <ul>
+          <li>Rendement annuel retenu : <strong>10 %</strong></li>
+          <li>Justification : exposition renforcée aux technologies (Nasdaq-100 PANX 25 %), aux marchés émergents (PAEEM 25 %) et à des valeurs à forte croissance (Dassault Systèmes 25 %, Sartorius Stedim Biotech 25 %). Ce taux est cohérent avec le CAGR long terme du Nasdaq-100 (14,8 % sur 1985-2025) après marge de prudence pour les cycles baissiers (2000-2002, 2008, 2022).</li>
+          <li>Scénario pessimiste : 5 % (décompression des valorisations technologiques).</li>
+          <li>Scénario optimiste : 15 % (accélération de la croissance des secteurs innovants).</li>
+          <li>Volatilité attendue : élevée (&minus;35 %/&minus;50 % en scénario de crise sectorielle).</li>
+        </ul>
+        <h4>Tableau de synthèse des rendements retenus</h4>
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Profil</th>
+                <th>Rendement retenu</th>
+                <th>Pessimiste</th>
+                <th>Optimiste</th>
+                <th>Volatilité</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Sécuritaire</strong></td>
+                <td class="num">5 %</td>
+                <td class="num">3 %</td>
+                <td class="num">7 %</td>
+                <td>Modérée</td>
+              </tr>
+              <tr>
+                <td><strong>Équilibré</strong></td>
+                <td class="num">7 %</td>
+                <td class="num">4 %</td>
+                <td class="num">10 %</td>
+                <td>Intermédiaire</td>
+              </tr>
+              <tr>
+                <td><strong>Dynamique</strong></td>
+                <td class="num">10 %</td>
+                <td class="num">5 %</td>
+                <td class="num">15 %</td>
+                <td>Élevée</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Ces hypothèses sont utilisées dans les simulations des chapitres 8.2 à 8.5. Voir notamment le tableau comparatif (8.2), le tableau de robustesse (8.3) et les ratios professionnels (8.5).</p>
+      </section>
+
+      <hr>
+
+      <!-- ════════════════════════════════════════
+           CHAPITRE 8 - SIMULATIONS FINANCIÈRES
+      ════════════════════════════════════════ -->
+      <section id="s-8" aria-labelledby="h-8">
+        <h2 id="h-8">8. Simulations financières</h2>
+        <p>Les simulations financières présentées dans cette section illustrent l'évolution potentielle d'un portefeuille PEA selon trois profils d'investissement (Sécuritaire, Équilibré, Dynamique) sur des horizons paramétrables de 5 à 30 ans. Elles reposent sur des hypothèses paramétrables et ne constituent pas une projection réelle des marchés.</p>
+
+        <h3 id="s-8-0">8.0 Hypothèses générales des simulations</h3>
+        <p>Les simulations reposent sur un ensemble d'hypothèses techniques permettant de modéliser l'évolution d'un portefeuille dans un cadre institutionnel. Elles sont entièrement paramétrables et doivent être ajustées par l'utilisateur selon ses propres hypothèses.</p>
+        <p>Les paramètres généraux incluent :</p>
+        <ul>
+          <li>capital initial&nbsp;;</li>
+          <li>montant des versements mensuels&nbsp;;</li>
+          <li>rendement annuel retenu&nbsp;;</li>
+          <li>durée d'investissement&nbsp;;</li>
+          <li>valeur future du capital seul&nbsp;;</li>
+          <li>valeur future des versements&nbsp;;</li>
+          <li>valeur future totale.</li>
+        </ul>
+        <p>Les paramètres sont ajustables selon les hypothèses propres à chaque utilisateur. Toutes les simulations, comparaisons et analyses de sensibilité reposent directement sur ces données, qui constituent la base de calcul unique du module financier.</p>
+        <p>Les projections interactives associées à cette section sont disponibles dans la page de simulation : <a href="simulation_pea.html">simulation_pea.html</a>.</p>
+
+        <h3 id="s-8-1">8.1 Présentation des trois profils</h3>
+        <p>Cette section présente les paramètres nécessaires au calcul de la valeur future d'un portefeuille pour chacun des trois profils d'investissement.</p>
+        <p>Les éléments suivants sont définis pour chaque profil :</p>
+        <ul>
+          <li>capital initial&nbsp;;</li>
+          <li>versements mensuels&nbsp;;</li>
+          <li>rendement annuel retenu&nbsp;;</li>
+          <li>durée d'investissement&nbsp;;</li>
+          <li>valeur future du capital seul&nbsp;;</li>
+          <li>valeur future des versements&nbsp;;</li>
+          <li>valeur future totale.</li>
+        </ul>
+        <p>Ces paramètres constituent la base de calcul de l'ensemble des simulations financières.</p>
+
+        <hr>
+
+        <h3 id="s-8-2">8.2 Tableau comparatif des profils</h3>
+        <p>Ce tableau compare les trois profils d'investissement à partir des paramètres définis dans la section précédente. Il permet d'observer, pour chaque profil : le capital initial, les versements mensuels, le rendement annuel retenu, la durée d'investissement, la valeur future du capital seul, la valeur future des versements et la valeur future totale.</p>
+        <p>L'objectif est de fournir une lecture immédiate des différences structurelles entre les profils.</p>
+        <p>En modifiant les hypothèses (rendement, durée, versements), l'utilisateur peut visualiser :</p>
+        <ul>
+          <li>l'évolution de la valeur future selon le niveau de risque choisi&nbsp;;</li>
+          <li>l'impact relatif du capital initial et des versements réguliers&nbsp;;</li>
+          <li>l'influence du rendement sur la croissance long terme&nbsp;;</li>
+          <li>la cohérence entre les paramètres et les résultats obtenus.</li>
+        </ul>
+        <p>La seconde partie du tableau calcule automatiquement :</p>
+        <ul>
+          <li>le montant total investi&nbsp;;</li>
+          <li>le gain net&nbsp;;</li>
+          <li>le ratio gain sur investi&nbsp;;</li>
+          <li>la part de la valeur finale provenant du capital initial&nbsp;;</li>
+          <li>la part provenant des versements&nbsp;;</li>
+          <li>la performance cumulée&nbsp;;</li>
+          <li>la performance annualisée&nbsp;;</li>
+          <li>l'effort d'épargne.</li>
+        </ul>
+        <p>Ces indicateurs permettent d'évaluer l'efficacité structurelle de chaque profil.</p>
+
+        <h3 id="s-8-3">8.3 Tableau de robustesse</h3>
+        <p>Ce tableau analyse la solidité structurelle de chaque profil d'investissement. Il ne mesure pas la performance brute, mais la capacité du portefeuille à :</p>
+        <ul>
+          <li>résister aux chocs&nbsp;;</li>
+          <li>limiter les pertes&nbsp;;</li>
+          <li>maintenir un équilibre cohérent entre stabilité et performance.</li>
+        </ul>
+        <p>Les indicateurs sont calculés automatiquement à partir des données saisies dans les sections précédentes.</p>
+
+        <hr>
+
+        <h4>8.3.1 Indicateurs de stabilité</h4>
+        <p>Cette section évalue trois dimensions essentielles :</p>
+        <ul>
+          <li>multiplicateur de résilience : capacité du profil à absorber un choc négatif et à revenir vers sa valeur neutre&nbsp;;</li>
+          <li>sensibilité globale : ampleur de la perte relative entre un scénario neutre et un scénario pessimiste&nbsp;;</li>
+          <li>ratio stabilité sur performance : quantité de stabilité obtenue pour chaque unité de performance.</li>
+        </ul>
+        <p>Ces indicateurs permettent d'identifier les profils les plus robustes, indépendamment des rendements attendus.</p>
+
+        <h4>8.3.2 Sensibilité au rendement (stress léger)</h4>
+        <p>Ce tableau simule l'impact de variations modérées du rendement annuel (+1 %, &minus;1 %, +5 %, &minus;5 %) sur la valeur finale du portefeuille. Il permet d'évaluer :</p>
+        <ul>
+          <li>la sensibilité du portefeuille aux fluctuations normales du marché&nbsp;;</li>
+          <li>la stabilité de la trajectoire de croissance&nbsp;;</li>
+          <li>la cohérence entre le niveau de risque choisi et la volatilité attendue.</li>
+        </ul>
+        <p>Cette analyse illustre les écarts de performance possibles dans des conditions légèrement favorables ou défavorables.</p>
+
+        <h4>8.3.3 Scénarios (stress test réel)</h4>
+        <p>Cette section projette les portefeuilles dans des scénarios extrêmes :</p>
+        <ul>
+          <li>scénario pessimiste (rendement fortement réduit)&nbsp;;</li>
+          <li>scénario neutre (rendement nominal)&nbsp;;</li>
+          <li>scénario optimiste (rendement fortement augmenté)&nbsp;;</li>
+          <li>scénario manuel (coefficient défini par l'utilisateur).</li>
+        </ul>
+        <p>Elle met en évidence :</p>
+        <ul>
+          <li>la résistance du portefeuille en cas de choc sévère&nbsp;;</li>
+          <li>l'amplitude des variations extrêmes&nbsp;;</li>
+          <li>la sensibilité du profil aux hypothèses de rendement.</li>
+        </ul>
+        <p>Cet outil permet d'évaluer la vulnérabilité ou la résilience d'une stratégie face à des événements rares.</p>
+
+        <h4>8.3.4 Robustesse structurelle (composition réelle)</h4>
+        <p>Ce tableau analyse la composition réelle de chaque profil, en prenant en compte :</p>
+        <ul>
+          <li>la part investie en ETF&nbsp;;</li>
+          <li>la part investie en actions individuelles&nbsp;;</li>
+          <li>l'exposition au secteur technologique&nbsp;;</li>
+          <li>la répartition géographique (États-Unis, Europe, marchés émergents)&nbsp;;</li>
+          <li>le score de robustesse associé à cette structure.</li>
+        </ul>
+        <p>Il permet d'évaluer la solidité intrinsèque du portefeuille, indépendamment des performances financières.</p>
+
+        <h4>8.3.5 Synthèse finale</h4>
+        <p>Cette synthèse attribue à chaque profil un score global de robustesse, calculé à partir des indicateurs précédents. Elle permet d'établir un classement des profils selon leur capacité à :</p>
+        <ul>
+          <li>absorber les chocs&nbsp;;</li>
+          <li>maintenir une stabilité structurelle&nbsp;;</li>
+          <li>transformer efficacement la performance en robustesse.</li>
+        </ul>
+        <p>Ce classement constitue un repère pour identifier le profil offrant le meilleur équilibre entre stabilité, performance et résistance aux variations de marché.</p>
+
+        <h3 id="s-8-4">8.4 Tableau des risques</h3>
+        <p>Ce tableau analyse la structure de risque de chaque profil en examinant :</p>
+        <ul>
+          <li>la répartition entre ETF et actions individuelles&nbsp;;</li>
+          <li>l'exposition sectorielle&nbsp;;</li>
+          <li>la répartition géographique&nbsp;;</li>
+          <li>le niveau de concentration&nbsp;;</li>
+          <li>le score de risque global.</li>
+        </ul>
+        <p>Il fournit une lecture synthétique du niveau de risque structurel associé à chaque allocation. Les indicateurs permettent d'évaluer :</p>
+        <ul>
+          <li>la diversification automatique via les ETF&nbsp;;</li>
+          <li>l'exposition au risque spécifique via les actions individuelles&nbsp;;</li>
+          <li>la sensibilité au secteur technologique&nbsp;;</li>
+          <li>la dépendance aux zones géographiques&nbsp;;</li>
+          <li>la concentration ou la diversification du portefeuille.</li>
+        </ul>
+        <p>Les cellules sont paramétrables : toute modification des pourcentages met automatiquement à jour le score de risque.</p>
+
+        <h3 id="s-8-5">8.5 Ratios professionnels</h3>
+        <p>Ce tableau regroupe les principaux ratios utilisés en gestion de portefeuille afin d'évaluer la qualité structurelle des trois profils. Il se concentre sur la cohérence interne de l'allocation et non sur la performance. Les ratios permettent d'analyser :</p>
+        <ul>
+          <li>l'équilibre entre actions individuelles et ETF&nbsp;;</li>
+          <li>l'exposition relative aux marchés américains et européens&nbsp;;</li>
+          <li>la part investie dans le secteur technologique&nbsp;;</li>
+          <li>l'exposition aux marchés émergents&nbsp;;</li>
+          <li>le ratio de concentration&nbsp;;</li>
+          <li>le ratio de diversification&nbsp;;</li>
+          <li>le score professionnel global.</li>
+        </ul>
+        <p>Les valeurs initiales sont neutres et se mettent automatiquement à jour en fonction des allocations saisies. Ce tableau constitue un outil d'évaluation objective de la cohérence structurelle de chaque profil.</p>
+      </section>
+
+      <hr>
+
+      <!-- ════════════════════════════════════════
+           CHAPITRE 9 - ANALYSE DES RISQUES
+      ════════════════════════════════════════ -->
+      <section id="s-9" aria-labelledby="h-9">
+        <h2 id="h-9">9. Analyse des risques</h2>
+        <p>L'analyse des risques constitue un élément central de toute démarche d'investissement structurée. Elle vise à identifier les facteurs susceptibles d'affecter la performance d'un portefeuille, à en mesurer l'ampleur potentielle et à évaluer la capacité des allocations retenues à absorber les chocs de marché. Les éléments présentés s'inscrivent dans une approche prudente, rationnelle et orientée long terme.</p>
+
+        <h3 id="s-9-1">9.1 Volatilité des marchés</h3>
+        <p>La volatilité représente l'amplitude des variations de prix observées sur les marchés financiers. Elle constitue un indicateur central du risque de marché et reflète la sensibilité d'un portefeuille aux fluctuations économiques, sectorielles ou géopolitiques.</p>
+        <h4>Sources de volatilité</h4>
+        <ul>
+          <li>variations rapides des anticipations économiques&nbsp;;</li>
+          <li>publications de résultats d'entreprises&nbsp;;</li>
+          <li>décisions de politique monétaire&nbsp;;</li>
+          <li>tensions géopolitiques&nbsp;;</li>
+          <li>mouvements sectoriels ou technologiques.</li>
+        </ul>
+        <h4>Impact sur les portefeuilles</h4>
+        <ul>
+          <li>augmentation de l'incertitude sur la valeur future des actifs&nbsp;;</li>
+          <li>fluctuations plus marquées pour les portefeuilles orientés croissance&nbsp;;</li>
+          <li>résilience plus élevée pour les portefeuilles diversifiés et défensifs.</li>
+        </ul>
+        <h4>Atténuation du risque</h4>
+        <ul>
+          <li>diversification géographique et sectorielle&nbsp;;</li>
+          <li>pondération équilibrée entre ETF et actions individuelles&nbsp;;</li>
+          <li>exposition maîtrisée aux secteurs cycliques.</li>
+        </ul>
+
+        <h3 id="s-9-2">9.2 Risques macroéconomiques</h3>
+        <p>Les portefeuilles sont exposés à plusieurs risques macroéconomiques majeurs :</p>
+        <ul>
+          <li>inflation : impact sur les rendements réels et les politiques monétaires&nbsp;;</li>
+          <li>taux d'intérêt : influence directe sur les valorisations&nbsp;;</li>
+          <li>croissance économique : ralentissements ou récessions affectant les bénéfices des entreprises&nbsp;;</li>
+          <li>politiques publiques : fiscalité, régulation sectorielle, dépenses publiques&nbsp;;</li>
+          <li>géopolitique : conflits, ruptures d'approvisionnement, sanctions économiques.</li>
+        </ul>
+        <p>La diversification géographique et sectorielle des ETF retenus contribue à atténuer l'exposition à ces risques.</p>
+
+        <hr>
+
+        <h3 id="s-9-3">9.3 Risques extrêmes</h3>
+        <p>Les risques extrêmes correspondent à des événements rares mais susceptibles de provoquer des corrections rapides et profondes :</p>
+        <ul>
+          <li>crises financières majeures&nbsp;;</li>
+          <li>chocs géopolitiques&nbsp;;</li>
+          <li>crises sanitaires&nbsp;;</li>
+          <li>ruptures technologiques&nbsp;;</li>
+          <li>défaillances systémiques.</li>
+        </ul>
+        <p>Les stress tests présentés dans la section 8 permettent d'apprécier la sensibilité des profils à ces scénarios extrêmes. Le profil Sécuritaire demeure le plus résilient, tandis que le profil Dynamique présente une sensibilité plus élevée, en cohérence avec son orientation croissance.</p>
+
+        <h3 id="s-9-4">9.4 Fiscalité en cas de clôture</h3>
+        <p>La fiscalité applicable en cas de clôture du PEA dépend de la date du retrait et du cadre réglementaire en vigueur.</p>
+        <h4>Clôture avant cinq ans</h4>
+        <ul>
+          <li>tout retrait avant cinq ans entraîne la clôture du plan, sauf cas dérogatoires prévus par la loi&nbsp;;</li>
+          <li>les gains réalisés sont soumis à l'impôt sur le revenu selon le régime applicable à la date de clôture&nbsp;;</li>
+          <li>les prélèvements sociaux s'appliquent au taux en vigueur au moment de la clôture (18,6 % en 2026). En cas d'application du PFU, la fiscalité peut atteindre 31,4 % (12,8 % IR + 18,6 %).</li>
+        </ul>
+        <h4>Clôture après cinq ans</h4>
+        <ul>
+          <li>les retraits effectués après cinq ans n'entraînent pas la clôture du plan&nbsp;;</li>
+          <li>en cas de clôture volontaire après cinq ans, les gains sont exonérés d'impôt sur le revenu&nbsp;;</li>
+          <li>les prélèvements sociaux restent applicables sur les gains réalisés (18,6 % en 2026).</li>
+        </ul>
+        <h4>Cas particuliers</h4>
+        <p>Certaines situations prévues par la réglementation (invalidité, licenciement, retraite anticipée, etc.) peuvent permettre un retrait anticipé sans clôture ou avec un régime fiscal spécifique.</p>
+        <h4>Cadre réglementaire</h4>
+        <p>Les règles applicables à la clôture du PEA sont définies par le Code général des impôts et les textes réglementaires associés.</p>
+
+        <hr>
+
+        <h3 id="s-9-5">9.5 Risques liés au fournisseur d'ETF</h3>
+        <p>Les ETF présentent des risques spécifiques liés à leur émetteur ou fournisseur. Ces risques ne concernent pas la performance de l'indice répliqué, mais la capacité opérationnelle de l'émetteur à assurer la gestion du fonds.</p>
+        <h4>Principaux risques</h4>
+        <ul>
+          <li>risque opérationnel : dépendance aux processus internes de gestion, de conservation et de compensation&nbsp;;</li>
+          <li>risque de contrepartie : notamment dans le cadre des ETF à réplication synthétique&nbsp;;</li>
+          <li>risque de liquidité : capacité de l'émetteur à maintenir un marché actif sur le support&nbsp;;</li>
+          <li>risque réglementaire : évolution des règles UCITS ou des exigences de transparence&nbsp;;</li>
+          <li>risque de structure : modification de la méthodologie de réplication ou de la gamme de produits.</li>
+        </ul>
+        <h4>Atténuation</h4>
+        <ul>
+          <li>sélection d'émetteurs reconnus et conformes aux normes UCITS&nbsp;;</li>
+          <li>vérification régulière de l'éligibilité PEA&nbsp;;</li>
+          <li>diversification entre plusieurs émetteurs lorsque cela est possible.</li>
+        </ul>
+
+        <hr>
+
+        <h3 id="s-9-6">9.6 Risque de change</h3>
+        <p>Les ETF éligibles PEA répliquent des indices libellés majoritairement en USD (MSCI World, S&amp;P 500, Nasdaq-100, MSCI Emerging Markets). Bien que ces ETF soient cotés en EUR sur Euronext Paris, leur valeur liquidative dépend directement des variations du taux de change EUR/USD.</p>
+        <h4>Nature du risque</h4>
+        <p>Un affaiblissement de l'euro face au dollar (EUR/USD en baisse) augmente la valeur en euros des actifs sous-jacents. Inversement, un renforcement de l'euro (EUR/USD en hausse) réduit la valeur liquidative de ces ETF, indépendamment de la performance de l'indice en devise locale.</p>
+        <h4>Exposition par profil</h4>
+        <ul>
+          <li>Sécuritaire : exposition USD indirecte d'environ 60 % (WPEA 60 %).</li>
+          <li>Équilibré : exposition USD indirecte d'environ 25 à 40 % (WPEA 25 %, S&amp;P 500 PEA 25 %).</li>
+          <li>Dynamique : exposition USD indirecte d'environ 50 % (Nasdaq-100 PEA 25 %, MSCI EM PEA 25 %).</li>
+        </ul>
+        <p>Les actions françaises en portefeuille (Air Liquide, Sanofi, Thales, Dassault Systèmes, Sartorius Stedim Biotech) sont cotées en EUR mais peuvent être exposées à des revenus internationaux en devises étrangères.</p>
+        <h4>Couverture</h4>
+        <p>Les ETF sélectionnés (<code>WPEA</code>, <code>PE500</code>, <code>PANX</code>, <code>PAEEM</code>) ne sont pas couverts contre le risque de change (non hedgés). Cette absence de couverture est intentionnelle sur le long terme : les études académiques montrent que sur des horizons supérieurs à 10 ans, la couverture de change génère un coût net sans réduire significativement la volatilité.</p>
+        <h4>Conséquences sur les simulations</h4>
+        <p>Les rendements simulés dans ce document (5 %, 7 %, 10 %) sont exprimés en EUR, après application d'une marge de prudence qui intègre implicitement un effet de change adverse moyen. Les CAGR historiques de référence (section 7.8) sont exprimés en USD total return ; les performances réalisées en EUR sur la période 1970-2025 peuvent différer de ±1 à ±2 % par an selon les cycles de change.</p>
+      </section>
+
+      <hr>
+
+      <!-- ════════════════════════════════════════
+           CHAPITRE 10 - CADRE MÉTHODOLOGIQUE
+      ════════════════════════════════════════ -->
+      <section id="s-10" aria-labelledby="h-10">
+        <h2 id="h-10">10. Cadre méthodologique complémentaire</h2>
+        <p>Les éléments présentés dans cette section relèvent d'un cadre méthodologique général applicable aux trois profils définis dans le document. Ils sont strictement informatifs et descriptifs. Ils ne constituent ni un conseil personnalisé, ni une orientation, ni une recommandation d'investissement.</p>
+
+        <h3 id="s-10-1">10.1 Principes de gestion</h3>
+        <p>La sélection d'un profil relève de paramètres individuels (horizon de placement, tolérance au risque, structure patrimoniale). Le document présente trois profils (Sécuritaire, Équilibré et Dynamique) correspondant à des niveaux d'exposition distincts aux marchés actions, aux secteurs et aux zones géographiques.</p>
+        <p>Chaque profil présente une structure d'allocation définie, un niveau de volatilité attendu et une sensibilité propre aux cycles économiques et sectoriels. Ces éléments constituent un cadre d'analyse exclusivement informatif ; ils ne doivent en aucun cas être interprétés comme une orientation ou une recommandation personnalisée.</p>
+
+        <h3 id="s-10-2">10.2 Considérations opérationnelles</h3>
+        <p>Les versements réguliers sont parfois utilisés pour lisser l'exposition dans le temps et réduire l'impact des variations de marché sur le prix d'acquisition moyen. Ce mécanisme est décrit à titre informatif ; il ne constitue pas une recommandation d'investissement. Les modalités de versement (fréquence, montant, durée) relèvent de la situation propre à chaque investisseur et ne sont pas déterminées dans ce document.</p>
+
+        <h3 id="s-10-3">10.3 Thématiques techniques</h3>
+        <p>Les éléments suivants relèvent de thématiques techniques parfois observées en gestion long terme d'un PEA :</p>
+        <ul>
+          <li>maintien d'une allocation cohérente avec le profil retenu&nbsp;;</li>
+          <li>rééquilibrage périodique&nbsp;;</li>
+          <li>suivi des pondérations sectorielles et géographiques&nbsp;;</li>
+          <li>prise en compte des évolutions réglementaires du PEA&nbsp;;</li>
+          <li>vérification de l'éligibilité des supports.</li>
+        </ul>
+        <p>Ces éléments ne constituent pas des recommandations opérationnelles et doivent être adaptés aux contraintes propres à chaque investisseur ou structure professionnelle.</p>
+      </section>
+
+      <hr>
+
+      <!-- ════════════════════════════════════════
+           CHAPITRE 11 - CONCLUSION
+      ════════════════════════════════════════ -->
+      <section id="s-11" aria-labelledby="h-11">
+        <h2 id="h-11">11. Conclusion</h2>
+        <p>Cette section présente les sources utilisées, les limites méthodologiques du document et les modalités de mise à jour prévues. Elle s'inscrit dans un cadre institutionnel visant à garantir la transparence, la rigueur et la lisibilité des informations fournies.</p>
+
+        <h3 id="s-11-1">11.1 Sources utilisées</h3>
+        <p>Les informations présentées dans ce document s'appuient sur des sources institutionnelles, réglementaires et financières reconnues. Elles sont utilisées dans un cadre documentaire et ne constituent pas une validation ou une interprétation des données publiées.</p>
+        <h4>Sources réglementaires</h4>
+        <ul>
+          <li>Textes législatifs et réglementaires relatifs au Plan d'Épargne en Actions.</li>
+          <li>Loi n° 2025-1403 du 30 décembre 2025 (LFSS 2026), art. 12, prélèvements sociaux (taux 18,6 % au 1er janvier 2026).</li>
+          <li>Documentation publiée par les autorités compétentes (administration fiscale, autorités de supervision financière).</li>
+          <li>Cadre juridique applicable aux instruments financiers éligibles.</li>
+        </ul>
+        <h4>Sources financières</h4>
+        <ul>
+          <li>Données d'indices fournies par les opérateurs de marché et les fournisseurs d'indices.</li>
+          <li>Informations publiées par les émetteurs d'ETF et d'OPCVM.</li>
+          <li>Données historiques issues des plateformes financières professionnelles.</li>
+        </ul>
+        <h4>Sources institutionnelles complémentaires</h4>
+        <ul>
+          <li>Publications économiques et statistiques émanant d'organismes publics ou internationaux.</li>
+          <li>Documents de référence des sociétés cotées lorsque utilisés dans le cadre de la description des instruments.</li>
+        </ul>
+        <h4>Cadre d'utilisation</h4>
+        <p>Les sources sont utilisées à des fins de structuration, de vérification et de contextualisation des informations. Elles ne constituent pas une recommandation, une analyse personnalisée ou une projection.</p>
+
+        <hr>
+
+        <h3 id="s-11-2">11.2 Limites méthodologiques</h3>
+        <p>Les éléments présentés dans ce document reposent sur des hypothèses techniques, des données historiques et des modèles de simulation. Ils sont soumis à plusieurs limites méthodologiques inhérentes à ce type d'exercice.</p>
+        <h4>Hypothèses de marché</h4>
+        <ul>
+          <li>Les simulations utilisent des hypothèses de rendement et de volatilité qui ne constituent ni des prévisions, ni des indicateurs fiables de performances futures.</li>
+          <li>Les conditions de marché peuvent évoluer de manière significative, entraînant des écarts entre les résultats simulés et les résultats observés.</li>
+        </ul>
+        <h4>Dépendance aux données historiques</h4>
+        <ul>
+          <li>Les données historiques utilisées pour contextualiser les indices et les supports ne préjugent pas de leur évolution future.</li>
+          <li>Les périodes retenues peuvent présenter des biais liés à la conjoncture économique ou aux cycles sectoriels.</li>
+        </ul>
+        <h4>Modèles de simulation</h4>
+        <ul>
+          <li>Les modèles appliqués reposent sur des mécanismes simplifiés ne prenant pas en compte l'ensemble des variables macroéconomiques ou microéconomiques.</li>
+          <li>Les résultats obtenus reflètent une construction théorique et ne constituent pas une projection personnalisée.</li>
+        </ul>
+        <h4>Périmètre des supports</h4>
+        <ul>
+          <li>Les supports analysés sont limités à ceux retenus dans la structure des portefeuilles présentés.</li>
+          <li>Les caractéristiques des instruments financiers peuvent évoluer dans le temps (composition, méthodologie de réplication, frais, liquidité).</li>
+        </ul>
+        <h4>Cadre réglementaire</h4>
+        <ul>
+          <li>Les règles fiscales et réglementaires mentionnées sont susceptibles d'évoluer.</li>
+          <li>Les informations présentées ne constituent pas une interprétation juridique ou fiscale.</li>
+        </ul>
+
+        <h3 id="s-11-3">11.3 Mise à jour future du document</h3>
+        <p>Ce document fera l'objet de mises à jour régulières afin d'intégrer :</p>
+        <ul>
+          <li>les évolutions réglementaires du PEA&nbsp;;</li>
+          <li>les ajustements éventuels des ETF éligibles&nbsp;;</li>
+          <li>les nouvelles données financières pertinentes&nbsp;;</li>
+          <li>les révisions nécessaires des profils d'investissement.</li>
+        </ul>
+        <p>La version actuelle (v2.0, mise à jour 2026) constitue une base de référence amenée à évoluer en fonction des conditions de marché et des bonnes pratiques de gestion.</p>
+
+        <hr>
+
+        <h3 id="s-11-4">11.4 Usage en grande entreprise</h3>
+        <h4>Support méthodologique et juridique</h4>
+        <p>Le présent document fixe le cadre réglementaire, la méthodologie, les avertissements et les limites. Il constitue le référentiel pour un usage institutionnel ou professionnel.</p>
+        <h4>Visualisation des simulations (section 8)</h4>
+        <p>La page de simulation interactive (<a href="simulation_pea.html">simulation_pea.html</a>) permet de visualiser en temps réel les projections financières des trois profils (Sécuritaire, Équilibré, Dynamique). Elle intègre les panneaux suivants : KPI valeurs futures, projections détaillées, distribution des gains, impact TER, progression annuelle, matrice de sensibilité, ajustement inflation, comparaison Livret A et stress tests.</p>
+        <p>Les paramètres (capital initial, versement mensuel, durée, rendements par profil) sont ajustables via des curseurs interactifs. Les calculs reposent sur la capitalisation mensuelle (taux équivalent, norme AMF / MiFID II).</p>
+        <h4>Usage combiné</h4>
+        <p>Le présent document constitue le référentiel méthodologique et juridique. La page <a href="simulation_pea.html">simulation_pea.html</a> sert à la visualisation interactive des projections financières. Ces deux supports sont complémentaires et indépendants l'un de l'autre.</p>
+      </section>
+
+      <hr>
+
+      <!-- ── Avertissement de conclusion ── -->
+      <aside class="doc-note" role="note" aria-label="Avertissement de conclusion">
+        <strong>Avertissement de conclusion :</strong> Le présent document est fourni exclusivement à titre informatif et documentaire. Il ne constitue ni un conseil en investissement personnalisé, ni une recommandation d'achat, de vente ou de conservation d'instruments financiers, ni une offre ou sollicitation à investir. Les simulations, hypothèses et données présentées sont indicatives et ne sauraient engager la responsabilité de l'auteur. Tout investissement en valeurs mobilières comporte un risque de perte en capital, potentiellement total. Les performances passées ne préjugent pas des performances futures. Toute décision d'investissement relève de la responsabilité exclusive de l'investisseur ou de son conseiller habilité.
+      </aside>
+
+      <p style="margin-top:32px;font-size:0.82em;color:var(--text-secondary);text-align:center;">
+        PEA v2.0, Gabriel ROULON, 2026
+      </p>
+
+</main><!-- fin .doc-content -->
+  </div><!-- fin .doc-wrap -->
+
+  <div id="quick-read-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-card">
+      <button class="modal-close" aria-label="Fermer">&times;</button>
+      <div class="modal-title" id="modal-title">Note importante</div>
+      <div class="modal-body">
+        <p>Ce document est élaboré à des fins <strong style="color:var(--text)">éducatives et de démonstration académique</strong>. Il ne constitue pas un conseil en investissement.</p>
+        <p style="margin-top:12px">Les projections et rendements présentés sont basés sur des <strong style="color:var(--text)">hypothèses historiques</strong> et ne garantissent pas les performances futures. Tout investissement comporte des risques de perte en capital.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <span class="footer-name">Gabriel ROULON</span>
+        <span class="footer-sub">PEA v2.0, 2026</span>
+      </div>
+      <div class="footer-col footer-col-right">
+        <a href="mailto:gabriel.roulon@gmail.com" class="footer-contact-link">gabriel.roulon@gmail.com</a>
+        <a href="tel:+33638226821" class="footer-contact-link">06 38 22 68 21</a>
+      </div>
+    </div>
+  </footer>
+  <script>
+    if (window.location.search.indexOf('summary=1') !== -1) {
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          var fab = document.querySelector('.btn-chatbot-fab');
+          if (fab) fab.click();
+        }, 500);
+      });
+    }
+  </script>
+  <script src="common.js" defer></script>
+  <div id="nav-panel" class="nav-panel" role="dialog" aria-modal="true" aria-label="Ressources Vue Jury" aria-hidden="true">
+    <div class="nav-panel-head">
+      <span class="nav-panel-title">Ressources Vue Jury</span>
+      <button class="nav-panel-close" aria-label="Fermer">&times;</button>
+    </div>
+    <div class="nav-panel-body">
+      <div class="nav-section-label">Candidature</div>
+      <div class="nav-links">
+        <a href="profil_personnel.html">Profil personnel</a>
+        <a href="lettre_motivation_ecole.html">Lettre (École)</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-section-label">Projet IT</div>
+      <div class="nav-links">
+        <a href="presentation_synthetique.html">IT Dashboard</a>
+        <a href="init_sequence.html">INIT_SEQUENCE</a>
+        <a href="poc_agents.html">POC Agents</a>
+      </div>
+      <div class="nav-section-label">Finance &amp; Investissement</div>
+      <div class="nav-links">
+        <a href="realisations_doc_financiere.html">Documentation financière</a>
+        <a href="PEA_V2_PRO.html">Étude PEA</a>
+        <a href="simulation_pea.html">Simulation PEA</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var btn = document.getElementById('btn-neophyte');
+      if (!btn) return;
+      document.querySelectorAll('.toc-highlight').forEach(function(a) {
+        var id = a.getAttribute('href').replace('#', '');
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.classList.add('neo-heading');
+        var sib = el.nextElementSibling;
+        while (sib && !sib.matches('h2, h3, hr')) {
+          sib.classList.add('neo-body');
+          sib = sib.nextElementSibling;
+        }
+      });
+      btn.addEventListener('click', function() {
+        var isNeo = document.body.classList.toggle('mode-neo');
+        btn.textContent = isNeo ? 'Vue Pro' : 'Néophyte';
+        btn.classList.toggle('active', isNeo);
+        btn.setAttribute('aria-label', isNeo ? 'Passer en vue professionnelle' : 'Passer en vue néophyte');
+      });
+    });
+  </script>
+  <button class="btn-chatbot-fab"
+          data-summary="Étude PEA v2.0 : document de référence méthodologique, 11 chapitres, version 2026.&#10;Périmètre : fonctionnement PEA, conditions légales, fiscalité, sélection ETF, construction de portefeuilles, simulations.&#10;4 ETF avec ISIN : WPEA (IE000Y7K78Z9), PE500 (FR0013412285), PANX (FR0013412269), PAEEM (FR0013412020).&#10;3 profils détaillés : Sécuritaire (WPEA 60 % + 2 actions), Équilibré (2 ETF + 3 actions), Dynamique (PANX + PAEEM + 2 actions).&#10;Simulations sur 5, 10 et 15 ans. Chapitre 8 : hypothèses, calculs, tableaux comparatifs.&#10;Fiscalité (ch. 3) : retraits avant/après 5 et 8 ans, prélèvements sociaux 18,6 %, plafond versements PEA 150 000 EUR.&#10;Section 9.6 : risque de change EUR/USD analysé par profil. Stress tests PRIIPS inclus.&#10;Référentiel de simulation_pea.html. Disclaimers complets sections 1.3 et 11. Pas un conseil en investissement."
+          aria-label="Résumé IA de la page" title="Résumé&#160;IA">Résumé&#160;IA</button>
+</body>
+</html>

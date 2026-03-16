@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Mes projets, Gabriel ROULON</title>
+  <meta name="description" content="Bibliothèque de projets de Gabriel ROULON : gouvernance IA, agents, infrastructure, finance et investissement.">
+  <meta name="author" content="Gabriel ROULON">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="stylesheet" href="common.css">
+  <style>
+    :root {
+      --bg:             #0f172a;
+      --bg-secondary:   #1e293b;
+      --bg-card:        #263347;
+      --border:         #334155;
+      --text:           #f1f5f9;
+      --text-secondary: #94a3b8;
+      --blue:           #38bdf8;
+      --blue-dim:       rgba(56, 189, 248, 0.08);
+    }
+    header { background: rgba(15, 23, 42, 0.97); }
+    .header-left .breadcrumb { padding: 0; margin: 0; border-bottom: none; font-size: 0.78em; }
+
+    main { max-width: none; padding-bottom: calc(var(--header-h) + 12px); }
+
+    /* Legende */
+    .proj-legend {
+      display: flex;
+      gap: 18px;
+      margin-bottom: 14px;
+      font-size: 0.72em;
+      color: var(--text-secondary);
+      flex-wrap: wrap;
+    }
+    .proj-legend-item { display: flex; align-items: center; gap: 6px; }
+    .proj-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .proj-legend-dot.finalized   { background: #22c55e; }
+    .proj-legend-dot.review      { background: #f59e0b; }
+    .proj-legend-dot.in-progress { background: #64748b; }
+    .proj-legend-dot.demo        { background: var(--blue); }
+    .proj-legend-dot.coming      { background: #334155; border: 1px solid #475569; }
+
+    /* Layout colonnes */
+    .proj-cols { display: flex; flex-direction: row; gap: 12px; align-items: stretch; position: relative; }
+    .proj-col { flex: 0.95; min-width: 220px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; transition: opacity 0.4s, border-color 0.4s; }
+    .proj-col.proj-col-compact { align-self: flex-start; display: block; }
+    #col-2 { flex: 1.1; }
+    .proj-col-label {
+      padding: 9px 18px;
+      font-size: 0.68em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-secondary);
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      transition: color 0.3s;
+    }
+
+    /* Lignes projets */
+    .proj-row { display: flex; align-items: stretch; border-bottom: 1px solid var(--border); flex: 1; }
+    .proj-row:last-child { border-bottom: none; }
+    .proj-row.proj-disabled { opacity: 0.5; }
+
+    .proj-row-main {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 18px;
+      min-width: 0;
+    }
+    .proj-row-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 4px;
+      background: var(--border);
+    }
+    .proj-row-dot.finalized   { background: #22c55e; }
+    .proj-row-dot.review      { background: #f59e0b; }
+    .proj-row-dot.in-progress { background: #64748b; }
+    .proj-row-dot.demo        { background: var(--blue); }
+    .proj-row-dot.coming      { background: #334155; border: 1px solid #475569; }
+
+    .proj-row-info { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+    .proj-row-title-line { display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; }
+    .proj-row-title { font-size: 0.93em; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .proj-row-desc { font-size: 0.74em; color: var(--text-secondary); line-height: 1.5; text-align: justify; }
+
+    /* Badge statut */
+    .proj-badge {
+      font-size: 0.65em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-radius: 3px;
+      padding: 2px 7px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .proj-badge.finalized  { color: #1a7a3a; background: rgba(26,122,58,0.08); border: 1px solid rgba(26,122,58,0.25); }
+    .proj-badge.review     { color: #f59e0b; background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.25); }
+    .proj-badge.in-progress{ color: #64748b; background: rgba(100,116,139,0.08); border: 1px solid rgba(100,116,139,0.25); }
+    .proj-badge.demo       { color: var(--blue); background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.25); }
+    .proj-badge.coming     { color: #94a3b8; background: rgba(148,163,184,0.06); border: 1px solid rgba(148,163,184,0.18); }
+
+    /* Lien Acceder */
+    .proj-row-link,
+    .proj-row-link-disabled {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 90px;
+      flex-shrink: 0;
+      font-size: 0.78em;
+      border-left: 1px solid var(--border);
+      white-space: nowrap;
+      text-align: center;
+    }
+    .proj-row-link {
+      color: var(--blue);
+      text-decoration: none;
+      transition: background 0.18s, color 0.18s;
+    }
+    .proj-row-link:hover { background: var(--blue-dim); color: var(--text); }
+    .proj-row-link-disabled {
+      color: var(--text-secondary);
+      cursor: not-allowed;
+    }
+    .proj-row-link-confidential {
+      color: #ef4444;
+      cursor: not-allowed;
+      letter-spacing: 0.02em;
+    }
+
+    /* ---- Guide IA ---- */
+
+    /* Bouton header */
+    .btn-guide {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78em;
+      font-weight: 600;
+      color: var(--blue);
+      background: rgba(56,189,248,0.07);
+      border: 1px solid rgba(56,189,248,0.3);
+      border-radius: 5px;
+      padding: 5px 13px;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+      white-space: nowrap;
+    }
+    .btn-guide:hover { background: rgba(56,189,248,0.14); color: var(--text); }
+    .btn-guide.active { background: rgba(56,189,248,0.18); border-color: var(--blue); }
+    .btn-guide-icon {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0;
+      box-shadow: 0 0 0 0 rgba(56,189,248,0.5);
+    }
+    .btn-guide.active .btn-guide-icon {
+      animation: halo-pulse 1.6s ease-out infinite;
+    }
+    @keyframes halo-pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(56,189,248,0.55); }
+      70%  { box-shadow: 0 0 0 7px rgba(56,189,248,0); }
+      100% { box-shadow: 0 0 0 0 rgba(56,189,248,0); }
+    }
+
+    /* Attenuation des colonnes non actives */
+    .proj-cols.guide-active .proj-col { opacity: 0.25; pointer-events: none; }
+    .proj-cols.guide-active .proj-col.guide-focus {
+      opacity: 1;
+      pointer-events: auto;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 2px rgba(56,189,248,0.18);
+    }
+    .proj-cols.guide-active .proj-col.guide-focus .proj-col-label { color: var(--blue); }
+
+    /* Bulle */
+    .guide-bubble {
+      position: absolute;
+      top: 0;
+      width: 240px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--blue);
+      border-radius: 10px;
+      padding: 16px 18px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.45), 0 0 0 1px rgba(56,189,248,0.1);
+      z-index: 100;
+      display: none;
+    }
+    .guide-bubble.visible {
+      display: block;
+      animation: bubble-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    .guide-bubble.closing {
+      animation: bubble-out 0.2s ease-in forwards;
+    }
+    @keyframes bubble-in {
+      from { opacity: 0; transform: translateY(-10px) scale(0.95); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes bubble-out {
+      from { opacity: 1; transform: translateY(0) scale(1); }
+      to   { opacity: 0; transform: translateY(-6px) scale(0.96); }
+    }
+
+    /* Fleche decorative de la bulle vers la colonne */
+    .guide-bubble::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      width: 9px; height: 9px;
+      background: var(--bg-secondary);
+      border-left: 1px solid var(--blue);
+      border-bottom: 1px solid var(--blue);
+    }
+    .guide-bubble.arrow-left::before {
+      left: -5px;
+      transform: rotate(45deg);
+    }
+    .guide-bubble.arrow-right::before {
+      right: -5px;
+      transform: rotate(-135deg);
+    }
+
+    .guide-bubble-step {
+      font-size: 0.65em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+    .guide-bubble-text {
+      font-size: 0.82em;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 14px;
+      text-align: justify;
+    }
+    .guide-bubble-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .guide-bubble-dots {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+    .guide-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background 0.25s, transform 0.25s;
+    }
+    .guide-dot.active { background: var(--blue); transform: scale(1.3); }
+    .btn-guide-next {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.78em;
+      font-weight: 700;
+      color: var(--bg);
+      background: var(--blue);
+      border: none;
+      border-radius: 4px;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: opacity 0.18s, transform 0.15s;
+    }
+    .btn-guide-next:hover { opacity: 0.85; transform: translateX(2px); }
+    .btn-guide-close {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.78em;
+      color: var(--text-secondary);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.18s;
+    }
+    .btn-guide-close:hover { color: var(--text); }
+
+    @media (max-width: 860px) {
+      .proj-cols { flex-direction: column; }
+      .proj-col { flex: none; }
+      .guide-bubble { position: static; width: auto; margin-top: 10px; }
+      .guide-bubble::before { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+  <header role="banner">
+    <div class="header-left">
+      <nav class="breadcrumb" id="site-breadcrumb" aria-label="Fil d'Ariane">
+        <a href="index.html">Présentation</a>
+        <span class="breadcrumb-sep" aria-hidden="true">&#8250;</span>
+        <a href="vue_rh.html">Vue RH / Recruteur</a>
+        <span class="breadcrumb-sep" aria-hidden="true">&#8250;</span>
+        <span class="breadcrumb-current" aria-current="page">Mes projets</span>
+      </nav>
+    </div>
+    <div class="header-center">Mes projets</div>
+    <div class="header-right">
+      <button class="btn-guide" id="btn-guide" aria-label="Lancer le guide IA">
+        <span class="btn-guide-icon"></span> Guide IA
+      </button>
+    </div>
+  </header>
+
+  <main id="main-content" role="main">
+    <h1 class="sr-only">Mes projets, Gabriel ROULON</h1>
+
+    <div class="proj-legend" aria-label="Légende des statuts">
+      <span class="proj-legend-item"><span class="proj-legend-dot finalized"></span>Finalisé</span>
+      <span class="proj-legend-item"><span class="proj-legend-dot demo"></span>Interactif</span>
+      <span class="proj-legend-item"><span class="proj-legend-dot review"></span>En revue</span>
+      <span class="proj-legend-item"><span class="proj-legend-dot in-progress"></span>En cours</span>
+      <span class="proj-legend-item"><span class="proj-legend-dot coming"></span>A venir</span>
+    </div>
+
+    <div class="proj-cols" id="proj-cols" role="list" aria-label="Bibliothèque de projets">
+
+      <!-- Gouvernance & Agents IA -->
+      <div class="proj-col" id="col-0" role="listitem">
+        <div class="proj-col-label">Gouvernance &amp; Agents IA</div>
+
+        <div class="proj-row">
+          <div class="proj-row-main">
+            <span class="proj-row-dot finalized" aria-hidden="true"></span>
+            <div class="proj-row-info">
+              <div class="proj-row-title-line">
+                <span class="proj-row-title">INIT_SEQUENCE</span>
+                <span class="proj-badge finalized">Finalisé</span>
+              </div>
+              <span class="proj-row-desc">Machine à états finis, gouvernance IA. 3 607 lignes, 7 états, 11 fichiers fondateurs.</span>
+            </div>
+          </div>
+          <a href="init_sequence.html" class="proj-row-link" aria-label="Accéder à INIT_SEQUENCE">Accéder</a>
+        </div>
+
+        <div class="proj-row">
+          <div class="proj-row-main">
+            <span class="proj-row-dot review" aria-hidden="true"></span>
+            <div class="proj-row-info">
+              <div class="proj-row-title-line">
+                <span class="proj-row-title">POC Agents</span>
+                <span class="proj-badge review">En revue</span>
+              </div>
+              <span class="proj-row-desc">3 agents (Cerveau, Collecteurs, Chatbot) pour remplacer les 10 scripts Python de collecte IT Dashboard.</span>
+            </div>
+          </div>
+          <a href="poc_agents.html" class="proj-row-link" aria-label="Accéder au POC Agents">Accéder</a>
+        </div>
+
+        <div class="proj-row">
+          <div class="proj-row-main">
+            <span class="proj-row-dot in-progress" aria-hidden="true"></span>
+            <div class="proj-row-info">
+              <div class="proj-row-title-line">
+                <span class="proj-row-title">POC Suite Tools</span>
+                <span class="proj-badge review">En cours</span>
+              </div>
+              <span class="proj-row-desc">Plateforme d'analyse documentaire hybride neuro-symbolique. 8 POC, 7 agents par module, pipeline 8 étapes, 2 000 à 5 000 requêtes pré-construites.</span>
+            </div>
+          </div>
+          <span class="proj-row-link-disabled proj-row-link-confidential" aria-label="Accès restreint">Confidentiel</span>
+        </div>
+
+      </div>
+
+      <!-- Système & Infrastructure -->
+      <div class="proj-col proj-col-compact" id="col-1" role="listitem">
+        <div class="proj-col-label">Système &amp; Infrastructure</div>
+
+        <div class="proj-row">
+          <div class="proj-row-main">
+            <span class="proj-row-dot in-progress" aria-hidden="true"></span>
+            <div class="proj-row-info">
+              <div class="proj-row-title-line">
+                <span class="proj-row-title">Maintenance Agent</span>
+                <span class="proj-badge in-progress">En cours</span>
+              </div>
+              <span class="proj-row-desc">Suite modulaire PowerShell et React pour la maintenance et les diagnostics Windows. Architecture RBAC.</span>
+            </div>
+          </div>
+          <a href="realisations_maintenance_agent.html" class="proj-row-link" aria-label="Accéder à Maintenance Agent">Accéder</a>
+        </div>
+
+        <div class="proj-row">
+          <div class="proj-row-main">
+            <span class="proj-row-dot in-progress" aria-hidden="true"></span>
+            <div class="proj-row-info">
+              <div class="proj-row-title-line">
+                <span class="proj-row-title">Mon Laboratoire</span>
+                <span class="proj-badge in-progress">En cours</span>
+              </div>
+              <span class="proj-row-desc">Infrastructure virtuelle : Hyper-V, Proxmox, 11 labs, collection ISO, scripts d'automatisation PowerShell.</span>
+            </div>
+          </div>
+          <a href="mon_laboratoire.html" class="proj-row-link" aria-label="Accéder à Mon Laboratoire">Accéder</a>
+        </div>
+
+      </div>
+
+      <!-- Finance & Investissement -->
+      <div class="proj-col" id="col-2" role="listitem">
+        <div class="proj-col-label">Finance &amp; Investissement</div>
+
+        <div class="proj-row">
+          <div class="proj-row-main">
+            <span class="proj-row-dot finalized" aria-hidden="true"></span>
+            <div class="proj-row-info">
+              <div class="proj-row-title-line">
+                <span class="proj-row-title">Documentation financière</span>
+                <span class="proj-badge finalized">Finalisé</span>
+              </div>
+              <span class="proj-row-desc">Présentation synthétique PEA v2.0 : 11 chapitres, 4 ETF, 3 profils, simulations 5 à 15 ans.</span>
+            </div>
+          </div>
+          <a href="realisations_doc_financiere.html" class="proj-row-link" aria-label="Accéder à la documentation financière">Accéder</a>
+        </div>
+
+        <div class="proj-row">
+          <div class="proj-row-main">
+            <span class="proj-row-dot finalized" aria-hidden="true"></span>
+            <div class="proj-row-info">
+              <div class="proj-row-title-line">
+                <span class="proj-row-title">Étude PEA v2.0</span>
+                <span class="proj-badge finalized">Finalisé</span>
+              </div>
+              <span class="proj-row-desc">Référentiel complet : cadre réglementaire, fiscalité, sélection ETF avec ISIN, 3 profils, stress tests PRIIPS.</span>
+            </div>
+          </div>
+          <a href="PEA_V2_PRO.html" class="proj-row-link" aria-label="Accéder à l'étude PEA v2.0">Accéder</a>
+        </div>
+
+        <div class="proj-row">
+          <div class="proj-row-main">
+            <span class="proj-row-dot demo" aria-hidden="true"></span>
+            <div class="proj-row-info">
+              <div class="proj-row-title-line">
+                <span class="proj-row-title">Simulation PEA</span>
+                <span class="proj-badge demo">Interactif</span>
+              </div>
+              <span class="proj-row-desc">Dashboard interactif : 10 panneaux, rendements ajustables, matrice de sensibilité, stress tests, Livret A.</span>
+            </div>
+          </div>
+          <a href="simulation_pea.html" class="proj-row-link" aria-label="Accéder à la simulation PEA">Accéder</a>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bulle Guide IA -->
+    <div class="guide-bubble" id="guide-bubble" role="dialog" aria-live="polite">
+      <div class="guide-bubble-step" id="guide-step-label"></div>
+      <p class="guide-bubble-text" id="guide-text"></p>
+      <div class="guide-bubble-footer">
+        <div class="guide-bubble-dots">
+          <span class="guide-dot" id="gdot-0"></span>
+          <span class="guide-dot" id="gdot-1"></span>
+          <span class="guide-dot" id="gdot-2"></span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button class="btn-guide-close" id="btn-guide-close">Fermer</button>
+          <button class="btn-guide-next" id="btn-guide-next">Suivant &#8594;</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <span class="footer-name">Gabriel ROULON</span>
+        <span class="footer-sub">Expert en Gouvernance IA</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="common.js" defer></script>
+  <script>
+    var GUIDE_STEPS = [
+      {
+        col: 'col-0',
+        label: '01 / 03 - Gouvernance & Agents IA',
+        text: "L'IA est au coeur de ma démarche. Ces projets traduisent ma conviction qu'une IA bien gouvernée et encadrée peut transformer durablement la façon de travailler."
+      },
+      {
+        col: 'col-1',
+        label: '02 / 03 - Système & Infrastructure',
+        text: "Ma formation initiale m'a donné le gout du système. Ces projets sont nés d'une envie simple : aider ceux qui ne sont pas à l'aise avec l'informatique à reprendre le contrôle, et transmettre ce savoir par la pratique."
+      },
+      {
+        col: 'col-2',
+        label: '03 / 03 - Finance & Investissement',
+        text: "La finance est une singularité dans mon parcours. Ces ressources sont nées d'une volonté de rendre accessibles des sujets comme le PEA à ceux qui n'auraient pas pris le temps de les explorer."
+      }
+    ];
+
+    var guideStep = -1;
+    var bubble = document.getElementById('guide-bubble');
+    var btnGuide = document.getElementById('btn-guide');
+    var btnNext = document.getElementById('btn-guide-next');
+    var btnClose = document.getElementById('btn-guide-close');
+    var projCols = document.getElementById('proj-cols');
+
+    function positionBubble(colEl) {
+      var colsRect = projCols.getBoundingClientRect();
+      var colRect = colEl.getBoundingClientRect();
+      var mainEl = document.getElementById('main-content');
+      var mainRect = mainEl.getBoundingClientRect();
+      var scrollY = window.scrollY || window.pageYOffset;
+
+      var bubbleW = 240;
+      var gap = 14;
+      var topOffset = colRect.top - mainRect.top + scrollY;
+
+      var rightSpace = window.innerWidth - colRect.right;
+      var leftSpace = colRect.left;
+
+      if (rightSpace >= bubbleW + gap) {
+        bubble.style.left = (colRect.left - mainRect.left + colRect.width + gap) + 'px';
+        bubble.classList.remove('arrow-right');
+        bubble.classList.add('arrow-left');
+      } else if (leftSpace >= bubbleW + gap) {
+        bubble.style.left = (colRect.left - mainRect.left - bubbleW - gap) + 'px';
+        bubble.classList.remove('arrow-left');
+        bubble.classList.add('arrow-right');
+      } else {
+        bubble.style.left = (colRect.left - mainRect.left) + 'px';
+        bubble.classList.remove('arrow-left', 'arrow-right');
+      }
+      bubble.style.top = topOffset + 'px';
+    }
+
+    function showStep(step) {
+      var data = GUIDE_STEPS[step];
+      var colEl = document.getElementById(data.col);
+
+      document.querySelectorAll('.proj-col').forEach(function(c) {
+        c.classList.remove('guide-focus');
+      });
+      colEl.classList.add('guide-focus');
+
+      document.getElementById('guide-step-label').textContent = data.label;
+      document.getElementById('guide-text').textContent = data.text;
+
+      for (var i = 0; i < 3; i++) {
+        document.getElementById('gdot-' + i).classList.toggle('active', i === step);
+      }
+
+      btnNext.innerHTML = step < GUIDE_STEPS.length - 1 ? 'Suivant &#8594;' : 'Terminer';
+
+      positionBubble(colEl);
+
+      bubble.classList.remove('closing');
+      if (!bubble.classList.contains('visible')) {
+        bubble.classList.add('visible');
+      } else {
+        bubble.style.animation = 'none';
+        bubble.offsetHeight;
+        bubble.style.animation = '';
+        bubble.classList.add('visible');
+      }
+    }
+
+    function startGuide() {
+      guideStep = 0;
+      projCols.classList.add('guide-active');
+      btnGuide.classList.add('active');
+      showStep(guideStep);
+    }
+
+    function endGuide() {
+      bubble.classList.add('closing');
+      bubble.addEventListener('animationend', function handler() {
+        bubble.classList.remove('visible', 'closing');
+        bubble.removeEventListener('animationend', handler);
+      });
+      projCols.classList.remove('guide-active');
+      document.querySelectorAll('.proj-col').forEach(function(c) {
+        c.classList.remove('guide-focus');
+      });
+      btnGuide.classList.remove('active');
+      guideStep = -1;
+    }
+
+    btnGuide.addEventListener('click', function() {
+      if (guideStep === -1) {
+        startGuide();
+      } else {
+        endGuide();
+      }
+    });
+
+    btnNext.addEventListener('click', function() {
+      if (guideStep < GUIDE_STEPS.length - 1) {
+        guideStep++;
+        showStep(guideStep);
+      } else {
+        endGuide();
+      }
+    });
+
+    btnClose.addEventListener('click', endGuide);
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && guideStep !== -1) endGuide();
+    });
+
+    window.addEventListener('resize', function() {
+      if (guideStep !== -1) positionBubble(document.getElementById(GUIDE_STEPS[guideStep].col));
+    });
+  </script>
+</body>
+</html>

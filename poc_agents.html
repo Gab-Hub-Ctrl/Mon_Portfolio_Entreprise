@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>POC Agents IT Dashboard</title>
+  <meta name="description" content="Trois agents opérationnels v2.1.0 : Cerveau (manager), Chatbot (FAQ frontend), Collecteurs (10 pôles). Approche neurosymbolique. Gabriel ROULON.">
+  <meta name="author" content="Gabriel ROULON">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="stylesheet" href="common.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "POC Agents IT Dashboard",
+    "description": "Trois agents opérationnels v2.1.0 : Cerveau (manager), Chatbot (FAQ frontend), Collecteurs (10 pôles). Approche neurosymbolique.",
+    "author": { "@type": "Person", "name": "Gabriel ROULON" },
+    "inLanguage": "fr-FR",
+    "dateModified": "2026-03-11"
+  }
+  </script>
+  <style>
+    :root {
+      --bg:             #0f172a;
+      --bg-secondary:   #1e293b;
+      --bg-card:        #263347;
+      --border:         #334155;
+      --text:           #f1f5f9;
+      --text-secondary: #94a3b8;
+      --blue:           #38bdf8;
+      --blue-dim:       rgba(56, 189, 248, 0.08);
+    }
+    header { background: rgba(15, 23, 42, 0.97); }
+    .header-left .breadcrumb { padding: 0; margin: 0; border-bottom: none; font-size: 0.78em; }
+    .chatbot-footer { border-top: 1px solid var(--border); padding: 10px 16px; background: var(--bg-card); display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .chatbot-footer-label { font-size: 0.72em; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin-bottom: 0; }
+    #quick-read-modal .modal-card { max-width: 680px; }
+    #quick-read-modal .modal-body { font-size: 0.9em; }
+    .content-section { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
+    h2.section-title { background: var(--bg-secondary); color: var(--text); border-left: 3px solid var(--blue); padding: 14px 20px; font-size: 1em; font-weight: 600; margin: 0; }
+    /* === TYPOGRAPHIE INTERNE === */
+    .accordion-inner h2 {
+      font-size: 1.05em;
+      font-weight: 600;
+      margin: 20px 0 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+    .accordion-inner h2:first-child { margin-top: 0; }
+    .accordion-inner p { font-size: 0.9em; color: var(--text-secondary); line-height: 1.7; margin: 8px 0; }
+    .accordion-inner strong { color: var(--text); }
+    .accordion-inner code {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 0.88em;
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--text);
+    }
+
+    /* === DIAGRAMME AGENTS === */
+    .agents-diagram {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin: 18px 0;
+      padding: 16px 8px;
+      flex-wrap: wrap;
+    }
+    .agent-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 12px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg-card);
+      text-align: center;
+      min-width: 130px;
+      max-width: 170px;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .agent-block:hover { transform: translateY(-2px); }
+    .agent-block.agent-collecteurs { border-color: #e6c32a; }
+    .agent-block.agent-cerveau     { border-color: var(--red); }
+    .agent-block.agent-chatbot     { border-color: var(--blue); }
+    .agent-name {
+      font-weight: 700;
+      font-size: 0.92em;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .agent-role { font-size: 0.76em; color: var(--text-secondary); line-height: 1.3; }
+    .diagram-arrow {
+      font-size: 1.4em;
+      color: var(--text-secondary);
+      padding: 0 8px;
+      flex-shrink: 0;
+      user-select: none;
+    }
+    .diagram-label {
+      font-size: 0.7em;
+      color: var(--text-secondary);
+      text-align: center;
+      margin-top: 4px;
+    }
+    .diagram-group { display: flex; flex-direction: column; align-items: center; }
+
+    /* === COMPOSANTS CARDS === */
+    .component-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+      margin: 12px 0;
+    }
+    .cc-2col { grid-template-columns: repeat(2, 1fr); }
+    .cc-2col > *:last-child:nth-child(odd) { grid-column: 1 / -1; }
+    .component-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      background: var(--bg-card);
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .component-card:hover { border-color: var(--text-secondary); transform: translateY(-1px); }
+    .component-card h4 {
+      margin: 0 0 6px;
+      font-size: 0.9em;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .component-card p {
+      margin: 0;
+      font-size: 0.84em;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* === FICHE AGENT === */
+    .agent-fiche {
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--border);
+      border-radius: 0 8px 8px 0;
+      padding: 18px;
+      margin: 14px 0;
+      background: var(--bg-card);
+    }
+    #section-collecteurs .agent-fiche { border-left-color: #e6c32a; }
+    #section-cerveau .agent-fiche     { border-left-color: var(--red); }
+    #section-chatbot .agent-fiche     { border-left-color: var(--blue); }
+    .agent-fiche-header {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .fiche-version {
+      font-size: 0.78em;
+      color: var(--text-secondary);
+      font-family: 'Courier New', Courier, monospace;
+    }
+    .fiche-status {
+      font-size: 0.76em;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+    .fiche-status.en-revue {
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+
+    /* === COMMON BAR === */
+    .common-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+    .common-tag {
+      font-size: 0.74em;
+      padding: 3px 10px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text-secondary);
+      background: var(--bg-secondary);
+      white-space: nowrap;
+    }
+
+    /* === POLES GRID === */
+    .poles-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .pole-cell {
+      border: 1px solid rgba(230, 195, 42, 0.35);
+      border-radius: 6px;
+      padding: 8px 6px;
+      text-align: center;
+      font-size: 0.78em;
+      background: var(--bg-card);
+      transition: border-color 0.2s ease;
+    }
+    .pole-cell:hover { border-color: rgba(230, 195, 42, 0.75); }
+    .pole-num {
+      font-weight: 700;
+      font-family: 'Courier New', Courier, monospace;
+      display: block;
+      margin-bottom: 2px;
+      color: var(--text);
+    }
+    .pole-name { color: var(--text-secondary); font-size: 0.9em; line-height: 1.2; }
+
+    /* === METRICS ROW === */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .agents-diagram { flex-direction: column; }
+      .diagram-arrow { transform: rotate(90deg); }
+      .poles-grid { grid-template-columns: repeat(2, 1fr); }
+      .component-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+  <!-- Chatbot panel -->
+  <div id="chatbot-panel" class="chatbot-panel" role="complementary" aria-label="Résumé IA de la page">
+    <div class="chatbot-head">
+      <div class="chatbot-title-group">
+        <span class="chatbot-title">Résumé IA</span>
+        <span class="chatbot-dot" aria-hidden="true"></span>
+      </div>
+      <button class="chatbot-close-btn" aria-label="Fermer">&times;</button>
+    </div>
+    <div class="chatbot-body">
+      <div class="chatbot-think" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="chatbot-msg" aria-live="polite" aria-label="Résumé de la page"></div>
+      <div class="chatbot-status" aria-live="polite"></div>
+    </div>
+    <div class="chatbot-footer">
+      <div class="chatbot-footer-label">Autres ressources Vue Jury</div>
+      <button class="chatbot-nav-btn" aria-label="Accéder aux autres ressources Vue Jury">Cliquez ici</button>
+    </div>
+  </div>
+
+  <header role="banner">
+    <div class="header-left">
+      <nav class="breadcrumb" id="site-breadcrumb" data-page="poc" aria-label="Fil d'Ariane">
+        <a href="index.html">Présentation</a>
+        <span class="breadcrumb-sep" aria-hidden="true">&#8250;</span>
+        <a href="mes_projets.html">Mes projets</a>
+        <span class="breadcrumb-sep" aria-hidden="true">&#8250;</span>
+        <span class="breadcrumb-current" aria-current="page">POC Agents</span>
+      </nav>
+    </div>
+    <div class="header-center">POC Agents</div>
+    <div class="header-right">
+      <button class="btn-quick-read btn-important" aria-haspopup="dialog" aria-label="Note importante sur POC Agents">Important</button>
+    </div>
+  </header>
+
+  <main id="main-content" role="main">
+
+    <h1 class="sr-only">POC Agents, IT Dashboard</h1>
+
+    <!-- ===== SECTION 1 : Vue d'ensemble ===== -->
+    <section class="content-section" id="section-overview">
+      <h2 class="section-title">Vue d'ensemble : trois agents, un objectif</h2>
+      <div class="accordion-inner">
+          <p>Trois Proof of Concept d'agents opérationnels (v2.1.0) conçus pour démontrer qu'un système multi-agents peut remplacer des scripts manuels, avec le même niveau d'exigence en termes de qualité, sécurité et traçabilité.</p>
+
+          <div class="highlight">
+            <p><strong>Contexte IT Dashboard :</strong> le projet intègre 10 scripts Python de collecte d'alertes (<code>collect_poleX_*.py</code>), un par pôle. Ce POC conçoit les agents destinés à les remplacer : collecte intelligente, supervision automatisée, mémoire et règles intégrées. <a href="presentation_synthetique.html" style="color:var(--blue);text-decoration:none;">IT Dashboard du projet</a></p>
+          </div>
+
+          <h2>Architecture multi-agents</h2>
+          <div class="agents-diagram" role="img" aria-label="Diagramme : les 10 collecteurs alimentent le Cerveau qui supervise l'ensemble, le Chatbot expose les informations à l'utilisateur">
+            <div class="diagram-group">
+              <div class="agent-block agent-collecteurs">
+                <div class="agent-name">Collecteurs</div>
+                <div class="agent-role">10 agents par pôle</div>
+                <div class="agent-role">Collecte d'alertes JSON</div>
+              </div>
+              <div class="diagram-label">Entrée des données</div>
+            </div>
+            <span class="diagram-arrow" aria-hidden="true">&#8594;</span>
+            <div class="diagram-group">
+              <div class="agent-block agent-cerveau">
+                <div class="agent-name">Cerveau</div>
+                <div class="agent-role">Manager central</div>
+                <div class="agent-role">Supervise, répare, relance</div>
+              </div>
+              <div class="diagram-label">Orchestration</div>
+            </div>
+            <span class="diagram-arrow" aria-hidden="true">&#8594;</span>
+            <div class="diagram-group">
+              <div class="agent-block agent-chatbot">
+                <div class="agent-name">Chatbot</div>
+                <div class="agent-role">Interface FAQ</div>
+                <div class="agent-role">Réponses prêtes</div>
+              </div>
+              <div class="diagram-label">Interface utilisateur</div>
+            </div>
+          </div>
+
+          <p>L'approche retenue est <strong>neurosymbolique</strong> : la couche symbolique (règles, états, logique formelle, audit) gouverne et encadre les capacités du ML. Le ML assiste (compréhension du langage, matching, génération), mais c'est la symbolique qui décide, trace et valide.</p>
+
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2 : Agent Collecteurs ===== -->
+    <section class="content-section" id="section-collecteurs">
+      <h2 class="section-title">Agent Collecteurs</h2>
+      <div class="accordion-inner">
+
+          <div class="agent-fiche">
+            <div class="agent-fiche-header">
+              <span class="fiche-version">v2.1.0</span>
+              <span class="fiche-status en-revue">En revue</span>
+            </div>
+            <p><strong>Rôle :</strong> 10 agents collecteurs, un par pôle (pole1 à pole10), spécialisés dans la collecte d'alertes IT. Chacun génère des événements JSON conformes au schéma Dashboard_IT et les écrit dans <code>Backend/storage/raw/</code>.</p>
+            <p><strong>Objectif :</strong> remplacer les 10 scripts Python de collecte (<code>collect_poleX_*.py</code>) par des agents à maturité (mémoire + règles). Une fois le seuil de 95 % de réponses conformes atteint, le script est remplacé par l'agent avec authentification Vault obligatoire (<code>pole1.json</code> à <code>pole10.json</code>).</p>
+          </div>
+
+          <h2>Les 10 pôles couverts</h2>
+          <div class="poles-grid" role="list" aria-label="Grille des 10 pôles spécialisés">
+            <div class="pole-cell" role="listitem"><span class="pole-num">P1</span><span class="pole-name">Sécurité</span></div>
+            <div class="pole-cell" role="listitem"><span class="pole-num">P2</span><span class="pole-name">Incidents</span></div>
+            <div class="pole-cell" role="listitem"><span class="pole-num">P3</span><span class="pole-name">Performances</span></div>
+            <div class="pole-cell" role="listitem"><span class="pole-num">P4</span><span class="pole-name">Applications</span></div>
+            <div class="pole-cell" role="listitem"><span class="pole-num">P5</span><span class="pole-name">Services</span></div>
+            <div class="pole-cell" role="listitem"><span class="pole-num">P6</span><span class="pole-name">Réseaux</span></div>
+            <div class="pole-cell" role="listitem"><span class="pole-num">P7</span><span class="pole-name">Systèmes</span></div>
+            <div class="pole-cell" role="listitem"><span class="pole-num">P8</span><span class="pole-name">Cloud</span></div>
+            <div class="pole-cell" role="listitem"><span class="pole-num">P9</span><span class="pole-name">Données</span></div>
+            <div class="pole-cell" role="listitem"><span class="pole-num">P10</span><span class="pole-name">Innovation</span></div>
+          </div>
+
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3 : Agent Cerveau ===== -->
+    <section class="content-section" id="section-cerveau">
+      <h2 class="section-title">Agent Cerveau</h2>
+      <div class="accordion-inner">
+
+          <div class="agent-fiche">
+            <div class="agent-fiche-header">
+              <span class="fiche-version">v2.1.0</span>
+              <span class="fiche-status en-revue">En revue</span>
+            </div>
+            <p><strong>Rôle :</strong> agent manager qui supervise, nettoie, répare et relance les 10 agents collecteurs. Il garantit la cohérence des logs et du stockage, et réduit les interventions manuelles.</p>
+            <p><strong>Objectif :</strong> démontrer qu'un agent opérationnel peut assurer la supervision, le nettoyage et la réparation/relance des collecteurs de façon reproductible et mesurable.</p>
+          </div>
+
+          <h2>Quatre responsabilités</h2>
+          <div class="component-cards cc-2col">
+            <div class="component-card">
+              <h4>Manager</h4>
+              <p>Surveillance de l'état des 10 collecteurs : succès/échec, latence. Décision de relance si échec ou timeout.</p>
+            </div>
+            <div class="component-card">
+              <h4>Nettoyer</h4>
+              <p>Suppression ou archivage des logs obsolètes, des fichiers <code>raw/</code> et <code>processed/</code> selon la politique de rétention (90 jours).</p>
+            </div>
+            <div class="component-card">
+              <h4>Réparer</h4>
+              <p>Détection d'anomalies (cache <code>pathcache</code>, intégrité config). Actions correctives documentées et réversibles.</p>
+            </div>
+            <div class="component-card">
+              <h4>Relancer</h4>
+              <p>Déclenchement de l'exécution d'un ou plusieurs collecteurs (ou du pipeline complet) après échec ou selon planning.</p>
+            </div>
+          </div>
+
+          <div class="highlight">
+            <p>Approche 100 % symbolique : règles déterministes (succès/échec, seuils, timeout), politique de rétention explicite, actions traçables, aucune décision prise par un LLM.</p>
+          </div>
+
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4 : Agent Chatbot ===== -->
+    <section class="content-section" id="section-chatbot">
+      <h2 class="section-title">Agent Chatbot</h2>
+      <div class="accordion-inner">
+
+          <div class="agent-fiche">
+            <div class="agent-fiche-header">
+              <span class="fiche-version">v2.1.0</span>
+              <span class="fiche-status en-revue">En revue</span>
+            </div>
+            <p><strong>Rôle :</strong> chatbot intégré au frontend Dashboard_IT (React/TypeScript), animé par une base FAQ préremplie. Réponses prêtes, interface simple et efficace.</p>
+            <p><strong>Objectif :</strong> démontrer qu'un chatbot FAQ répond au même niveau d'exigence que les POC Cerveau et Collecteurs : qualité des réponses, cohérence, traçabilité, intégration Dashboard_IT.</p>
+          </div>
+
+          <h2>Fonctionnalités</h2>
+          <div class="component-cards">
+            <div class="component-card">
+              <h4>Base FAQ versionnée</h4>
+              <p>Questions/réponses prédéfinies en format JSON ou Markdown. Versionnée, sans contenu sensible. Couverture 100 % des questions accessibles.</p>
+            </div>
+            <div class="component-card">
+              <h4>Matching intelligent</h4>
+              <p>Recherche par mots-clés, similarité ou menu par catégories. Cible : 95 % ou plus de réponses correctes sur un jeu de test (questions FAQ + variantes).</p>
+            </div>
+            <div class="component-card">
+              <h4>Traçabilité</h4>
+              <p>Enregistrement de chaque interaction (question posée, réponse fournie, timestamp) pour audit et amélioration continue.</p>
+            </div>
+          </div>
+
+          <div class="highlight highlight-red">
+            <p>100 % frontend : FAQ structurée (JSON/Markdown) + matching par règles, pas de LLM génératif. Contrairement aux agents Cerveau et Collecteurs, le Chatbot peut fonctionner sans backend. Dans ce cas, l'authentification Vault s'applique à un endpoint optionnel de log des interactions ou au pipeline de déploiement.</p>
+          </div>
+
+      </div>
+    </section>
+
+</main>
+
+  <footer role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <span class="footer-name">Gabriel ROULON</span>
+        <span class="footer-sub">Expert en Gouvernance IA</span>
+      </div>
+      <div class="footer-col footer-col-right">
+        <a href="mailto:gabriel.roulon@gmail.com" class="footer-contact-link">gabriel.roulon@gmail.com</a>
+        <a href="tel:+33638226821" class="footer-contact-link">06 38 22 68 21</a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="quick-read-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-card">
+      <button class="modal-close" aria-label="Fermer">&times;</button>
+      <div class="modal-title" id="modal-title">Note d'évolution : Architecture POC Agents</div>
+      <div class="modal-body">
+        <p>À l'heure de la conception de ce portfolio, mon approche neurosymbolique faisait l'objet de remises en question. Ma réflexion a depuis évolué vers une architecture <strong style="color:var(--text)">hybride neurosymbolique + LLM</strong>, avec une représentation LLM proportionnelle au rôle de chaque composant :</p>
+        <ul style="margin:10px 0 10px 18px;line-height:1.8">
+          <li><strong style="color:var(--text)">Collecteurs</strong> : ~20 % LLM</li>
+          <li><strong style="color:var(--text)">Cerveau</strong> : ~40 % LLM</li>
+          <li><strong style="color:var(--text)">Chatbot</strong> : ~60 % LLM</li>
+        </ul>
+        <p>Un LLM embarqué dans une architecture à règles pré-établies surpasse un grand modèle généraliste sur les tâches ciblées. L'objectif reste un <strong style="color:var(--text)">IT Dashboard en local</strong> avec des ressources limitées, l'approche symbolique reste le socle, le LLM vient l'augmenter.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    if (window.location.search.indexOf('summary=1') !== -1) {
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          var fab = document.querySelector('.btn-chatbot-fab');
+          if (fab) fab.click();
+        }, 500);
+      });
+    }
+  </script>
+  <script src="common.js" defer></script>
+  <button class="btn-chatbot-fab"
+          data-summary="POC Agents v2.1.0 : amélioration des collecteurs Python de l'IT Dashboard. Le projet remplace 10 scripts collect_poleX_*.py par des agents intelligents avec mémoire, règles et supervision.&#10;3 agents opérationnels sur 10 pôles IT, architecture en revue.&#10;Agent Collecteurs : remplace les 10 scripts Python de collecte d'alertes JSON, un agent par pôle (Sécurité, Incidents, Performances, Réseaux, Systèmes, Applications, Services, Cloud, Données, Innovation).&#10;Agent Cerveau : manager central, supervise, nettoie, répare et relance les 10 collecteurs, 100 % déterministe.&#10;Agent Chatbot : FAQ versionnée JSON/Markdown, matching par règles, 100 % frontend, cible 95 % de réponses correctes.&#10;Approche neurosymbolique en évolution vers un hybride LLM (Collecteurs ~20 %, Cerveau ~40 %, Chatbot ~60 %).&#10;Architecture : FastAPI backend, HashiCorp Vault, standards Dashboard_IT, traçabilité complète."
+          aria-label="Résumé IA de la page" title="Résumé&#160;IA">Résumé&#160;IA</button>
+  <div id="nav-panel" class="nav-panel" role="dialog" aria-modal="true" aria-label="Ressources Vue Jury" aria-hidden="true">
+    <div class="nav-panel-head">
+      <span class="nav-panel-title">Ressources Vue Jury</span>
+      <button class="nav-panel-close" aria-label="Fermer">&times;</button>
+    </div>
+    <div class="nav-panel-body">
+      <div class="nav-section-label">Candidature</div>
+      <div class="nav-links">
+        <a href="profil_personnel.html">Profil personnel</a>
+        <a href="lettre_motivation_ecole.html">Lettre (École)</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-section-label">Projet IT</div>
+      <div class="nav-links">
+        <a href="presentation_synthetique.html">IT Dashboard</a>
+        <a href="init_sequence.html">INIT_SEQUENCE</a>
+      </div>
+      <div class="nav-section-label">Finance &amp; Investissement</div>
+      <div class="nav-links">
+        <a href="realisations_doc_financiere.html">Documentation financière</a>
+        <a href="PEA_V2_PRO.html">Étude PEA</a>
+        <a href="simulation_pea.html">Simulation PEA</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

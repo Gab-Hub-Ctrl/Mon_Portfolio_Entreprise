@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Documentation financière PEA v2.0</title>
+  <meta name="description" content="Étude PEA v2.0 rédigée par Gabriel ROULON. 11 chapitres, ETF 2026, 3 profils de portefeuille, simulations et stress tests.">
+  <meta name="author" content="Gabriel ROULON">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="stylesheet" href="common.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Documentation financière PEA v2.0",
+    "description": "Étude complète PEA : ETF éligibles 2026, 3 profils de portefeuille, simulations et analyse des risques.",
+    "author": { "@type": "Person", "name": "Gabriel ROULON" },
+    "inLanguage": "fr-FR",
+    "dateModified": "2026-03-11"
+  }
+  </script>
+  <style>
+    :root {
+      --bg:             #0f172a;
+      --bg-secondary:   #1e293b;
+      --bg-card:        #263347;
+      --border:         #334155;
+      --text:           #f1f5f9;
+      --text-secondary: #94a3b8;
+      --blue:           #38bdf8;
+      --blue-dim:       rgba(56, 189, 248, 0.08);
+      --green:          #22c55e;
+      --orange:         #f97316;
+    }
+    header { background: rgba(15, 23, 42, 0.97); }
+    .header-left .breadcrumb { padding: 0; margin: 0; border-bottom: none; font-size: 0.78em; }
+    .chatbot-footer { border-top: 1px solid var(--border); padding: 10px 16px; background: var(--bg-card); display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .chatbot-footer-label { font-size: 0.72em; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin-bottom: 0; }
+
+    /* Page header */
+    .page-header { margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .page-title {
+      font-size: 1.35em;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0;
+      line-height: 1.3;
+    }
+    .page-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .page-badge { display: inline-block; font-size: 0.75em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; border-radius: 3px; padding: 2px 10px; }
+    .page-badge.finalized { color: #1a7a3a; background: rgba(26, 122, 58, 0.08); border: 1px solid rgba(26, 122, 58, 0.25); }
+
+    /* Sections */
+    .content-section { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
+    h2.section-title { background: var(--bg-secondary); color: var(--text); border-left: 3px solid var(--blue); padding: 14px 20px; font-size: 1em; font-weight: 600; margin: 0; }
+    .accordion-inner { padding: 16px 20px; }
+    .accordion-inner p { color: var(--text-secondary); text-align: justify; line-height: 1.7; margin-bottom: 12px; }
+    .accordion-inner p:last-child { margin-bottom: 0; }
+    .accordion-inner h3 { font-size: 1em; color: var(--text-secondary); font-weight: 500; margin: 16px 0 6px; }
+
+    /* Highlight callout */
+    .highlight {
+      border-left: 3px solid var(--blue);
+      background: rgba(56, 189, 248, 0.05);
+      border-radius: 0 6px 6px 0;
+      padding: 12px 16px;
+      margin: 12px 0;
+    }
+    .highlight p { color: var(--text) !important; font-style: italic; }
+
+    /* Metric cards - horizontal */
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+      margin: 14px 0 4px;
+    }
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--blue);
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .metric-val {
+      font-size: 1.6em;
+      font-weight: 700;
+      color: var(--text);
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .metric-label {
+      font-size: 0.78em;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    /* Chapter list - 2 colonnes */
+    .chapter-list {
+      list-style: none;
+      padding: 0;
+      margin: 14px 0 4px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    @media (max-width: 640px) { .chapter-list { grid-template-columns: 1fr; } }
+    /* Carte en L - partie haute (col 2, ligne 6) */
+    .chapter-note-top {
+      grid-column: 2;
+      grid-row: 6;
+      background: rgba(56, 189, 248, 0.05);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-bottom: none;
+      border-radius: 6px 6px 0 0;
+      padding: 10px 12px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      position: relative;
+      list-style: none;
+    }
+    .chapter-note-top::after {
+      content: '';
+      position: absolute;
+      bottom: -9px;
+      left: -1px;
+      right: -1px;
+      height: 9px;
+      background: rgba(56, 189, 248, 0.05);
+      border-left: 1px solid rgba(56, 189, 248, 0.35);
+      border-right: 1px solid rgba(56, 189, 248, 0.35);
+    }
+    .chapter-note-label {
+      font-size: 0.74em;
+      font-weight: 700;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .chapter-note-icon { font-size: 0.65em; color: #f59e0b; }
+    /* Carte en L - partie basse (cols 1+2, ligne 7) */
+    .chapter-note-bottom {
+      grid-column: 1 / -1;
+      grid-row: 7;
+      background: rgba(56, 189, 248, 0.05);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-top: none;
+      border-radius: 0 0 6px 6px;
+      padding: 8px 14px 12px;
+      font-size: 0.82em;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      position: relative;
+      list-style: none;
+    }
+    /* Bord supérieur uniquement sur la moitié gauche (barre horizontale du L) */
+    .chapter-note-bottom::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 0;
+      width: calc(50% - 4px);
+      height: 1px;
+      background: rgba(56, 189, 248, 0.35);
+    }
+    .chapter-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.87em;
+      transition: border-color 0.15s;
+    }
+    .chapter-item:hover { border-color: var(--blue); }
+    .chapter-item::after {
+      content: '→';
+      color: var(--border);
+      font-size: 0.82em;
+      margin-left: auto;
+      transition: color 0.15s, transform 0.15s;
+      flex-shrink: 0;
+    }
+    .chapter-item:hover::after { color: var(--blue); transform: translateX(3px); }
+    .chapter-num {
+      font-size: 0.74em;
+      font-weight: 700;
+      color: var(--blue);
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 4px;
+      padding: 1px 7px;
+      flex-shrink: 0;
+    }
+    .chapter-title { color: var(--text-secondary); flex: 1; }
+
+    /* ETF cards */
+    .etf-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 14px 0 4px;
+    }
+    .etf-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .etf-card:hover { box-shadow: 0 0 0 1px rgba(56,189,248,0.18); }
+    .etf-card:nth-child(1) { border-left: 3px solid var(--blue); }
+    .etf-card:nth-child(2) { border-left: 3px solid var(--green); }
+    .etf-card:nth-child(3) { border-left: 3px solid var(--orange); }
+    .etf-card:nth-child(4) { border-left: 3px solid #a855f7; }
+    .etf-name {
+      font-size: 0.82em;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .etf-ticker {
+      display: inline-block;
+      font-size: 0.72em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-secondary);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 1px 7px;
+      margin-bottom: 8px;
+    }
+    .etf-desc { font-size: 0.82em; color: var(--text-secondary); line-height: 1.55; }
+
+    /* Profil cards */
+    .profil-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 14px 0 4px;
+    }
+    @media (max-width: 640px) { .profil-grid { grid-template-columns: 1fr; } }
+    .profil-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      border-top: 3px solid var(--border);
+      padding: 14px 16px;
+      transition: box-shadow 0.15s;
+    }
+    .profil-card:hover { box-shadow: 0 0 0 1px rgba(255,255,255,0.08); }
+    .profil-card.profil-sec { border-top-color: #1a7a3a; }
+    .profil-card.profil-eq  { border-top-color: var(--blue); }
+    .profil-card.profil-dyn { border-top-color: #e63946; }
+    .profil-name {
+      font-size: 0.95em;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .profil-card.profil-sec .profil-name { color: #1a7a3a; }
+    .profil-card.profil-eq  .profil-name { color: var(--blue); }
+    .profil-card.profil-dyn .profil-name { color: #e63946; }
+    .profil-divider { border: none; border-top: 1px solid var(--border); margin: 8px 0; }
+    .profil-alloc {
+      font-size: 0.82em;
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+  <!-- Chatbot panel -->
+  <div id="chatbot-panel" class="chatbot-panel" role="complementary" aria-label="Résumé IA de la page">
+    <div class="chatbot-head">
+      <div class="chatbot-title-group">
+        <span class="chatbot-title">Résumé IA</span>
+        <span class="chatbot-dot" aria-hidden="true"></span>
+      </div>
+      <button class="chatbot-close-btn" aria-label="Fermer">&times;</button>
+    </div>
+    <div class="chatbot-body">
+      <div class="chatbot-think" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="chatbot-msg" aria-live="polite" aria-label="Résumé de la page"></div>
+      <div class="chatbot-status" aria-live="polite"></div>
+    </div>
+    <div class="chatbot-footer">
+      <div class="chatbot-footer-label">Autres ressources Vue Jury</div>
+      <button class="chatbot-nav-btn" aria-label="Accéder aux autres ressources Vue Jury">Cliquez ici</button>
+    </div>
+  </div>
+
+  <header role="banner">
+    <div class="header-left">
+      <nav class="breadcrumb" id="site-breadcrumb" data-page="doc-financiere" aria-label="Fil d'Ariane">
+        <a href="index.html">Présentation</a>
+        <span class="breadcrumb-sep" aria-hidden="true">&#8250;</span>
+        <a href="vue_ecole.html">Vue Jury école</a>
+        <span class="breadcrumb-sep" aria-hidden="true">&#8250;</span>
+        <span class="breadcrumb-current" aria-current="page">Documentation financière</span>
+      </nav>
+    </div>
+    <div class="header-center">Documentation financière</div>
+    <div class="header-right">
+      <button class="btn-quick-read btn-important" aria-haspopup="dialog" aria-label="Note réglementaire sur les ETF synthétiques">Important</button>
+    </div>
+  </header>
+
+  <main id="main-content" role="main">
+
+    <div class="page-header">
+      <h1 class="page-title">Documentation financière PEA v2.0</h1>
+      <div class="page-meta">
+        <span class="page-badge finalized">Finalisé</span>
+      </div>
+    </div>
+
+    <!-- Vue d'ensemble -->
+    <section class="content-section" id="section-overview">
+      <h2 class="section-title">Vue d'ensemble</h2>
+      <div class="accordion-inner">
+        <p>L'étude PEA v2.0 est un document de référence personnel rédigé le 30 janvier 2026. Elle couvre l'ensemble des décisions d'investissement long terme via un Plan d'Épargne en Actions, des conditions légales aux simulations de performance.</p>
+        <p>L'objectif était de produire un document utilisable, pas un résumé approximatif : chaque règle fiscale est vérifiée, chaque allocation justifiée, chaque simulation chiffrée.</p>
+        <div class="metric-row">
+          <div class="metric-card">
+            <span class="metric-val">11</span>
+            <span class="metric-label">chapitres</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-val">4</span>
+            <span class="metric-label">ETF sélectionnés</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-val">3</span>
+            <span class="metric-label">profils de portefeuille</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-val">Jan.</span>
+            <span class="metric-label">2026 / mise à jour</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Structure du document -->
+    <section class="content-section" id="section-structure">
+      <h2 class="section-title">Structure du document</h2>
+      <div class="accordion-inner">
+        <p>Le document suit une progression logique, du cadre légal jusqu'aux recommandations concrètes, en passant par l'analyse des instruments disponibles.</p>
+        <ul class="chapter-list">
+          <li class="chapter-item"><span class="chapter-num">01</span><span class="chapter-title">Définition et fonctionnement du PEA</span></li>
+          <li class="chapter-item"><span class="chapter-num">02</span><span class="chapter-title">Conditions d'ouverture et plafonds légaux</span></li>
+          <li class="chapter-item"><span class="chapter-num">03</span><span class="chapter-title">Fiscalité des retraits selon durée de détention</span></li>
+          <li class="chapter-item"><span class="chapter-num">04</span><span class="chapter-title">Types d'ETF éligibles PEA</span></li>
+          <li class="chapter-item"><span class="chapter-num">05</span><span class="chapter-title">Sélection des 4 ETF retenus pour 2026</span></li>
+          <li class="chapter-item"><span class="chapter-num">06</span><span class="chapter-title">Performances historiques comparées</span></li>
+          <li class="chapter-item"><span class="chapter-num">07</span><span class="chapter-title">Construction des 3 profils de portefeuille</span></li>
+          <li class="chapter-item"><span class="chapter-num">08</span><span class="chapter-title">Simulations sur 5, 10 et 15 ans</span></li>
+          <li class="chapter-item"><span class="chapter-num">09</span><span class="chapter-title">Analyse des risques et stress tests</span></li>
+          <li class="chapter-item"><span class="chapter-num">10</span><span class="chapter-title">Cadre méthodologique et limites</span></li>
+          <li class="chapter-item"><span class="chapter-num">11</span><span class="chapter-title">Conclusion et recommandations</span></li>
+          <li class="chapter-note-top">
+            <span class="chapter-note-icon">●</span>
+            <span class="chapter-note-label">Guide lecture néophyte</span>
+          </li>
+          <li class="chapter-note-bottom">
+            Dans la table des matières de l'étude complète, les entrées <span style="color:#f59e0b;font-weight:700;">●</span> signalent les sections essentielles pour comprendre le PEA sans tout lire : définition, fiscalité, choix des ETF et construction d'un premier portefeuille.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ETF sélectionnés -->
+    <section class="content-section" id="section-etf">
+      <h2 class="section-title">4 ETF sélectionnés pour 2026</h2>
+      <div class="accordion-inner">
+        <p>La sélection repose sur trois critères : éligibilité PEA confirmée, liquidité suffisante, diversification géographique complémentaire.</p>
+        <div class="etf-grid">
+          <div class="etf-card">
+            <div class="etf-name">Monde développé</div>
+            <div class="etf-ticker">MSCI World - WPEA</div>
+            <div class="etf-desc">1 600+ entreprises, 23 pays. Socle de tout portefeuille long terme.</div>
+          </div>
+          <div class="etf-card">
+            <div class="etf-name">Grandes capitalisations US</div>
+            <div class="etf-ticker">S&amp;P 500 - PE500</div>
+            <div class="etf-desc">500 premières entreprises américaines. Exposition aux leaders technologiques.</div>
+          </div>
+          <div class="etf-card">
+            <div class="etf-name">Marchés émergents</div>
+            <div class="etf-ticker">MSCI EM - PAEEM</div>
+            <div class="etf-desc">Asie, Amérique Latine, Afrique. Diversification et potentiel de croissance.</div>
+          </div>
+          <div class="etf-card">
+            <div class="etf-name">Technologie US</div>
+            <div class="etf-ticker">Nasdaq-100 - PANX</div>
+            <div class="etf-desc">100 valeurs non-financières Nasdaq. Concentration sur l'innovation.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 profils de portefeuille -->
+    <section class="content-section" id="section-profils">
+      <h2 class="section-title">3 profils de portefeuille</h2>
+      <div class="accordion-inner">
+        <p>Trois allocations ont été construites pour correspondre à des niveaux de risque distincts. Chaque profil combine ETF et actions individuelles, et est simulé sur trois horizons (5, 10 et 15 ans) avec un versement mensuel fixe.</p>
+        <div class="profil-grid">
+          <div class="profil-card profil-sec">
+            <div class="profil-name">Sécuritaire</div>
+            <hr class="profil-divider">
+            <div class="profil-alloc">
+              MSCI World (WPEA) : 60 %<br>
+              Air Liquide : 20 %<br>
+              Sanofi : 20 %
+            </div>
+          </div>
+          <div class="profil-card profil-eq">
+            <div class="profil-name">Équilibré</div>
+            <hr class="profil-divider">
+            <div class="profil-alloc">
+              MSCI World (WPEA) : 25 %<br>
+              S&amp;P 500 : 25 %<br>
+              Thales : 20 %<br>
+              Air Liquide : 15 %<br>
+              Sanofi : 15 %
+            </div>
+          </div>
+          <div class="profil-card profil-dyn">
+            <div class="profil-name">Dynamique</div>
+            <hr class="profil-divider">
+            <div class="profil-alloc">
+              Nasdaq-100 (PANX) : 25 %<br>
+              MSCI EM (PAEEM) : 25 %<br>
+              Dassault Systèmes : 25 %<br>
+              Sartorius Stedim Biotech : 25 %
+            </div>
+          </div>
+        </div>
+        <p>Les simulations intègrent trois scénarios de stress test : crise dot-com (2000), crise financière (2008), choc COVID (2020). Chaque profil est analysé sous ces conditions extrêmes pour mesurer la résistance et la durée de récupération.</p>
+      </div>
+    </section>
+
+    <!-- Ce que cela démontre -->
+    <section class="content-section" id="section-apport">
+      <h2 class="section-title">Ce que cela démontre</h2>
+      <div class="accordion-inner">
+        <p>Ce document n'est pas un article de blog. C'est une étude de référence avec un raisonnement tracé de bout en bout, des sources citées et des simulations chiffrées.</p>
+        <div class="highlight">
+          <p>Rédiger de la documentation financière solide exige les mêmes compétences que rédiger des spécifications techniques : structurer l'information, distinguer les faits des hypothèses, et rendre le document utilisable par quelqu'un d'autre.</p>
+        </div>
+        <p>Cette étude est représentative de la façon dont j'aborde tout sujet complexe : découpage en chapitres indépendants, progression logique, validation de chaque affirmation avant de passer à la suivante.</p>
+      </div>
+    </section>
+
+    <p style="font-size:0.78em;color:var(--text-secondary);margin-top:24px;line-height:1.6">
+      Ce document est produit à des fins <strong>éducatives et de démonstration académique</strong>.
+      Il ne constitue pas un conseil en investissement. Les projections reposent sur des hypothèses
+      historiques et ne garantissent pas les performances futures.
+    </p>
+</main>
+
+  <footer role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <span class="footer-name">Gabriel ROULON</span>
+        <span class="footer-sub">Expert en Gouvernance IA</span>
+      </div>
+      <div class="footer-col footer-col-right">
+        <a href="mailto:gabriel.roulon@gmail.com" class="footer-contact-link">gabriel.roulon@gmail.com</a>
+        <a href="tel:+33638226821" class="footer-contact-link">06 38 22 68 21</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    if (window.location.search.indexOf('summary=1') !== -1) {
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          var fab = document.querySelector('.btn-chatbot-fab');
+          if (fab) fab.click();
+        }, 500);
+      });
+    }
+  </script>
+  <script src="common.js" defer></script>
+  <div id="nav-panel" class="nav-panel" role="dialog" aria-modal="true" aria-label="Ressources Vue Jury" aria-hidden="true">
+    <div class="nav-panel-head">
+      <span class="nav-panel-title">Ressources Vue Jury</span>
+      <button class="nav-panel-close" aria-label="Fermer">&times;</button>
+    </div>
+    <div class="nav-panel-body">
+      <div class="nav-section-label">Candidature</div>
+      <div class="nav-links">
+        <a href="profil_personnel.html">Profil personnel</a>
+        <a href="lettre_motivation_ecole.html">Lettre (École)</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-section-label">Projet IT</div>
+      <div class="nav-links">
+        <a href="presentation_synthetique.html">IT Dashboard</a>
+        <a href="init_sequence.html">INIT_SEQUENCE</a>
+        <a href="poc_agents.html">POC Agents</a>
+      </div>
+      <div class="nav-section-label">Finance &amp; Investissement</div>
+      <div class="nav-links">
+        <a href="realisations_doc_financiere.html">Documentation financière</a>
+        <a href="PEA_V2_PRO.html">Étude PEA</a>
+        <a href="simulation_pea.html">Simulation PEA</a>
+      </div>
+    </div>
+  </div>
+  <div id="quick-read-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-card">
+      <button class="modal-close" aria-label="Fermer">&times;</button>
+      <div class="modal-title" id="modal-title">Note réglementaire</div>
+      <div class="modal-body">
+        <p>En février 2026, un article du Figaro a révélé que Bercy (ministère de l'Économie et des Finances) mène des <strong style="color:var(--text)">analyses sur les ETF synthétiques à réplication par swap</strong> actuellement éligibles au PEA. Ces instruments reproduisent la performance d'indices non-européens en détenant des titres européens et en échangeant leur performance via un contrat de swap, ce qui contredit l'objectif initial du PEA d'orienter l'épargne vers l'économie européenne.</p>
+        <p style="margin-top:12px">Les 4 ETF retenus dans cette étude (WPEA, PE500, PANX, PAEEM) sont tous des ETF synthétiques swap. <strong style="color:var(--text)">Une évolution réglementaire pourrait remettre en cause leur éligibilité PEA.</strong> À ce stade, aucune proposition législative n'a été déposée. La situation fait l'objet d'un suivi attentif.</p>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-chatbot-fab"
+          data-summary="Documentation financière PEA v2.0 : étude complète en 11 chapitres, janvier 2026.&#10;4 ETF éligibles PEA sélectionnés : MSCI World (WPEA IE000Y7K78Z9), S&amp;P 500 (PE500), Nasdaq-100 (PANX), MSCI EM (PAEEM).&#10;CAGR sourcés : MSCI World 9,2 % (1970-2025), S&amp;P 500 10,5 %, Nasdaq-100 14,8 %, MSCI EM 6-7 %.&#10;3 profils construits : Sécuritaire, Équilibré, Dynamique (ETF et actions individuelles).&#10;Simulations sur 3 horizons : 5, 10 et 15 ans. Stress tests PRIIPS. Section 9.6 : risque de change EUR/USD.&#10;Fiscalité complète : retraits avant/après 5 ans, prélèvements sociaux 18,6 %, plafond PEA 150 000 EUR.&#10;Simulation interactive : simulation_pea.html. Étude complète : PEA_V2_PRO.html.&#10;Raisonnement tracé, sources citées, reproductible. Pas un conseil en investissement."
+          aria-label="Résumé IA de la page" title="Résumé&#160;IA">Résumé&#160;IA</button>
+</body>
+</html>
