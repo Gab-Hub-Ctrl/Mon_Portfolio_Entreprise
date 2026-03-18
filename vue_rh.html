@@ -131,7 +131,7 @@
     .guide-bubble.arrow-left::before { left: -5px; transform: rotate(45deg); }
     .guide-bubble.arrow-right::before { right: -5px; transform: rotate(-135deg); }
     .guide-bubble.arrow-below::before { display: none; }
-    .guide-bubble-step { font-size: 0.65em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); margin-bottom: 8px; }
+    .guide-bubble-step { font-size: 0.65em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); margin-bottom: 8px; text-align: center; }
     .guide-bubble-text { font-size: 0.82em; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px; text-align: justify; }
     .guide-bubble-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .guide-bubble-dots { display: flex; gap: 5px; align-items: center; }
@@ -167,7 +167,7 @@
       50% { background: rgba(56,189,248,0.2); border-color: var(--blue); box-shadow: 0 0 0 2px rgba(56,189,248,0.18); color: var(--text); }
       100% { background: var(--blue-dim); border-color: rgba(56,189,248,0.4); }
     }
-    .vue-list-summary.highlighted { animation: summary-highlight 0.8s ease-in-out 3; }
+    .vue-list-summary.highlighted { animation: summary-highlight 1s ease-in-out 2; }
   </style>
 </head>
 <body>
@@ -182,7 +182,7 @@
       </nav>
     </div>
     <div class="header-center">Vue RH / Recruteur</div>
-    <div class="header-right"><a href="mes_projets.html" class="btn-quick-read btn-important">Mes projets</a></div>
+    <div class="header-right"><a href="mes_projets.html" id="btn-mes-projets" class="btn-quick-read btn-important">Mes projets</a></div>
   </header>
 
   <main id="main-content" role="main">
@@ -256,6 +256,7 @@
       <div class="guide-bubble-footer">
         <div class="guide-bubble-dots">
           <span class="guide-dot" id="gdot-0"></span>
+          <span class="guide-dot" id="gdot-1"></span>
         </div>
         <div style="display:flex;gap:8px;align-items:center;">
           <button class="btn-guide-close" id="btn-guide-close">Fermer</button>
@@ -290,8 +291,14 @@
     var GUIDE_STEPS = [
       {
         grp: 'grp-rh',
-        label: '01 / 01 - RH / Recruteur',
+        label: '01 / 02 - RH / Recruteur',
         text: "Retrouvez ici mon profil, mon CV et ma lettre de motivation. Les Résumés IA permettent d'avoir une vue d'ensemble en moins d'une minute par document."
+      },
+      {
+        grp: null,
+        btnId: 'btn-mes-projets',
+        label: '02 / 02 - Mes projets',
+        text: "Ici vous avez la possibilité de consulter le reste de mes projets. En vous souhaitant une bonne lecture !"
       }
     ];
 
@@ -380,17 +387,33 @@
       });
     }
 
+    function positionBubbleFromBtn(btnEl) {
+      var btnRect  = btnEl.getBoundingClientRect();
+      var mainEl   = document.getElementById('main-content');
+      var mainRect = mainEl.getBoundingClientRect();
+      var scrollY  = window.scrollY || window.pageYOffset;
+      var bubbleW  = 240;
+      bubble.style.width = bubbleW + 'px';
+      bubble.style.left  = Math.max(8, btnRect.right - mainRect.left - bubbleW) + 'px';
+      bubble.style.top   = (btnRect.bottom - mainRect.top + scrollY + 10) + 'px';
+      bubble.classList.remove('arrow-left', 'arrow-right', 'arrow-below');
+    }
+
     function showStep(step) {
       var data  = GUIDE_STEPS[step - 1];
-      var grpEl = document.getElementById(data.grp);
       document.querySelectorAll('.vue-list-group').forEach(function(g) { g.classList.remove('guide-focus'); });
-      grpEl.classList.add('guide-focus');
+      if (data.grp) {
+        var grpEl = document.getElementById(data.grp);
+        grpEl.classList.add('guide-focus');
+        positionBubble(grpEl);
+      } else if (data.btnId) {
+        positionBubbleFromBtn(document.getElementById(data.btnId));
+      }
       document.getElementById('guide-step-label').textContent = data.label;
       document.getElementById('guide-text').textContent = data.text;
-      for (var i = 0; i < 1; i++) document.getElementById('gdot-' + i).classList.toggle('active', i === step - 1);
+      for (var i = 0; i < 2; i++) document.getElementById('gdot-' + i).classList.toggle('active', i === step - 1);
       btnNext.innerHTML = step < GUIDE_STEPS.length ? 'Suivant &#8594;' : 'Terminer';
       btnNext.disabled = false;
-      positionBubble(grpEl);
       bubble.classList.remove('closing');
       if (!bubble.classList.contains('visible')) {
         bubble.classList.add('visible');
@@ -449,7 +472,11 @@
     btnClose.addEventListener('click', endGuide);
     document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && guideStep !== -1) endGuide(); });
     window.addEventListener('resize', function() {
-      if (guideStep >= 1) positionBubble(document.getElementById(GUIDE_STEPS[guideStep - 1].grp));
+      if (guideStep >= 1) {
+        var d = GUIDE_STEPS[guideStep - 1];
+        if (d.grp) positionBubble(document.getElementById(d.grp));
+        else if (d.btnId) positionBubbleFromBtn(document.getElementById(d.btnId));
+      }
     });
   </script>
 </body>
