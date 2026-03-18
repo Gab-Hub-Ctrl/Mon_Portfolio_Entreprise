@@ -53,6 +53,12 @@
     .view-btn-title { display: block; font-size: 1.05em; font-weight: 600; color: var(--text); }
     .view-btn-count { display: block; font-size: 0.78em; color: var(--text-secondary); margin-top: 3px; }
     .view-btn-arrow { font-size: 1.1em; color: var(--blue); flex-shrink: 0; margin-left: 16px; }
+    .view-card-wrap { display: flex; align-items: center; gap: 16px; width: 100%; max-width: 680px; }
+    .view-card-wrap .view-selector { flex: 1; max-width: none; }
+    .view-aside { display: flex; flex-direction: column; align-items: center; gap: 5px; flex-shrink: 0; padding: 8px 4px; }
+    .view-aside-arrow { font-size: 1.3em; color: var(--blue); line-height: 1; }
+    .view-aside-label { font-size: 0.75em; font-weight: 700; color: var(--blue); white-space: nowrap; letter-spacing: 0.02em; }
+    .view-aside-sub { font-size: 0.62em; color: var(--text-secondary); white-space: nowrap; text-align: center; line-height: 1.4; }
 
     /* Métriques intégrées */
     .view-btn-metrics { display: flex; gap: 28px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
@@ -104,25 +110,31 @@
         <span class="landing-name">Gabriel ROULON</span>
       </div>
 
-      <div class="view-selector" role="list">
-        <a href="vue_rh.html" class="view-btn" role="listitem">
-          <div class="view-btn-content">
-            <span class="view-btn-title">Accéder au portfolio</span>
-            <span class="view-btn-count">12 ressources</span>
-            <div class="view-btn-metrics">
-              <div class="view-btn-metric">
-                <span class="vbm-val">7 min 30</span>
-                <span class="vbm-label">Lecture complète</span>
+      <div class="view-card-wrap">
+        <div class="view-selector" role="list">
+          <a href="vue_rh.html" class="view-btn" role="listitem">
+            <div class="view-btn-content">
+              <span class="view-btn-title">Accéder au portfolio</span>
+              <span class="view-btn-count">12 ressources</span>
+              <div class="view-btn-metrics">
+                <div class="view-btn-metric">
+                  <span class="vbm-val">7 min 30</span>
+                  <span class="vbm-label">Lecture complète</span>
+                </div>
+                <div class="view-btn-metric">
+                  <span class="vbm-val">~2 min</span>
+                  <span class="vbm-label">Résumés IA</span>
+                </div>
+                <span class="vbm-note">Hors ressources de la page Mes projets.</span>
               </div>
-              <div class="view-btn-metric">
-                <span class="vbm-val">~2 min</span>
-                <span class="vbm-label">Résumés IA</span>
-              </div>
-              <span class="vbm-note">Hors ressources de la page Mes projets.</span>
             </div>
-          </div>
-          <span class="view-btn-arrow" aria-hidden="true">→</span>
-        </a>
+            </a>
+        </div>
+        <div class="view-aside" aria-hidden="true">
+          <span class="view-aside-arrow">&#8592;</span>
+          <span class="view-aside-label">Guide&#160;IA</span>
+          <span class="view-aside-sub">sur chaque<br>page</span>
+        </div>
       </div>
 
     </div>
@@ -131,8 +143,5 @@
   <footer role="contentinfo"></footer>
 
   <script src="common.js" defer></script>
-  <button class="btn-chatbot-fab"
-          data-summary="Bonjour et bienvenue,&#10;Merci de prendre le temps de consulter ce portfolio, conçu pour vous accompagner dans la découverte de mon profil.&#10;&#10;La carte ci-dessous ouvre l'accès au profil, CV, lettre de motivation et contact. Aucun prérequis technique requis.&#10;&#10;Mes projets sont également accessibles pour ceux qui souhaitent mesurer mon implication et ma démarche d'autoformation.&#10;&#10;Un Résumé IA est disponible sur chaque ressource pour parcourir le portfolio en quelques minutes."
-          aria-label="Résumé IA de la page" title="Résumé&#160;IA">Résumé&#160;IA</button>
 </body>
 </html>

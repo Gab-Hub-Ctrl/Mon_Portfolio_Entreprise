@@ -422,8 +422,8 @@
       <div class="chatbot-status" aria-live="polite"></div>
     </div>
     <div class="chatbot-footer">
-      <div class="chatbot-footer-label">Autres ressources Vue Jury</div>
-      <button class="chatbot-nav-btn" aria-label="Accéder aux autres ressources Vue Jury">Cliquez ici</button>
+      <div class="chatbot-footer-label">Autres ressources Vue Mes projets</div>
+      <button class="chatbot-nav-btn" aria-label="Accéder aux autres ressources Vue Mes projets">Cliquez ici</button>
     </div>
   </div>
 
@@ -858,7 +858,7 @@
           </div>
 
           <div class="highlight" style="margin-top:18px;">
-            <p>INIT_SEQUENCE est le socle de gouvernance du projet IT Dashboard. Pour le contexte complet de l'architecture et des composants, voir la <a href="presentation_synthetique.html" style="color:var(--blue);text-decoration:none;">IT Dashboard</a>. Pour les agents opérationnels conçus dans ce cadre, voir le <a href="poc_agents.html" style="color:var(--blue);text-decoration:none;">POC Agents</a>.</p>
+            <p>INIT_SEQUENCE est le socle de gouvernance du projet IT Dashboard. Pour le contexte complet de l'architecture et des composants, voir la <a href="it_dashboard.html" style="color:var(--blue);text-decoration:none;">IT Dashboard</a>. Pour les agents opérationnels conçus dans ce cadre, voir le <a href="poc_agents.html" style="color:var(--blue);text-decoration:none;">POC Agents</a>.</p>
           </div>
 
       </div>
@@ -889,35 +889,24 @@
     </div>
   </div>
 
-  <script>
-    if (window.location.search.indexOf('summary=1') !== -1) {
-      window.addEventListener('load', function() {
-        setTimeout(function() {
-          var fab = document.querySelector('.btn-chatbot-fab');
-          if (fab) fab.click();
-        }, 500);
-      });
-    }
-  </script>
   <button class="btn-chatbot-fab"
           data-summary="INIT_SEQUENCE : gouvernance IA par machine à états finis, 3 607 lignes dont 2 502 de prompts fondateurs, 7 états.&#10;Problème résolu : perte totale de contexte IA entre sessions sur un projet de grande ampleur.&#10;4 couches : Bootloader (activation stricte), SYSTEM (7 états, 15 sections de règles), USER PROMPT (7 phases de progression), Module Cognitif (actif en S5).&#10;7 états : S(-1) attente, S0 bilans techniques, S2 arborescence, S4 cohérence, S5 mode projet actif, S6 maintenance, S7 recovery.&#10;11 fichiers fondateurs : 7 prompts (Comportement, Standards, Vision, Pôles x4, Architecture, Arborescence/UI, Orchestration).&#10;10 figures historiques intégrées comme piliers de raisonnement dans le Module Cognitif.&#10;Activation S5 par phrase dédiée, déclenchement unique du mode analyse avancé.&#10;Valeur architecturale : procédure de prompting structurée, non applicable comme imposition d'état sur les IA publiques actuelles."
           aria-label="Résumé IA de la page" title="Résumé&#160;IA">Résumé&#160;IA</button>
-  <div id="nav-panel" class="nav-panel" role="dialog" aria-modal="true" aria-label="Ressources Vue Jury" aria-hidden="true">
+  <div id="nav-panel" class="nav-panel" role="dialog" aria-modal="true" aria-label="Ressources Vue Mes projets" aria-hidden="true">
     <div class="nav-panel-head">
-      <span class="nav-panel-title">Ressources Vue Jury</span>
+      <span class="nav-panel-title">Ressources Vue Mes projets</span>
       <button class="nav-panel-close" aria-label="Fermer">&times;</button>
     </div>
     <div class="nav-panel-body">
-      <div class="nav-section-label">Candidature</div>
+      <div class="nav-section-label">Gouvernance &amp; Agents IA</div>
       <div class="nav-links">
-        <a href="profil_personnel.html">Profil personnel</a>
-        <a href="lettre_motivation_ecole.html">Lettre (École)</a>
-        <a href="contact.html">Contact</a>
-      </div>
-      <div class="nav-section-label">Projet IT</div>
-      <div class="nav-links">
-        <a href="presentation_synthetique.html">IT Dashboard</a>
         <a href="poc_agents.html">POC Agents</a>
+      </div>
+      <div class="nav-section-label">Système &amp; Infrastructure</div>
+      <div class="nav-links">
+        <a href="it_dashboard.html">IT Dashboard</a>
+        <a href="realisations_maintenance_agent.html">Maintenance Agent</a>
+        <a href="mon_laboratoire.html">Mon Laboratoire</a>
       </div>
       <div class="nav-section-label">Finance &amp; Investissement</div>
       <div class="nav-links">

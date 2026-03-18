@@ -301,8 +301,8 @@
       <div class="chatbot-status" aria-live="polite"></div>
     </div>
     <div class="chatbot-footer">
-      <div class="chatbot-footer-label">Autres ressources Vue Jury</div>
-      <button class="chatbot-nav-btn" aria-label="Accéder aux autres ressources Vue Jury">Cliquez ici</button>
+      <div class="chatbot-footer-label">Autres ressources Vue Mes projets</div>
+      <button class="chatbot-nav-btn" aria-label="Accéder aux autres ressources Vue Mes projets">Cliquez ici</button>
     </div>
   </div>
 
@@ -311,7 +311,7 @@
       <nav class="breadcrumb" id="site-breadcrumb" data-page="doc-financiere" aria-label="Fil d'Ariane">
         <a href="index.html">Présentation</a>
         <span class="breadcrumb-sep" aria-hidden="true">&#8250;</span>
-        <a href="vue_ecole.html">Vue Jury école</a>
+        <a href="vue_rh.html">Vue RH / Recruteur</a>
         <span class="breadcrumb-sep" aria-hidden="true">&#8250;</span>
         <span class="breadcrumb-current" aria-current="page">Documentation financière</span>
       </nav>
@@ -489,38 +489,26 @@
     </div>
   </footer>
 
-  <script>
-    if (window.location.search.indexOf('summary=1') !== -1) {
-      window.addEventListener('load', function() {
-        setTimeout(function() {
-          var fab = document.querySelector('.btn-chatbot-fab');
-          if (fab) fab.click();
-        }, 500);
-      });
-    }
-  </script>
   <script src="common.js" defer></script>
-  <div id="nav-panel" class="nav-panel" role="dialog" aria-modal="true" aria-label="Ressources Vue Jury" aria-hidden="true">
+  <div id="nav-panel" class="nav-panel" role="dialog" aria-modal="true" aria-label="Ressources Vue Mes projets" aria-hidden="true">
     <div class="nav-panel-head">
-      <span class="nav-panel-title">Ressources Vue Jury</span>
+      <span class="nav-panel-title">Ressources Vue Mes projets</span>
       <button class="nav-panel-close" aria-label="Fermer">&times;</button>
     </div>
     <div class="nav-panel-body">
-      <div class="nav-section-label">Candidature</div>
+      <div class="nav-section-label">Gouvernance &amp; Agents IA</div>
       <div class="nav-links">
-        <a href="profil_personnel.html">Profil personnel</a>
-        <a href="lettre_motivation_ecole.html">Lettre (École)</a>
-        <a href="contact.html">Contact</a>
-      </div>
-      <div class="nav-section-label">Projet IT</div>
-      <div class="nav-links">
-        <a href="presentation_synthetique.html">IT Dashboard</a>
         <a href="init_sequence.html">INIT_SEQUENCE</a>
         <a href="poc_agents.html">POC Agents</a>
       </div>
+      <div class="nav-section-label">Système &amp; Infrastructure</div>
+      <div class="nav-links">
+        <a href="it_dashboard.html">IT Dashboard</a>
+        <a href="realisations_maintenance_agent.html">Maintenance Agent</a>
+        <a href="mon_laboratoire.html">Mon Laboratoire</a>
+      </div>
       <div class="nav-section-label">Finance &amp; Investissement</div>
       <div class="nav-links">
-        <a href="realisations_doc_financiere.html">Documentation financière</a>
         <a href="PEA_V2_PRO.html">Étude PEA</a>
         <a href="simulation_pea.html">Simulation PEA</a>
       </div>

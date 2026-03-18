@@ -189,6 +189,7 @@
     var isOpen = false;
     var typeTimer = null;
     var thinkTimer = null;
+    var ignoreNextClose = false;
 
     function calcDelay(text) {
       return Math.max(10, Math.min(32, 6000 / Math.max(text.length, 1)));
@@ -281,12 +282,21 @@
 
     btn.addEventListener('click', function () { isOpen ? close() : open(); });
     if (closeBtn) closeBtn.addEventListener('click', close);
+
+    if (window.location.search.indexOf('summary=1') !== -1) {
+      setTimeout(function () {
+        open();
+        ignoreNextClose = true;
+        setTimeout(function () { ignoreNextClose = false; }, 800);
+      }, 400);
+    }
+
     document.addEventListener('click', function (e) {
       var navPanel = document.getElementById('nav-panel');
       var navBtn = document.querySelector('.chatbot-nav-btn');
       var modal = document.getElementById('quick-read-modal');
       var importantTrigger = document.querySelector('.btn-important');
-      if (isOpen && !panel.contains(e.target) && !btn.contains(e.target) &&
+      if (isOpen && !ignoreNextClose && !panel.contains(e.target) && !btn.contains(e.target) &&
           !(navPanel && navPanel.contains(e.target)) &&
           !(navBtn && navBtn.contains(e.target)) &&
           !(modal && modal.contains(e.target)) &&

@@ -259,8 +259,8 @@
       <div class="chatbot-status" aria-live="polite"></div>
     </div>
     <div class="chatbot-footer">
-      <div class="chatbot-footer-label">Autres ressources Vue Jury</div>
-      <button class="chatbot-nav-btn" aria-label="Accéder aux autres ressources Vue Jury">Cliquez ici</button>
+      <div class="chatbot-footer-label">Autres ressources Vue Mes projets</div>
+      <button class="chatbot-nav-btn" aria-label="Accéder aux autres ressources Vue Mes projets">Cliquez ici</button>
     </div>
   </div>
 
@@ -291,7 +291,7 @@
           <p>Trois Proof of Concept d'agents opérationnels (v2.1.0) conçus pour démontrer qu'un système multi-agents peut remplacer des scripts manuels, avec le même niveau d'exigence en termes de qualité, sécurité et traçabilité.</p>
 
           <div class="highlight">
-            <p><strong>Contexte IT Dashboard :</strong> le projet intègre 10 scripts Python de collecte d'alertes (<code>collect_poleX_*.py</code>), un par pôle. Ce POC conçoit les agents destinés à les remplacer : collecte intelligente, supervision automatisée, mémoire et règles intégrées. <a href="presentation_synthetique.html" style="color:var(--blue);text-decoration:none;">IT Dashboard du projet</a></p>
+            <p><strong>Contexte IT Dashboard :</strong> le projet intègre 10 scripts Python de collecte d'alertes (<code>collect_poleX_*.py</code>), un par pôle. Ce POC conçoit les agents destinés à les remplacer : collecte intelligente, supervision automatisée, mémoire et règles intégrées. <a href="it_dashboard.html" style="color:var(--blue);text-decoration:none;">IT Dashboard du projet</a></p>
           </div>
 
           <h2>Architecture multi-agents</h2>
@@ -469,36 +469,25 @@
     </div>
   </div>
 
-  <script>
-    if (window.location.search.indexOf('summary=1') !== -1) {
-      window.addEventListener('load', function() {
-        setTimeout(function() {
-          var fab = document.querySelector('.btn-chatbot-fab');
-          if (fab) fab.click();
-        }, 500);
-      });
-    }
-  </script>
   <script src="common.js" defer></script>
   <button class="btn-chatbot-fab"
           data-summary="POC Agents v2.1.0 : amélioration des collecteurs Python de l'IT Dashboard. Le projet remplace 10 scripts collect_poleX_*.py par des agents intelligents avec mémoire, règles et supervision.&#10;3 agents opérationnels sur 10 pôles IT, architecture en revue.&#10;Agent Collecteurs : remplace les 10 scripts Python de collecte d'alertes JSON, un agent par pôle (Sécurité, Incidents, Performances, Réseaux, Systèmes, Applications, Services, Cloud, Données, Innovation).&#10;Agent Cerveau : manager central, supervise, nettoie, répare et relance les 10 collecteurs, 100 % déterministe.&#10;Agent Chatbot : FAQ versionnée JSON/Markdown, matching par règles, 100 % frontend, cible 95 % de réponses correctes.&#10;Approche neurosymbolique en évolution vers un hybride LLM (Collecteurs ~20 %, Cerveau ~40 %, Chatbot ~60 %).&#10;Architecture : FastAPI backend, HashiCorp Vault, standards Dashboard_IT, traçabilité complète."
           aria-label="Résumé IA de la page" title="Résumé&#160;IA">Résumé&#160;IA</button>
-  <div id="nav-panel" class="nav-panel" role="dialog" aria-modal="true" aria-label="Ressources Vue Jury" aria-hidden="true">
+  <div id="nav-panel" class="nav-panel" role="dialog" aria-modal="true" aria-label="Ressources Vue Mes projets" aria-hidden="true">
     <div class="nav-panel-head">
-      <span class="nav-panel-title">Ressources Vue Jury</span>
+      <span class="nav-panel-title">Ressources Vue Mes projets</span>
       <button class="nav-panel-close" aria-label="Fermer">&times;</button>
     </div>
     <div class="nav-panel-body">
-      <div class="nav-section-label">Candidature</div>
+      <div class="nav-section-label">Gouvernance &amp; Agents IA</div>
       <div class="nav-links">
-        <a href="profil_personnel.html">Profil personnel</a>
-        <a href="lettre_motivation_ecole.html">Lettre (École)</a>
-        <a href="contact.html">Contact</a>
-      </div>
-      <div class="nav-section-label">Projet IT</div>
-      <div class="nav-links">
-        <a href="presentation_synthetique.html">IT Dashboard</a>
         <a href="init_sequence.html">INIT_SEQUENCE</a>
+      </div>
+      <div class="nav-section-label">Système &amp; Infrastructure</div>
+      <div class="nav-links">
+        <a href="it_dashboard.html">IT Dashboard</a>
+        <a href="realisations_maintenance_agent.html">Maintenance Agent</a>
+        <a href="mon_laboratoire.html">Mon Laboratoire</a>
       </div>
       <div class="nav-section-label">Finance &amp; Investissement</div>
       <div class="nav-links">

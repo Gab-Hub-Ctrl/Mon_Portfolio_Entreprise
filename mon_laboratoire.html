@@ -82,6 +82,8 @@
       .lab-id { min-width: auto; }
       .lab-name { min-width: auto; }
     }
+    .chatbot-footer { border-top: 1px solid var(--border); padding: 10px 16px; background: var(--bg-card); display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .chatbot-footer-label { font-size: 0.72em; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin-bottom: 0; }
   </style>
 </head>
 <body>
@@ -99,6 +101,10 @@
       <div class="chatbot-think" aria-hidden="true"><span></span><span></span><span></span></div>
       <div class="chatbot-msg" aria-live="polite" aria-label="Résumé de la page"></div>
       <div class="chatbot-status" aria-live="polite"></div>
+    </div>
+    <div class="chatbot-footer">
+      <div class="chatbot-footer-label">Autres ressources Vue Mes projets</div>
+      <button class="chatbot-nav-btn" aria-label="Accéder aux autres ressources Vue Mes projets">Cliquez ici</button>
     </div>
   </div>
 
@@ -335,5 +341,29 @@
   <button class="btn-chatbot-fab"
           data-summary="Mon Laboratoire est un environnement personnel de test et d'apprentissage autour des infrastructures virtualisées, en cours de réalisation. L'objectif est de pratiquer et d'approfondir des technologies difficiles à déployer en environnement réel.&#10;2 hyperviseurs : Hyper-V (4 labs Windows : systèmes, automatisation, réseau, sécurité) et Proxmox (7 labs : Linux, cybersécurité, services, support, développement, IA, gestion VM).&#10;Collection ISO en 8 catégories couvrant systèmes, firewalls, hyperviseurs et outils Microsoft.&#10;Scripts PowerShell portables et réexécutables sans effet de bord pour l'automatisation et les sauvegardes.&#10;HashiCorp Vault intégré pour la gestion des secrets."
           aria-label="Résumé IA de la page" title="Résumé&#160;IA">Résumé&#160;IA</button>
+  <div id="nav-panel" class="nav-panel" role="dialog" aria-modal="true" aria-label="Ressources Vue Mes projets" aria-hidden="true">
+    <div class="nav-panel-head">
+      <span class="nav-panel-title">Ressources Vue Mes projets</span>
+      <button class="nav-panel-close" aria-label="Fermer">&times;</button>
+    </div>
+    <div class="nav-panel-body">
+      <div class="nav-section-label">Gouvernance &amp; Agents IA</div>
+      <div class="nav-links">
+        <a href="init_sequence.html">INIT_SEQUENCE</a>
+        <a href="poc_agents.html">POC Agents</a>
+      </div>
+      <div class="nav-section-label">Système &amp; Infrastructure</div>
+      <div class="nav-links">
+        <a href="it_dashboard.html">IT Dashboard</a>
+        <a href="realisations_maintenance_agent.html">Maintenance Agent</a>
+      </div>
+      <div class="nav-section-label">Finance &amp; Investissement</div>
+      <div class="nav-links">
+        <a href="realisations_doc_financiere.html">Documentation financière</a>
+        <a href="PEA_V2_PRO.html">Étude PEA</a>
+        <a href="simulation_pea.html">Simulation PEA</a>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

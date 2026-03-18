@@ -24,7 +24,7 @@
     }
     header { background: rgba(15, 23, 42, 0.97); }
     .header-left .breadcrumb { padding: 0; margin: 0; border-bottom: none; font-size: 0.78em; }
-    .vue-list { display: flex; flex-direction: column; gap: 10px; max-width: 600px; margin: 0 auto; }
+    .vue-list { display: flex; flex-direction: column; gap: 10px; max-width: 500px; margin: 0 auto; }
     .vue-list-group { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
     .vue-list-group-label {
       padding: 9px 18px;
@@ -80,6 +80,94 @@
     .vue-list-main-contact { justify-content: center; }
     .vue-list-main-contact .vue-list-title { flex: 0; }
     main { padding-bottom: calc(var(--header-h) + 12px); }
+    main { position: relative; }
+    /* ---- Guide IA ---- */
+    .btn-guide {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.78em; font-weight: 600; color: var(--blue);
+      background: rgba(56,189,248,0.07); border: 1px solid rgba(56,189,248,0.3);
+      border-radius: 5px; padding: 5px 13px; cursor: pointer;
+      transition: background 0.18s, color 0.18s; white-space: nowrap;
+      animation: guide-glow 2.8s ease-in-out infinite;
+    }
+    .btn-guide:hover { background: rgba(56,189,248,0.14); color: var(--text); }
+    .btn-guide.active { background: rgba(56,189,248,0.18); border-color: var(--blue); animation: none; }
+    @keyframes guide-glow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(56,189,248,0); border-color: rgba(56,189,248,0.3); }
+      50% { box-shadow: 0 0 10px 3px rgba(56,189,248,0.22); border-color: rgba(56,189,248,0.75); }
+    }
+    .btn-guide-icon {
+      width: 10px; height: 10px; border-radius: 50%; background: var(--blue);
+      flex-shrink: 0; animation: halo-pulse 2.8s ease-out infinite;
+    }
+    .btn-guide.active .btn-guide-icon { animation: halo-pulse 1.6s ease-out infinite; }
+    @keyframes halo-pulse {
+      0% { box-shadow: 0 0 0 0 rgba(56,189,248,0.55); }
+      70% { box-shadow: 0 0 0 7px rgba(56,189,248,0); }
+      100% { box-shadow: 0 0 0 0 rgba(56,189,248,0); }
+    }
+    .vue-list-group { transition: opacity 0.4s, border-color 0.4s; }
+    .vue-list.guide-active .vue-list-group { opacity: 0.25; pointer-events: none; }
+    .vue-list.guide-active .vue-list-group.guide-focus {
+      opacity: 1; pointer-events: auto;
+      border-color: var(--blue); box-shadow: 0 0 0 2px rgba(56,189,248,0.18);
+    }
+    .vue-list.guide-active .vue-list-group.guide-focus .vue-list-group-label { color: var(--blue); }
+    .guide-bubble {
+      position: absolute; top: 0; width: 240px;
+      background: var(--bg-secondary); border: 1px solid var(--blue);
+      border-radius: 10px; padding: 16px 18px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.45), 0 0 0 1px rgba(56,189,248,0.1);
+      z-index: 100; display: none;
+    }
+    .guide-bubble.visible { display: block; animation: bubble-in 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+    .guide-bubble.closing { animation: bubble-out 0.2s ease-in forwards; }
+    @keyframes bubble-in { from { opacity:0; transform:translateY(-10px) scale(0.95); } to { opacity:1; transform:translateY(0) scale(1); } }
+    @keyframes bubble-out { from { opacity:1; transform:translateY(0) scale(1); } to { opacity:0; transform:translateY(-6px) scale(0.96); } }
+    .guide-bubble::before {
+      content: ''; position: absolute; top: 18px; width: 9px; height: 9px;
+      background: var(--bg-secondary); border-left: 1px solid var(--blue); border-bottom: 1px solid var(--blue);
+    }
+    .guide-bubble.arrow-left::before { left: -5px; transform: rotate(45deg); }
+    .guide-bubble.arrow-right::before { right: -5px; transform: rotate(-135deg); }
+    .guide-bubble.arrow-below::before { display: none; }
+    .guide-bubble-step { font-size: 0.65em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); margin-bottom: 8px; }
+    .guide-bubble-text { font-size: 0.82em; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px; text-align: justify; }
+    .guide-bubble-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .guide-bubble-dots { display: flex; gap: 5px; align-items: center; }
+    .guide-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); transition: background 0.25s, transform 0.25s; }
+    .guide-dot.active { background: var(--blue); transform: scale(1.3); }
+    .btn-guide-next {
+      display: inline-flex; align-items: center; gap: 5px; font-size: 0.78em;
+      font-weight: 700; color: var(--bg); background: var(--blue); border: none;
+      border-radius: 4px; padding: 5px 12px; cursor: pointer;
+      transition: opacity 0.18s, transform 0.15s;
+    }
+    .btn-guide-next:hover { opacity: 0.85; transform: translateX(2px); }
+    .btn-guide-close { display: inline-flex; align-items: center; font-size: 0.78em; color: var(--text-secondary); background: none; border: none; cursor: pointer; padding: 0; transition: color 0.18s; }
+    .btn-guide-close:hover { color: var(--text); }
+    .proj-guidance {
+      display: flex; flex-direction: column; gap: 0;
+      margin-bottom: 16px; border: 1px solid rgba(56,189,248,0.22);
+      border-radius: 8px; background: rgba(56,189,248,0.04);
+      opacity: 0; transform: translateY(6px);
+      transition: opacity 0.5s ease, transform 0.5s ease; overflow: hidden;
+      max-width: 500px; margin-left: auto; margin-right: auto;
+    }
+    .proj-guidance.visible { opacity: 1; transform: translateY(0); }
+    .proj-guidance-top { display: flex; flex-direction: row; align-items: center; gap: 12px; padding: 12px 18px; }
+    .proj-guidance-intro-wrap { display: none; flex: 1; align-items: center; justify-content: center; gap: 10px; text-align: center; animation: fadeIn 0.3s ease forwards; }
+    .proj-guidance-intro-wrap.visible { display: flex; }
+    .proj-guidance-intro-text { font-size: 0.83em; color: var(--text-secondary); }
+    .proj-total-time { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; margin-left: auto; }
+    .proj-total-time-label { font-size: 0.62em; color: var(--text-secondary); white-space: nowrap; }
+    .proj-total-time-value { font-size: 0.95em; font-weight: 600; color: var(--text); white-space: nowrap; }
+    @keyframes summary-highlight {
+      0% { background: var(--blue-dim); border-color: rgba(56,189,248,0.4); }
+      50% { background: rgba(56,189,248,0.2); border-color: var(--blue); box-shadow: 0 0 0 2px rgba(56,189,248,0.18); color: var(--text); }
+      100% { background: var(--blue-dim); border-color: rgba(56,189,248,0.4); }
+    }
+    .vue-list-summary.highlighted { animation: summary-highlight 0.8s ease-in-out 3; }
   </style>
 </head>
 <body>
@@ -100,9 +188,26 @@
   <main id="main-content" role="main">
     <h1 class="sr-only">Vue RH / Recruteur, Gabriel ROULON</h1>
 
+    <!-- Guidance : bouton Guide IA + métrique temps -->
+    <div class="proj-guidance" id="proj-guidance">
+      <div class="proj-guidance-top">
+        <button class="btn-guide" id="btn-guide" aria-label="Lancer le guide IA">
+          <span class="btn-guide-icon"></span> Guide IA
+        </button>
+        <div class="proj-guidance-intro-wrap" id="proj-guidance-intro-wrap">
+          <span class="proj-guidance-intro-text" id="proj-guidance-intro-text"></span>
+          <button class="btn-guide-next" id="btn-guide-next-intro" style="display:none">Suivant</button>
+        </div>
+        <div class="proj-total-time" id="proj-total-time" aria-label="Temps de lecture pour l'intégralité des ressources : 7 minutes 30">
+          <span class="proj-total-time-label">Temps de lecture · vue complète</span>
+          <span class="proj-total-time-value">7 min 30</span>
+        </div>
+      </div>
+    </div>
+
     <div class="vue-list" role="list" aria-label="Ressources RH / Recruteur">
 
-      <div class="vue-list-group" role="listitem">
+      <div class="vue-list-group" id="grp-rh" role="listitem">
         <div class="vue-list-group-label">RH / Recruteur</div>
 
         <div class="vue-list-item">
@@ -143,6 +248,21 @@
       </div>
 
     </div>
+    <!-- Bulle Guide IA -->
+    <div class="guide-bubble" id="guide-bubble" role="dialog" aria-live="polite">
+      <div class="guide-bubble-step" id="guide-step-label"></div>
+      <p class="guide-bubble-text" id="guide-text"></p>
+      <div class="guide-bubble-footer">
+        <div class="guide-bubble-dots">
+          <span class="guide-dot" id="gdot-0"></span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button class="btn-guide-close" id="btn-guide-close">Fermer</button>
+          <button class="btn-guide-next" id="btn-guide-next">Suivant &#8594;</button>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <footer role="contentinfo">
@@ -165,5 +285,171 @@
 
   <script>sessionStorage.setItem('lastVue', 'rh');</script>
   <script src="common.js" defer></script>
+  <script>
+    var GUIDE_STEPS = [
+      {
+        grp: 'grp-rh',
+        label: '01 / 01 - RH / Recruteur',
+        text: "Retrouvez ici mon profil, mon CV et ma lettre de motivation. Les Résumés IA permettent d'avoir une vue d'ensemble en moins d'une minute par document."
+      }
+    ];
+
+    var INTRO_TEXT = "Ressources essentielles pour les recruteurs.";
+
+    var guideStep   = -1;
+    var bubble      = document.getElementById('guide-bubble');
+    var btnGuide    = document.getElementById('btn-guide');
+    var btnNext     = document.getElementById('btn-guide-next');
+    var btnNextIntro = document.getElementById('btn-guide-next-intro');
+    var btnClose    = document.getElementById('btn-guide-close');
+
+    var introWrapEl = document.getElementById('proj-guidance-intro-wrap');
+    var introTextEl = document.getElementById('proj-guidance-intro-text');
+
+    var guidanceEl = document.getElementById('proj-guidance');
+    if (guidanceEl) guidanceEl.classList.add('visible');
+
+    var typeTimer = null;
+    function typeIntro(text, onDone) {
+      var i = 0;
+      function tick() {
+        if (i <= text.length) {
+          introTextEl.textContent = text.slice(0, i);
+          i++;
+          typeTimer = setTimeout(tick, 22);
+        } else {
+          typeTimer = null;
+          if (onDone) onDone();
+        }
+      }
+      tick();
+    }
+    function cancelType() {
+      if (typeTimer) { clearTimeout(typeTimer); typeTimer = null; }
+    }
+
+    function highlightSummaries(onDone) {
+      var summaries = document.querySelectorAll('.vue-list-summary');
+      summaries.forEach(function(el, i) {
+        setTimeout(function() {
+          el.classList.add('highlighted');
+          el.addEventListener('animationend', function() {
+            el.classList.remove('highlighted');
+          }, { once: true });
+        }, i * 130);
+      });
+      setTimeout(onDone, (summaries.length - 1) * 130 + 2500);
+    }
+
+    function positionBubble(grpEl) {
+      var grpRect  = grpEl.getBoundingClientRect();
+      var mainEl   = document.getElementById('main-content');
+      var mainRect = mainEl.getBoundingClientRect();
+      var scrollY  = window.scrollY || window.pageYOffset;
+      bubble.style.width = '';
+      var bubbleW = 240, gap = 14;
+      var rightSpace = window.innerWidth - grpRect.right;
+      var leftSpace  = grpRect.left;
+      if (rightSpace >= bubbleW + gap) {
+        bubble.style.left = (grpRect.left - mainRect.left + grpRect.width + gap) + 'px';
+        bubble.style.top  = (grpRect.top - mainRect.top + scrollY) + 'px';
+        bubble.classList.remove('arrow-right', 'arrow-below'); bubble.classList.add('arrow-left');
+      } else if (leftSpace >= bubbleW + gap) {
+        bubble.style.left = (grpRect.left - mainRect.left - bubbleW - gap) + 'px';
+        bubble.style.top  = (grpRect.top - mainRect.top + scrollY) + 'px';
+        bubble.classList.remove('arrow-left', 'arrow-below'); bubble.classList.add('arrow-right');
+      } else {
+        bubble.style.left  = (grpRect.left - mainRect.left) + 'px';
+        bubble.style.width = grpRect.width + 'px';
+        bubble.style.top   = (grpRect.bottom - mainRect.top + scrollY + gap) + 'px';
+        bubble.classList.remove('arrow-left', 'arrow-right'); bubble.classList.add('arrow-below');
+      }
+    }
+
+    function showIntroStep() {
+      document.querySelectorAll('.vue-list-group').forEach(function(g) { g.classList.remove('guide-focus'); });
+      bubble.classList.remove('visible', 'closing');
+      introTextEl.textContent = '';
+      btnNextIntro.style.display = 'none';
+      btnNextIntro.disabled = true;
+      introWrapEl.classList.add('visible');
+      typeIntro(INTRO_TEXT, function() {
+        btnNextIntro.style.display = 'inline-flex';
+        btnNextIntro.disabled = false;
+      });
+    }
+
+    function showStep(step) {
+      var data  = GUIDE_STEPS[step - 1];
+      var grpEl = document.getElementById(data.grp);
+      document.querySelectorAll('.vue-list-group').forEach(function(g) { g.classList.remove('guide-focus'); });
+      grpEl.classList.add('guide-focus');
+      document.getElementById('guide-step-label').textContent = data.label;
+      document.getElementById('guide-text').textContent = data.text;
+      for (var i = 0; i < 1; i++) document.getElementById('gdot-' + i).classList.toggle('active', i === step - 1);
+      btnNext.innerHTML = step < GUIDE_STEPS.length ? 'Suivant &#8594;' : 'Terminer';
+      btnNext.disabled = false;
+      positionBubble(grpEl);
+      bubble.classList.remove('closing');
+      if (!bubble.classList.contains('visible')) {
+        bubble.classList.add('visible');
+      } else {
+        bubble.style.animation = 'none'; bubble.offsetHeight; bubble.style.animation = '';
+        bubble.classList.add('visible');
+      }
+    }
+
+    function getVueList() { return document.querySelector('.vue-list'); }
+
+    function startGuide() {
+      guideStep = 0;
+      btnGuide.classList.add('active');
+      showIntroStep();
+    }
+
+    function endGuide() {
+      cancelType();
+      introTextEl.textContent = '';
+      btnNextIntro.style.display = 'none';
+      introWrapEl.classList.remove('visible');
+      if (bubble.classList.contains('visible')) {
+        bubble.classList.add('closing');
+        bubble.addEventListener('animationend', function handler() {
+          bubble.classList.remove('visible', 'closing');
+          bubble.removeEventListener('animationend', handler);
+        });
+      }
+      var vl = getVueList();
+      if (vl) vl.classList.remove('guide-active');
+      document.querySelectorAll('.vue-list-group').forEach(function(g) { g.classList.remove('guide-focus'); });
+      btnGuide.classList.remove('active');
+      guideStep = -1;
+    }
+
+    function launchFromIntro() {
+      cancelType();
+      btnNextIntro.disabled = true;
+      introWrapEl.classList.remove('visible');
+      highlightSummaries(function() {
+        guideStep = 1;
+        var vl = getVueList();
+        if (vl) vl.classList.add('guide-active');
+        showStep(guideStep);
+      });
+    }
+
+    btnGuide.addEventListener('click', function() { if (guideStep === -1) startGuide(); else endGuide(); });
+    btnNextIntro.addEventListener('click', launchFromIntro);
+    btnNext.addEventListener('click', function() {
+      if (guideStep === 0) { launchFromIntro(); }
+      else if (guideStep < GUIDE_STEPS.length) { guideStep++; showStep(guideStep); }
+      else { endGuide(); }
+    });
+    btnClose.addEventListener('click', endGuide);
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && guideStep !== -1) endGuide(); });
+    window.addEventListener('resize', function() {
+      if (guideStep >= 1) positionBubble(document.getElementById(GUIDE_STEPS[guideStep - 1].grp));
+    });
+  </script>
 </body>
 </html>

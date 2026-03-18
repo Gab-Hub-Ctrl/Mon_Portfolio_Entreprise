@@ -83,8 +83,8 @@
       <div class="chatbot-status" aria-live="polite"></div>
     </div>
     <div class="chatbot-footer">
-      <div class="chatbot-footer-label">Autres ressources Vue Jury</div>
-      <button class="chatbot-nav-btn" aria-label="Accéder aux autres ressources Vue Jury">Cliquez ici</button>
+      <div class="chatbot-footer-label">Autres ressources Vue Mes projets</div>
+      <button class="chatbot-nav-btn" aria-label="Accéder aux autres ressources Vue Mes projets">Cliquez ici</button>
     </div>
   </div>
 
@@ -244,36 +244,25 @@
     </div>
   </footer>
 
-  <script>
-    if (window.location.search.indexOf('summary=1') !== -1) {
-      window.addEventListener('load', function() {
-        setTimeout(function() {
-          var fab = document.querySelector('.btn-chatbot-fab');
-          if (fab) fab.click();
-        }, 500);
-      });
-    }
-  </script>
   <script src="common.js" defer></script>
   <button class="btn-chatbot-fab"
           data-summary="IT Dashboard : surveillance multi-pôles, développé en 3 mois parti de zéro en programmation.&#10;Contexte : reconversion IT, formation TSSR, IA comme outil de montée en compétences.&#10;Architecture : 10 pôles surveillés (Sécurité, Incidents, Performances, Applications, Services, Réseaux, Systèmes, Cloud, Données, Innovation).&#10;Pipeline ETL : collecte parallèle, hash SHA256, Rules Engine, corrélation multi-pôles, alertes structurées JSON.&#10;Agents POC v2.1.0 : Cerveau (supervision), Chatbot (FAQ frontend), Collecteurs (10 scripts Python).&#10;Démonstrations fonctionnelles : intégration Vault, pipeline backend complet, synchronisation Backend-Frontend, remontée des alertes React.&#10;Standards : 31 standards sur 8 catégories. Technologies : FastAPI, React/TypeScript, Vault, Bridgepoint.&#10;Métriques : 95 scripts PowerShell, 79 fichiers Python, 92 composants React/TypeScript.&#10;Gouvernance IA : INIT_SEQUENCE, machine à états finis, 3 607 lignes dont 2 502 de prompts fondateurs, 7 états, reconstitue le contexte de travail par une séquence de prompts structurée.&#10;Conclusion : capacité à apprendre seul, structurer des solutions, maintenir des standards professionnels. Objectif : transformer cette pratique empirique en compétence structurée."
           aria-label="Résumé IA de la page" title="Résumé&#160;IA">Résumé&#160;IA</button>
-  <div id="nav-panel" class="nav-panel" role="dialog" aria-modal="true" aria-label="Ressources Vue Jury" aria-hidden="true">
+  <div id="nav-panel" class="nav-panel" role="dialog" aria-modal="true" aria-label="Ressources Vue Mes projets" aria-hidden="true">
     <div class="nav-panel-head">
-      <span class="nav-panel-title">Ressources Vue Jury</span>
+      <span class="nav-panel-title">Ressources Vue Mes projets</span>
       <button class="nav-panel-close" aria-label="Fermer">&times;</button>
     </div>
     <div class="nav-panel-body">
-      <div class="nav-section-label">Candidature</div>
-      <div class="nav-links">
-        <a href="profil_personnel.html">Profil personnel</a>
-        <a href="lettre_motivation_ecole.html">Lettre (École)</a>
-        <a href="contact.html">Contact</a>
-      </div>
-      <div class="nav-section-label">Projet IT</div>
+      <div class="nav-section-label">Gouvernance &amp; Agents IA</div>
       <div class="nav-links">
         <a href="init_sequence.html">INIT_SEQUENCE</a>
         <a href="poc_agents.html">POC Agents</a>
+      </div>
+      <div class="nav-section-label">Système &amp; Infrastructure</div>
+      <div class="nav-links">
+        <a href="realisations_maintenance_agent.html">Maintenance Agent</a>
+        <a href="mon_laboratoire.html">Mon Laboratoire</a>
       </div>
       <div class="nav-section-label">Finance &amp; Investissement</div>
       <div class="nav-links">

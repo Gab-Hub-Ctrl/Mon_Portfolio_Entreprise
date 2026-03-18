@@ -109,6 +109,32 @@
     .proj-badge.demo       { color: var(--blue); background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.25); }
     .proj-badge.coming     { color: #94a3b8; background: rgba(148,163,184,0.06); border: 1px solid rgba(148,163,184,0.18); }
 
+    /* Temps de lecture */
+    .proj-row-time { font-size: 0.72em; color: var(--text-secondary); white-space: nowrap; flex-shrink: 0; align-self: flex-start; margin-top: 3px; }
+
+    /* Résumé IA colonne */
+    .proj-row-summary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 108px;
+      flex-shrink: 0;
+      font-size: 0.72em;
+      color: var(--blue);
+      text-decoration: none;
+      border-left: 1px solid var(--border);
+      white-space: nowrap;
+      text-align: center;
+      padding: 0 8px;
+      transition: background 0.18s, color 0.18s;
+    }
+    .proj-row-summary:hover { background: var(--blue-dim); color: var(--text); }
+
+    /* Temps total */
+    .proj-total-time { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; margin-left: auto; }
+    .proj-total-time-label { font-size: 0.62em; color: var(--text-secondary); white-space: nowrap; }
+    .proj-total-time-value { font-size: 0.95em; font-weight: 600; color: var(--text); white-space: nowrap; }
+
     /* Lien Acceder */
     .proj-row-link,
     .proj-row-link-disabled {
@@ -158,12 +184,19 @@
     }
     .btn-guide:hover { background: rgba(56,189,248,0.14); color: var(--text); }
     .btn-guide.active { background: rgba(56,189,248,0.18); border-color: var(--blue); }
+    .btn-guide { animation: guide-glow 2.8s ease-in-out infinite; }
+    .btn-guide.active { animation: none; }
+    @keyframes guide-glow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(56,189,248,0); border-color: rgba(56,189,248,0.3); }
+      50%  { box-shadow: 0 0 10px 3px rgba(56,189,248,0.22); border-color: rgba(56,189,248,0.75); }
+    }
     .btn-guide-icon {
       width: 10px; height: 10px;
       border-radius: 50%;
       background: var(--blue);
       flex-shrink: 0;
       box-shadow: 0 0 0 0 rgba(56,189,248,0.5);
+      animation: halo-pulse 2.8s ease-out infinite;
     }
     .btn-guide.active .btn-guide-icon {
       animation: halo-pulse 1.6s ease-out infinite;
@@ -293,6 +326,51 @@
     }
     .btn-guide-close:hover { color: var(--text); }
 
+    /* Bloc guidance */
+    .proj-guidance {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: 16px;
+      border: 1px solid rgba(56,189,248,0.22);
+      border-radius: 8px;
+      background: rgba(56,189,248,0.04);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      overflow: hidden;
+    }
+    .proj-guidance.visible { opacity: 1; transform: translateY(0); }
+    .proj-guidance-top {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 18px;
+    }
+    .proj-guidance-intro-wrap {
+      display: none;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-align: center;
+      animation: fadeIn 0.3s ease forwards;
+    }
+    .proj-guidance-intro-wrap.visible { display: flex; }
+    .proj-guidance-intro-text {
+      font-size: 0.83em;
+      color: var(--text-secondary);
+    }
+
+    /* Highlight résumés IA */
+    @keyframes summary-highlight {
+      0%   { background: var(--blue-dim); border-color: rgba(56,189,248,0.4); }
+      50%  { background: rgba(56,189,248,0.2); border-color: var(--blue); box-shadow: 0 0 0 2px rgba(56,189,248,0.18); color: var(--text); }
+      100% { background: var(--blue-dim); border-color: rgba(56,189,248,0.4); }
+    }
+    .proj-row-summary.highlighted { animation: summary-highlight 0.8s ease-in-out 3; }
+
     @media (max-width: 860px) {
       .proj-cols { flex-direction: column; }
       .proj-col { flex: none; }
@@ -315,11 +393,7 @@
       </nav>
     </div>
     <div class="header-center">Mes projets</div>
-    <div class="header-right">
-      <button class="btn-guide" id="btn-guide" aria-label="Lancer le guide IA">
-        <span class="btn-guide-icon"></span> Guide IA
-      </button>
-    </div>
+    <div class="header-right"></div>
   </header>
 
   <main id="main-content" role="main">
@@ -331,6 +405,23 @@
       <span class="proj-legend-item"><span class="proj-legend-dot review"></span>En revue</span>
       <span class="proj-legend-item"><span class="proj-legend-dot in-progress"></span>En cours</span>
       <span class="proj-legend-item"><span class="proj-legend-dot coming"></span>A venir</span>
+    </div>
+
+    <!-- Guidance : bouton Guide IA + métrique temps -->
+    <div class="proj-guidance" id="proj-guidance">
+      <div class="proj-guidance-top">
+        <button class="btn-guide" id="btn-guide" aria-label="Lancer le guide IA">
+          <span class="btn-guide-icon"></span> Guide IA
+        </button>
+        <div class="proj-guidance-intro-wrap" id="proj-guidance-intro-wrap">
+          <span class="proj-guidance-intro-text" id="proj-guidance-intro-text"></span>
+          <button class="btn-guide-next" id="btn-guide-next-intro" style="display:none">Suivant</button>
+        </div>
+        <div class="proj-total-time" id="proj-total-time" aria-label="Temps de lecture pour l'intégralité des ressources : 1 heure 27 minutes">
+          <span class="proj-total-time-label">Temps de lecture · intégralité des ressources</span>
+          <span class="proj-total-time-value">1h 27 min</span>
+        </div>
+      </div>
     </div>
 
     <div class="proj-cols" id="proj-cols" role="list" aria-label="Bibliothèque de projets">
@@ -349,7 +440,9 @@
               </div>
               <span class="proj-row-desc">Machine à états finis, gouvernance IA. 3 607 lignes, 7 états, 11 fichiers fondateurs.</span>
             </div>
+            <span class="proj-row-time">8 min</span>
           </div>
+          <a href="init_sequence.html?summary=1" class="proj-row-summary" aria-label="Résumé IA de INIT_SEQUENCE, 1 minute">Résumé IA · 1 min</a>
           <a href="init_sequence.html" class="proj-row-link" aria-label="Accéder à INIT_SEQUENCE">Accéder</a>
         </div>
 
@@ -363,7 +456,9 @@
               </div>
               <span class="proj-row-desc">3 agents (Cerveau, Collecteurs, Chatbot) pour remplacer les 10 scripts Python de collecte IT Dashboard.</span>
             </div>
+            <span class="proj-row-time">4 min</span>
           </div>
+          <a href="poc_agents.html?summary=1" class="proj-row-summary" aria-label="Résumé IA de POC Agents, 1 minute">Résumé IA · 1 min</a>
           <a href="poc_agents.html" class="proj-row-link" aria-label="Accéder au POC Agents">Accéder</a>
         </div>
 
@@ -392,12 +487,30 @@
             <span class="proj-row-dot in-progress" aria-hidden="true"></span>
             <div class="proj-row-info">
               <div class="proj-row-title-line">
+                <span class="proj-row-title">IT Dashboard</span>
+                <span class="proj-badge in-progress">En cours</span>
+              </div>
+              <span class="proj-row-desc">Tableau de bord IT : supervision multi-pôles, 10 scripts Python de collecte, alertes centralisées.</span>
+            </div>
+            <span class="proj-row-time">3 min</span>
+          </div>
+          <a href="it_dashboard.html?summary=1" class="proj-row-summary" aria-label="Résumé IA de IT Dashboard, 1 minute">Résumé IA · 1 min</a>
+          <a href="it_dashboard.html" class="proj-row-link" aria-label="Accéder à IT Dashboard">Accéder</a>
+        </div>
+
+        <div class="proj-row">
+          <div class="proj-row-main">
+            <span class="proj-row-dot in-progress" aria-hidden="true"></span>
+            <div class="proj-row-info">
+              <div class="proj-row-title-line">
                 <span class="proj-row-title">Maintenance Agent</span>
                 <span class="proj-badge in-progress">En cours</span>
               </div>
               <span class="proj-row-desc">Suite modulaire PowerShell et React pour la maintenance et les diagnostics Windows. Architecture RBAC.</span>
             </div>
+            <span class="proj-row-time">3 min</span>
           </div>
+          <a href="realisations_maintenance_agent.html?summary=1" class="proj-row-summary" aria-label="Résumé IA de Maintenance Agent, 30 secondes">Résumé IA · 30 sec</a>
           <a href="realisations_maintenance_agent.html" class="proj-row-link" aria-label="Accéder à Maintenance Agent">Accéder</a>
         </div>
 
@@ -411,7 +524,9 @@
               </div>
               <span class="proj-row-desc">Infrastructure virtuelle : Hyper-V, Proxmox, 11 labs, collection ISO, scripts d'automatisation PowerShell.</span>
             </div>
+            <span class="proj-row-time">3 min</span>
           </div>
+          <a href="mon_laboratoire.html?summary=1" class="proj-row-summary" aria-label="Résumé IA de Mon Laboratoire, 30 secondes">Résumé IA · 30 sec</a>
           <a href="mon_laboratoire.html" class="proj-row-link" aria-label="Accéder à Mon Laboratoire">Accéder</a>
         </div>
 
@@ -431,7 +546,9 @@
               </div>
               <span class="proj-row-desc">Présentation synthétique PEA v2.0 : 11 chapitres, 4 ETF, 3 profils, simulations 5 à 15 ans.</span>
             </div>
+            <span class="proj-row-time">4 min</span>
           </div>
+          <a href="realisations_doc_financiere.html?summary=1" class="proj-row-summary" aria-label="Résumé IA de la documentation financière, 30 secondes">Résumé IA · 30 sec</a>
           <a href="realisations_doc_financiere.html" class="proj-row-link" aria-label="Accéder à la documentation financière">Accéder</a>
         </div>
 
@@ -445,7 +562,9 @@
               </div>
               <span class="proj-row-desc">Référentiel complet : cadre réglementaire, fiscalité, sélection ETF avec ISIN, 3 profils, stress tests PRIIPS.</span>
             </div>
+            <span class="proj-row-time">55 min</span>
           </div>
+          <a href="PEA_V2_PRO.html?summary=1" class="proj-row-summary" aria-label="Résumé IA de l'étude PEA v2.0, 1 minute">Résumé IA · 1 min</a>
           <a href="PEA_V2_PRO.html" class="proj-row-link" aria-label="Accéder à l'étude PEA v2.0">Accéder</a>
         </div>
 
@@ -459,7 +578,9 @@
               </div>
               <span class="proj-row-desc">Dashboard interactif : 10 panneaux, rendements ajustables, matrice de sensibilité, stress tests, Livret A.</span>
             </div>
+            <span class="proj-row-time">7 min</span>
           </div>
+          <a href="simulation_pea.html?summary=1" class="proj-row-summary" aria-label="Résumé IA de la simulation PEA, 1 minute">Résumé IA · 1 min</a>
           <a href="simulation_pea.html" class="proj-row-link" aria-label="Accéder à la simulation PEA">Accéder</a>
         </div>
 
@@ -501,12 +622,12 @@
       {
         col: 'col-0',
         label: '01 / 03 - Gouvernance & Agents IA',
-        text: "L'IA est au coeur de ma démarche. Ces projets traduisent ma conviction qu'une IA bien gouvernée et encadrée peut transformer durablement la façon de travailler."
+        text: "L'IA est au cœur de ma démarche. Ces projets traduisent ma conviction qu'une IA bien gouvernée et encadrée peut transformer durablement la façon de travailler."
       },
       {
         col: 'col-1',
         label: '02 / 03 - Système & Infrastructure',
-        text: "Ma formation initiale m'a donné le gout du système. Ces projets sont nés d'une envie simple : aider ceux qui ne sont pas à l'aise avec l'informatique à reprendre le contrôle, et transmettre ce savoir par la pratique."
+        text: "Ma formation initiale m'a donné le goût du système. Ces projets sont nés d'une envie simple : aider ceux qui ne sont pas à l'aise avec l'informatique à reprendre le contrôle, et transmettre ce savoir par la pratique."
       },
       {
         col: 'col-2',
@@ -515,104 +636,161 @@
       }
     ];
 
-    var guideStep = -1;
-    var bubble = document.getElementById('guide-bubble');
-    var btnGuide = document.getElementById('btn-guide');
-    var btnNext = document.getElementById('btn-guide-next');
-    var btnClose = document.getElementById('btn-guide-close');
-    var projCols = document.getElementById('proj-cols');
+    var INTRO_TEXT = "Cette page est conçue pour accéder directement au résumé des différentes ressources pour les lecteurs pressés.";
 
+    var guideStep    = -1;
+    var bubble       = document.getElementById('guide-bubble');
+    var btnGuide     = document.getElementById('btn-guide');
+    var btnNext      = document.getElementById('btn-guide-next');
+    var btnNextIntro  = document.getElementById('btn-guide-next-intro');
+    var btnClose      = document.getElementById('btn-guide-close');
+    var projCols      = document.getElementById('proj-cols');
+    var introWrapEl   = document.getElementById('proj-guidance-intro-wrap');
+    var introTextEl   = document.getElementById('proj-guidance-intro-text');
+
+    // Afficher le bloc guidance immédiatement
+    var guidanceEl = document.getElementById('proj-guidance');
+    if (guidanceEl) guidanceEl.classList.add('visible');
+
+    /* --- Effet machine à écrire pour l'intro --- */
+    var typeTimer = null;
+    function typeIntro(text, onDone) {
+      var i = 0;
+      function tick() {
+        if (i <= text.length) {
+          introTextEl.textContent = text.slice(0, i);
+          i++;
+          typeTimer = setTimeout(tick, 22);
+        } else {
+          typeTimer = null;
+          if (onDone) onDone();
+        }
+      }
+      tick();
+    }
+    function cancelType() {
+      if (typeTimer) { clearTimeout(typeTimer); typeTimer = null; }
+    }
+
+    /* --- Highlight des boutons Résumé IA --- */
+    function highlightSummaries(onDone) {
+      var summaries = document.querySelectorAll('.proj-row-summary');
+      summaries.forEach(function(el, i) {
+        setTimeout(function() {
+          el.classList.add('highlighted');
+          el.addEventListener('animationend', function() {
+            el.classList.remove('highlighted');
+          }, { once: true });
+        }, i * 130);
+      });
+      // durée totale : décalage du dernier + 3 cycles × 0.8s
+      setTimeout(onDone, (summaries.length - 1) * 130 + 2500);
+    }
+
+    /* --- Positionnement bulle → colonne --- */
     function positionBubble(colEl) {
-      var colsRect = projCols.getBoundingClientRect();
-      var colRect = colEl.getBoundingClientRect();
-      var mainEl = document.getElementById('main-content');
+      var colRect  = colEl.getBoundingClientRect();
+      var mainEl   = document.getElementById('main-content');
       var mainRect = mainEl.getBoundingClientRect();
-      var scrollY = window.scrollY || window.pageYOffset;
-
-      var bubbleW = 240;
-      var gap = 14;
-      var topOffset = colRect.top - mainRect.top + scrollY;
-
+      var scrollY  = window.scrollY || window.pageYOffset;
+      bubble.style.width = '';
+      var bubbleW = 240, gap = 14;
       var rightSpace = window.innerWidth - colRect.right;
-      var leftSpace = colRect.left;
-
+      var leftSpace  = colRect.left;
       if (rightSpace >= bubbleW + gap) {
         bubble.style.left = (colRect.left - mainRect.left + colRect.width + gap) + 'px';
-        bubble.classList.remove('arrow-right');
-        bubble.classList.add('arrow-left');
+        bubble.classList.remove('arrow-right'); bubble.classList.add('arrow-left');
       } else if (leftSpace >= bubbleW + gap) {
         bubble.style.left = (colRect.left - mainRect.left - bubbleW - gap) + 'px';
-        bubble.classList.remove('arrow-left');
-        bubble.classList.add('arrow-right');
+        bubble.classList.remove('arrow-left'); bubble.classList.add('arrow-right');
       } else {
         bubble.style.left = (colRect.left - mainRect.left) + 'px';
         bubble.classList.remove('arrow-left', 'arrow-right');
       }
-      bubble.style.top = topOffset + 'px';
+      bubble.style.top = (colRect.top - mainRect.top + scrollY) + 'px';
     }
 
-    function showStep(step) {
-      var data = GUIDE_STEPS[step];
-      var colEl = document.getElementById(data.col);
-
-      document.querySelectorAll('.proj-col').forEach(function(c) {
-        c.classList.remove('guide-focus');
+    /* --- Étape 0 : intro inline dans le bloc guidance --- */
+    function showIntroStep() {
+      document.querySelectorAll('.proj-col').forEach(function(c) { c.classList.remove('guide-focus'); });
+      bubble.classList.remove('visible', 'closing');
+      introTextEl.textContent = '';
+      btnNextIntro.style.display = 'none';
+      btnNextIntro.disabled = true;
+      introWrapEl.classList.add('visible');
+      typeIntro(INTRO_TEXT, function() {
+        btnNextIntro.style.display = 'inline-flex';
+        btnNextIntro.disabled = false;
       });
+    }
+
+    /* --- Étapes 1-3 : colonnes --- */
+    function showStep(step) {
+      var data  = GUIDE_STEPS[step - 1];
+      var colEl = document.getElementById(data.col);
+      document.querySelectorAll('.proj-col').forEach(function(c) { c.classList.remove('guide-focus'); });
       colEl.classList.add('guide-focus');
-
       document.getElementById('guide-step-label').textContent = data.label;
-      document.getElementById('guide-text').textContent = data.text;
-
-      for (var i = 0; i < 3; i++) {
-        document.getElementById('gdot-' + i).classList.toggle('active', i === step);
-      }
-
-      btnNext.innerHTML = step < GUIDE_STEPS.length - 1 ? 'Suivant &#8594;' : 'Terminer';
-
+      document.getElementById('guide-text').textContent       = data.text;
+      for (var i = 0; i < 3; i++) document.getElementById('gdot-' + i).classList.toggle('active', i === step - 1);
+      btnNext.innerHTML = step < GUIDE_STEPS.length ? 'Suivant &#8594;' : 'Terminer';
+      btnNext.disabled  = false;
       positionBubble(colEl);
-
       bubble.classList.remove('closing');
       if (!bubble.classList.contains('visible')) {
         bubble.classList.add('visible');
       } else {
-        bubble.style.animation = 'none';
-        bubble.offsetHeight;
-        bubble.style.animation = '';
+        bubble.style.animation = 'none'; bubble.offsetHeight; bubble.style.animation = '';
         bubble.classList.add('visible');
       }
     }
 
     function startGuide() {
       guideStep = 0;
-      projCols.classList.add('guide-active');
       btnGuide.classList.add('active');
-      showStep(guideStep);
+      showIntroStep();
     }
 
     function endGuide() {
-      bubble.classList.add('closing');
-      bubble.addEventListener('animationend', function handler() {
-        bubble.classList.remove('visible', 'closing');
-        bubble.removeEventListener('animationend', handler);
-      });
+      cancelType();
+      introTextEl.textContent = '';
+      btnNextIntro.style.display = 'none';
+      introWrapEl.classList.remove('visible');
+      // Cacher la bulle flottante
+      if (bubble.classList.contains('visible')) {
+        bubble.classList.add('closing');
+        bubble.addEventListener('animationend', function handler() {
+          bubble.classList.remove('visible', 'closing');
+          bubble.removeEventListener('animationend', handler);
+        });
+      }
       projCols.classList.remove('guide-active');
-      document.querySelectorAll('.proj-col').forEach(function(c) {
-        c.classList.remove('guide-focus');
-      });
+      document.querySelectorAll('.proj-col').forEach(function(c) { c.classList.remove('guide-focus'); });
       btnGuide.classList.remove('active');
       guideStep = -1;
     }
 
     btnGuide.addEventListener('click', function() {
-      if (guideStep === -1) {
-        startGuide();
-      } else {
-        endGuide();
-      }
+      if (guideStep === -1) startGuide(); else endGuide();
     });
 
+    function launchFromIntro() {
+      cancelType();
+      btnNextIntro.disabled = true;
+      introWrapEl.classList.remove('visible');
+      highlightSummaries(function() {
+        guideStep = 1;
+        projCols.classList.add('guide-active');
+        showStep(guideStep);
+      });
+    }
+
+    btnNextIntro.addEventListener('click', launchFromIntro);
+
     btnNext.addEventListener('click', function() {
-      if (guideStep < GUIDE_STEPS.length - 1) {
+      if (guideStep === 0) {
+        launchFromIntro();
+      } else if (guideStep < GUIDE_STEPS.length) {
         guideStep++;
         showStep(guideStep);
       } else {
@@ -627,7 +805,7 @@
     });
 
     window.addEventListener('resize', function() {
-      if (guideStep !== -1) positionBubble(document.getElementById(GUIDE_STEPS[guideStep].col));
+      if (guideStep >= 1) positionBubble(document.getElementById(GUIDE_STEPS[guideStep - 1].col));
     });
   </script>
 </body>

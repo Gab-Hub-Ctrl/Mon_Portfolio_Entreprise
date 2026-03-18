@@ -87,6 +87,8 @@
       .module-item:last-child { border-bottom: none; }
       .skills-list { grid-template-columns: 1fr; }
     }
+    .chatbot-footer { border-top: 1px solid var(--border); padding: 10px 16px; background: var(--bg-card); display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .chatbot-footer-label { font-size: 0.72em; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin-bottom: 0; }
   </style>
 </head>
 <body>
@@ -104,6 +106,10 @@
       <div class="chatbot-think" aria-hidden="true"><span></span><span></span><span></span></div>
       <div class="chatbot-msg" aria-live="polite" aria-label="Résumé de la page"></div>
       <div class="chatbot-status" aria-live="polite"></div>
+    </div>
+    <div class="chatbot-footer">
+      <div class="chatbot-footer-label">Autres ressources Vue Mes projets</div>
+      <button class="chatbot-nav-btn" aria-label="Accéder aux autres ressources Vue Mes projets">Cliquez ici</button>
     </div>
   </div>
 
@@ -275,5 +281,29 @@
   <button class="btn-chatbot-fab"
           data-summary="Maintenance Agent est une suite modulaire conçue pour rendre la maintenance Windows accessible aux utilisateurs non-experts, tout en donnant à l'administrateur un contrôle complet, centralisé et sécurisé.&#10;Architecture 2 couches : Setup_Script (déploiement et installation) et Maintenance_Agent (exécution au quotidien).&#10;8 modules aux responsabilités strictement séparées : Admin, User, Shared, Backend, Frontend, Scheduler, RemoteServer, Tests.&#10;Sécurité intégrée dès la conception : RBAC par rôle, signatures de code, secrets chiffrés, communications TLS.&#10;88 fichiers générés à l'installation. Roadmap en 8 étapes jusqu'à la revue sécurité complète."
           aria-label="Résumé IA de la page" title="Résumé&#160;IA">Résumé&#160;IA</button>
+  <div id="nav-panel" class="nav-panel" role="dialog" aria-modal="true" aria-label="Ressources Vue Mes projets" aria-hidden="true">
+    <div class="nav-panel-head">
+      <span class="nav-panel-title">Ressources Vue Mes projets</span>
+      <button class="nav-panel-close" aria-label="Fermer">&times;</button>
+    </div>
+    <div class="nav-panel-body">
+      <div class="nav-section-label">Gouvernance &amp; Agents IA</div>
+      <div class="nav-links">
+        <a href="init_sequence.html">INIT_SEQUENCE</a>
+        <a href="poc_agents.html">POC Agents</a>
+      </div>
+      <div class="nav-section-label">Système &amp; Infrastructure</div>
+      <div class="nav-links">
+        <a href="it_dashboard.html">IT Dashboard</a>
+        <a href="mon_laboratoire.html">Mon Laboratoire</a>
+      </div>
+      <div class="nav-section-label">Finance &amp; Investissement</div>
+      <div class="nav-links">
+        <a href="realisations_doc_financiere.html">Documentation financière</a>
+        <a href="PEA_V2_PRO.html">Étude PEA</a>
+        <a href="simulation_pea.html">Simulation PEA</a>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
