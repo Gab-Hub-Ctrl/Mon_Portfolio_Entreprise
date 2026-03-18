@@ -66,6 +66,31 @@
     .vbm-val { font-size: 1.15em; font-weight: 700; color: var(--text); line-height: 1.1; }
     .vbm-label { font-size: 0.66em; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 3px; }
     .vbm-note { align-self: flex-end; font-size: 0.66em; color: var(--text-secondary); font-style: italic; margin-left: auto; }
+
+    /* Recommandations */
+    .reco-section { width: 100%; max-width: 680px; margin-top: 16px; }
+    .reco-headline { font-size: 0.72em; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    .reco-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .reco-card { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--border); border-radius: 0 8px 8px 0; padding: 14px 16px; transition: border-left-color 0.2s; display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .reco-card:hover { border-left-color: var(--text-secondary); }
+    .reco-name { font-size: 0.88em; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .reco-role { font-size: 0.76em; color: var(--text-secondary); line-height: 1.4; margin-bottom: 6px; }
+    .reco-reason { font-size: 0.76em; color: var(--text-secondary); font-style: italic; line-height: 1.4; margin-bottom: 10px; }
+    .reco-dl { display: inline-flex; align-items: center; gap: 5px; font-size: 0.74em; color: var(--blue); text-decoration: none; border: 1px solid var(--border); border-radius: 4px; padding: 3px 10px; background: var(--bg-secondary); transition: border-color 0.15s, background 0.15s; margin-top: auto; }
+    .reco-dl:hover { border-color: var(--blue); background: var(--bg-card); }
+
+    @keyframes reco-pulse {
+      0%, 100% { border-left-color: var(--border); filter: brightness(0.72); }
+      50% { border-left-color: var(--text-secondary); filter: brightness(0.85); }
+    }
+    .reco-card { animation: reco-pulse 2.5s ease-in-out infinite; filter: brightness(0.72); }
+    .reco-card:nth-child(2) { animation-delay: 0.5s; }
+    .reco-card:nth-child(3) { animation-delay: 1s; }
+    @media (prefers-reduced-motion: reduce) { .reco-card { animation: none; filter: brightness(0.72); } }
+
+    @media (max-width: 640px) {
+      .reco-cards { grid-template-columns: 1fr; }
+    }
   </style>
   <script type="application/ld+json">
   {
@@ -98,7 +123,7 @@
   </div>
 
   <header role="banner">
-    <div class="header-center">Recherche d'alternance · Bachelor IA &amp; Business, Eugenia School · 2026</div>
+    <div class="header-center">Gabriel ROULON &nbsp;·&nbsp; Recherche d'alternance · Bachelor IA &amp; Business, Eugenia School · 2026</div>
   </header>
 
   <main id="main-content" role="main">
@@ -106,11 +131,7 @@
 
     <div class="landing-wrap">
 
-      <div class="landing-intro">
-        <span class="landing-name">Gabriel ROULON</span>
-      </div>
-
-      <div class="view-card-wrap">
+<div class="view-card-wrap">
         <div class="view-selector" role="list">
           <a href="vue_rh.html" class="view-btn" role="listitem">
             <div class="view-btn-content">
@@ -128,7 +149,7 @@
                 <span class="vbm-note">Hors ressources de la page Mes projets.</span>
               </div>
             </div>
-            </a>
+          </a>
         </div>
         <div class="view-aside" aria-hidden="true">
           <span class="view-aside-arrow">&#8592;</span>
@@ -136,6 +157,30 @@
           <span class="view-aside-sub">sur chaque<br>page</span>
         </div>
       </div>
+
+      <section class="reco-section" aria-label="Lettres de recommandation">
+        <div class="reco-headline">Recommandations professionnelles</div>
+        <div class="reco-cards">
+          <div class="reco-card">
+            <div class="reco-name">DALMAS-REINA Loïc-Marie</div>
+            <div class="reco-role"><strong>Responsable des relations entreprises</strong> · Human Booster</div>
+            <div class="reco-reason">Recommandé pour la poursuite d'études TSSR</div>
+            <a href="R_Gabriel_Lettre_Recommandation_1.pdf" download class="reco-dl" aria-label="Télécharger la lettre de Mme DALMAS-REINA">&#8595; Lettre PDF</a>
+          </div>
+          <div class="reco-card">
+            <div class="reco-name">Abdelilah KOUDDANE</div>
+            <div class="reco-role"><strong>Formateur et consultant en infrastructures informatiques</strong></div>
+            <div class="reco-reason">Recommandé pour le passage en TSSR</div>
+            <a href="R_Gabriel_Lettre_Recommandation_2.pdf" download class="reco-dl" aria-label="Télécharger la lettre d'Abdelilah KOUDDANE">&#8595; Lettre PDF</a>
+          </div>
+          <div class="reco-card">
+            <div class="reco-name">Mathieu MELLE</div>
+            <div class="reco-role"><strong>Responsable infrastructure &amp; cybersécurité</strong> · Fétis Group</div>
+            <div class="reco-reason">Recommandé pour toute opportunité dans le domaine de l'informatique</div>
+            <a href="R_Gabriel_Lettre_Recommandation_3.pdf" download class="reco-dl" aria-label="Télécharger la lettre de Mathieu MELLE">&#8595; Lettre PDF</a>
+          </div>
+        </div>
+      </section>
 
     </div>
   </main>

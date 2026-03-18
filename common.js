@@ -8,70 +8,6 @@
   'use strict';
 
   /* ============================================================
-   * initNavModal - modal "Navigation" injecte dynamiquement
-   * ============================================================ */
-  function initNavModal() {
-    var btn = document.getElementById('btn-nav-modal');
-    if (!btn) return;
-
-    var overlay = document.createElement('div');
-    overlay.id = 'nav-modal';
-    overlay.className = 'modal-overlay';
-    overlay.setAttribute('role', 'dialog');
-    overlay.setAttribute('aria-modal', 'true');
-    overlay.setAttribute('aria-labelledby', 'nav-modal-title');
-    overlay.setAttribute('aria-hidden', 'true');
-    overlay.innerHTML =
-      '<div class="modal-card">' +
-      '<button class="modal-close" id="nav-modal-close" aria-label="Fermer">&times;</button>' +
-      '<div class="modal-title" id="nav-modal-title">Navigation</div>' +
-      '<div class="modal-body">' +
-      '<p>Ce site est organise par <strong style="color:var(--text)">profils de lecture</strong>.' +
-      ' Pour une experience optimale, commencez par selectionner votre vue depuis la page d\'accueil.</p>' +
-      '<p style="margin-top:16px;margin-bottom:5px"><strong style="color:var(--text)">RH / Recruteur</strong></p>' +
-      '<p style="margin:0 0 12px;color:var(--text-secondary);font-size:0.90em">Profil personnel, CV, lettres de motivation, contact et presentation synthetique du projet.</p>' +
-      '<p style="margin-bottom:5px"><strong style="color:var(--text)">Jury ecole</strong></p>' +
-      '<p style="margin:0 0 12px;color:var(--text-secondary);font-size:0.90em">Profil, lettre de motivation ecole, contact, IT Dashboard complet et realisations finance.</p>' +
-      '<p style="margin-bottom:5px"><strong style="color:var(--text)">Technicien</strong></p>' +
-      '<p style="margin:0 0 16px;color:var(--text-secondary);font-size:0.90em">Profil, contact, IT Dashboard, standards, documentation technique, infrastructure et systemes.</p>' +
-      '<p>En selectionnant une vue, les ressources non pertinentes sont <strong style="color:var(--text)">masquees</strong>' +
-      ' pour simplifier la lecture. La vue peut etre reinitialisee a tout moment en cliquant a nouveau sur le bouton actif.</p>' +
-      '<p style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);color:var(--text-secondary);font-size:0.87em">' +
-      'Pour revenir a l\'accueil depuis n\'importe quelle page, utilisez le <strong style="color:var(--text)">fil d\'Ariane</strong>' +
-      ' affiche en haut du contenu de chaque page.</p>' +
-      '</div>' +
-      '</div>';
-    document.body.appendChild(overlay);
-
-    var card = overlay.querySelector('.modal-card');
-    var closeBtn = document.getElementById('nav-modal-close');
-    var lastFocus = null;
-
-    function openModal() {
-      lastFocus = document.activeElement;
-      overlay.style.display = 'flex';
-      overlay.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-      if (closeBtn) closeBtn.focus();
-    }
-    function closeModal() {
-      overlay.style.display = '';
-      overlay.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-      if (lastFocus) lastFocus.focus();
-    }
-
-    btn.addEventListener('click', openModal);
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
-    overlay.addEventListener('click', function (e) {
-      if (!card.contains(e.target)) closeModal();
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && overlay.getAttribute('aria-hidden') === 'false') closeModal();
-    });
-  }
-
-  /* ============================================================
    * initModal modal "Important" ou "Lecture rapide"
    * ============================================================ */
   function initModal() {
@@ -202,6 +138,7 @@
       el.appendChild(cursor);
       var i = 0;
       var delay = calcDelay(text);
+      var bodyEl = panel.querySelector('.chatbot-body');
 
       function step() {
         if (i < text.length) {
@@ -213,6 +150,7 @@
             el.insertBefore(document.createTextNode(text[i]), cursor);
           }
           i++;
+          if (bodyEl) bodyEl.scrollTop = bodyEl.scrollHeight;
           typeTimer = setTimeout(step, delay);
         } else {
           cursor.remove();
@@ -416,7 +354,6 @@
    * Auto-init
    * ============================================================ */
   document.addEventListener('DOMContentLoaded', function () {
-    initNavModal();
     initModal();
     initAccordions();
     initChatbot();
